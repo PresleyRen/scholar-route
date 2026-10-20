@@ -28,6 +28,8 @@ jobs:
         run: python tools/validate_package.py
       - name: Check README registry tables
         run: python tools/update_readme.py --check
+      - name: Check coverage and repair index
+        run: python tools/coverage_audit.py --check
       - name: Run offline regression suite
         shell: bash
         run: |
@@ -52,3 +54,32 @@ jobs:
           path: work/validation/
           if-no-files-found: error
           retention-days: 14
+
+  release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[release]')
+    needs: offline
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Publish tested version when its release is new
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(python -c 'import ast; from pathlib import Path; t=ast.parse(Path("skills/scholar-route/scripts/scholar_route.py").read_text()); print(next(ast.literal_eval(n.value) for n in t.body if isinstance(n,ast.Assign) and any(isinstance(x,ast.Name) and x.id=="VERSION" for x in n.targets)))')
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          tag="v$version"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $tag already exists; keeping it unchanged."
+            exit 0
+          fi
+          git archive --format=zip --prefix="scholar-route-$tag/" --output="scholar-route-$tag.zip" HEAD
+          gh release create "$tag" "scholar-route-$tag.zip" \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "ScholarRoute $tag" --notes-file RELEASE_NOTES.md

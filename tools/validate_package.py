@@ -67,6 +67,9 @@ def validate():
     conflict_ids = re.findall(r"\| (CF\d+) \|", conflicts)
     if len(conflict_ids) != len(set(conflict_ids)):
         errors.append("Duplicate conflict IDs.")
+    from coverage_audit import inventory
+    coverage = inventory(ROOT)
+    errors.extend(coverage["errors"])
     return {"ok": not errors, "errors": errors, "modules": len(ids),
             "domains": len(json.loads((SKILL / "assets/domains.json").read_text())),
             "source_repositories": len(upstreams["sources"]),

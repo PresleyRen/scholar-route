@@ -15,7 +15,7 @@ from route_core import REGIONS, SKILL_ROOT, STAGES, asset, route
 from search_import import import_search
 from venue_audit import assess
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 
 def emit(value):

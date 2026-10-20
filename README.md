@@ -1,60 +1,100 @@
 # ScholarRoute · 研途
 
-**从一个研究领域，到有证据的研究问题、可复现实验和投稿路线。**
+**把研究领域、Agent 项目或论文初稿，推进到文献地图、可验证问题、实验方案和投稿路线。**
 
-ScholarRoute 是面向研究型 Agent 的统一技能。给它一个领域、一份研究笔记、一个 Agent 程序或一篇稿件，它会按**领域、贡献类型和当前阶段**组合所需流程，持续保存文献、主张、实验、期刊事实和决策记录。重点支持 **LLM Agent 能力研究、Agent 程序与系统研究，以及费用敏感的期刊选择**。
+ScholarRoute 是一个可按领域组合的科研与选刊技能。它根据**领域、贡献类型和当前阶段**选择需要的流程，将文献探索、Agent 能力与程序研究、实验、写作、选刊、投稿和返修连接到同一项目记录。
 
-[English](README.en.md) · [技能入口](skills/scholar-route/SKILL.md) · [来源审计](docs/source-audit.md) · [冲突规则](skills/scholar-route/references/conflicts.md) · [测试报告](docs/VALIDATION.md)
+重点适合 **LLM Agent 能力研究、Agent 程序/系统研究，以及优先考虑费用和实际适配度的期刊选择**。中文讨论和英文论文写作可以在同一项目中协作。
 
-## 这一版包含什么
+[English](README.en.md) · [技能入口](skills/scholar-route/SKILL.md) · [覆盖与修复索引](docs/COVERAGE.md) · [来源明细](docs/source-audit.md) · [本轮验收](docs/AUDIT-2026-10-20.md)
 
-| 范围 | v1.0.0 内容 |
+## 能解决什么问题
+
+| 你的起点 | 技能完成的工作 | 获得的产物 |
+|---|---|---|
+| 只有一个领域，不知道研究哪个点 | 阅读综述与代表论文，整理问题、方法、证据和竞争者 | 领域地图、研究问题候选、下一轮检索路线 |
+| 有一个 Agent 想法或程序 | 区分能力创新与系统贡献，比较替代设计和失败场景 | 可证伪假设、基线、消融、最小实验和实现计划 |
+| 有实验结果，不知道怎么组织论文 | 建立问题—机制—结果—结论的论证链 | 论文结构、英文段落、图表与引文检查清单 |
+| 有稿件，想找相对现实、费用合适的期刊 | 多来源发现候选，调查同刊先例、文种、索引、费用和审稿时间 | 单刊档案、三类候选池、主投/备选顺序和补强任务 |
+| 已收到审稿意见 | 拆解每条意见，关联补实验、实际改动与稿件位置 | 返修任务表、逐条回复和修改定位 |
+| 项目做了一半，需要继续 | 读取已有账本、历史和关系图 | 延续原有证据、实验与决策的下一步工作 |
+
+## v1.1.0 概览
+
+| 组成 | 内容 |
 |---|---|
-| 领域路由 | 8 个领域配置，可组合用于交叉研究 |
-| 工作流 | 41 项能力模块，覆盖探索、实验、选刊、写作、投稿、返修与发表后工作 |
-| 参考来源 | 17 个现行公开仓库，139 条来源能力映射，固定到完整提交 SHA |
-| 冲突整理 | 33 条有明确处理方式的冲突规则 |
-| 原生论文接口 | OpenAlex、Crossref、DBLP、arXiv 共 4 个受限检索适配器 |
-| 原生本地工具 | 路由、证据账本、版本历史、事实冲突、约束筛选、报告与引用导出 |
-| 运行要求 | Python 3.11+；核心只使用标准库 |
+| 领域配置 | **8 个**，支持交叉领域组合 |
+| 统一能力 | **41 项**，每项都有入口与工作流说明 |
+| 来源覆盖 | **17 个来源仓库、139 条技能/子模式/领域变体映射** |
+| 冲突整合 | **33 条规则**；18 条关联程序行为测试，15 条关联工作流场景审查 |
+| 原生检索 | OpenAlex、Crossref、DBLP、arXiv |
+| 本地工具 | 路由、证据账本、历史、约束筛选、报告、图和 BibTeX 导出 |
+| 实测 | **118 项 Python 回归通过**；包含 288 种路由组合 |
+| 运行环境 | Python 3.11+，核心使用标准库 |
 
-这里的 **139 条映射包括上游技能、子模式和领域变体**，不是 139 个已安装或已运行的独立插件。能力由本项目重新编写并统一组织；不需要先安装全部上游仓库。逐项出处和实际检查深度见[来源审计](docs/source-audit.md)。
+**使用一个入口即可组合这些能力。**139 条记录是来源特点到统一模块的映射；具体功能在本项目中由三层协作完成：Python 工具处理确定性任务，使用本技能的 Agent 执行阅读、研究与写作流程，宿主提供浏览、代码运行、绘图及专业数据库访问。
 
-“完整探索”表示覆盖相关研究流程，并明确检索范围、证据缺口和下一步。它不能证明某个领域已经被穷尽，也不会把计划中的实验写成完成结果。
+## 全流程文本图
+
+```text
+输入：领域 / 研究笔记 / Agent 代码 / 论文初稿
+  │
+  ▼
+目标与阶段识别 ─── 领域组合 + 贡献类型 + 语言/预算/数据条件
+  │
+  ├─ 领域探索
+  │   多源检索 → 身份与版本 → 精读与证据提取 → 领域地图
+  │                                            │
+  ├─ 研究设计 ◀─────────────────────────────────┘
+  │   竞争方法 → 创新差异 → 可证伪假设 → 最小验证实验
+  │                                  │
+  │           ┌──────────────────────┴────────────────────┐
+  │           ▼                                           ▼
+  │     Agent 能力研究                              Agent 程序研究
+  │     规划 / 记忆 / 工具 / RAG / 协作             状态 / 调度 / 恢复 / 存储 / 部署
+  │           └──────────────────────┬────────────────────┘
+  │                                  ▼
+  ├─ 实验与实现：基线 → 等预算对照 → 消融 → 故障注入 → 统计与复现
+  │                                  │
+  │                         新证据 ────┴──→ 更新问题与地图
+  │                                  ▼
+  ├─ 论文与选刊
+  │   论证 / 写作 / 引文 / 图表 / 多视角审稿
+  │   候选召回 → 单刊调查 → 索引/分区/费用/时间 → 适配比较
+  │                         ├─ 符合条件 → 主投/备选顺序
+  │                         ├─ 待核实   → 指定字段与来源
+  │                         └─ 排除     → 保存明确原因
+  │                                  ▼
+  └─ 投稿与后续：模板 / 投稿信 / 预检 → 逐条返修 → 清样 / 传播 / 更正
+
+贯穿所有阶段：project.json + 证据来源 + 历史版本 + 决策记录
+交付：REPORT.md / MAP.md / journals.csv / references.bib / assessment.json
+扩展：来源特点 → 能力 ID → 实现/工作流 → 冲突用例 → 回归验证
+```
 
 ## 快速开始
 
-### 1. 获取和检查
+### 安装和验证
 
 ```bash
 git clone https://github.com/PresleyRen/scholar-route.git
 cd scholar-route
 python tests/run.py
 python tools/validate_package.py
-python skills/scholar-route/scripts/scholar_route.py doctor
+python tools/coverage_audit.py --check
 ```
 
-无须安装 Python 第三方依赖。运行实际检索需要可访问相应 API；模型训练、数据分析、文档编译等使用宿主已经提供的工具。
-
-### 2. 作为技能使用
-
-安装目录是 `skills/scholar-route/`，其中 `SKILL.md` 是唯一入口。支持本地技能的宿主可以直接读取该入口，或通过自己的技能安装器从此仓库安装这个目录。
-
-对于 Codex CLI / IDE，可将此目录放到目标项目的 `.agents/skills/scholar-route/`，或个人的 `~/.agents/skills/scholar-route/`。目标有同名技能时，先比较版本，再选择更新位置。位置与调用方式依据 [OpenAI 官方技能文档](https://learn.chatgpt.com/docs/build-skills)，核对日期为 2026-10-20；其他宿主以其说明为准。
-
-安装后，可以这样提问：
+技能目录是 `skills/scholar-route/`，入口是 `SKILL.md`。Codex 可将整个目录安装到项目的 `.agents/skills/scholar-route/`，或个人目录 `~/.agents/skills/scholar-route/`；调用方式见 [官方技能文档](https://learn.chatgpt.com/docs/build-skills)。其他支持本地技能的宿主可以加载相同入口。
 
 ```text
-用 $scholar-route 完整探索 LLM Agent 的长期记忆与错误恢复。
-重点区分能力创新和程序/系统创新，先建立文献地图与竞争方法，
-给出可证伪问题、等预算对照、消融和最小实验。
-最后根据真实证据筛选 SCIE 期刊，优先无强制发表费用的路径。
-中文讨论，论文段落用英文；持续更新已有项目，不编造实验结果。
+用 $scholar-route 探索 LLM Agent 的长期记忆和错误恢复。
+先读取已有项目；整理领域地图、竞争方法与研究问题。
+分别分析能力创新和程序/系统创新，设计等预算基线、消融和最小实验。
+再根据稿件证据筛选 SCIE 期刊，优先无强制发表费用的路线。
+中文讨论，论文段落用英文。
 ```
 
-ChatGPT 中已安装的技能可通过技能选择器或 `@` 选择；Codex CLI / IDE 可以使用 `$scholar-route`。**发布 GitHub 源码和 Release 不会自动把技能安装到每个宿主，也不等于已上架插件目录。**
-
-### 3. 直接运行本地工具
+### 直接使用 Python 工具
 
 ```bash
 python skills/scholar-route/scripts/scholar_route.py route \
@@ -62,49 +102,26 @@ python skills/scholar-route/scripts/scholar_route.py route \
   --domains agent-ai,computer-science --stage full
 
 python skills/scholar-route/scripts/scholar_route.py init \
-  --project ./work/agent-memory \
-  --topic "LLM Agent memory and recovery" \
+  --project ./work/agent-memory --topic "LLM Agent memory and recovery" \
   --domains agent-ai,computer-science --language zh-CN
 
 python skills/scholar-route/scripts/scholar_route.py search \
-  --provider openalex --query "language agent memory" \
+  --provider crossref --query "language agent memory" \
   --limit 5 --project ./work/agent-memory
-
-python skills/scholar-route/scripts/scholar_route.py validate \
-  --project ./work/agent-memory
 
 python skills/scholar-route/scripts/scholar_route.py report \
   --project ./work/agent-memory
 ```
 
-离线试用使用原创合成数据，不涉及真实期刊推荐：
+运行离线示例查看完整产物：
 
 ```bash
 python examples/run_demo.py --project ./work/demo
 ```
 
-实际记录和费用约束的 JSON 示例见[数据契约](skills/scholar-route/references/data-contracts.md)和[记录示例](skills/scholar-route/references/record-examples.md)。
+示例使用明确标记的合成期刊记录，展示候选筛选、证据保存、关系图与报告导出。真实研究时，将检索结果和核验后的期刊事实导入项目即可继续。
 
-## 怎样完成一个领域的探索
-
-技能先判定贡献属于方法/能力、系统/程序、基准评测、领域应用或人机研究，然后组合领域规则。默认按需读取参考模块；要求全流程时，规划全部相关阶段并完成当前条件允许的工作。
-
-```mermaid
-flowchart TD
-    A[领域与实际约束] --> B[文献地图与证据]
-    B --> C[可证伪问题]
-    C --> D[对照实验与实现]
-    D --> E{证据足够吗}
-    E -->|补充或修正| B
-    E -->|支持有限主张| F[稿件论证与选刊]
-    F --> G[投稿准备与返修]
-    G -->|补充实验| D
-    G --> H[清样与发表后工作]
-```
-
-每个阶段都应交付能继续使用的内容：查询和筛选记录、论文笔记、研究地图、假设与反证、实验协议、实际运行记录、期刊证据表、稿件审查或回复稿。未获得全文、未执行实验、未核验费用、未发送投稿都保持明确的未完成状态。
-
-### 领域配置
+## 按领域组合能力
 
 <!-- DOMAINS:START -->
 
@@ -121,173 +138,208 @@ flowchart TD
 
 <!-- DOMAINS:END -->
 
-领域关键词只是初始建议，可以通过 `--domains` 明确指定。医学文献问答 Agent 可组合 `agent-ai,computer-science,biomedicine`，但是否需要临床试验规范取决于实际研究设计。会议论文可以作为计算机领域的重要文献证据；要求 SCI 期刊时，会议不能进入期刊投稿候选。
+| 场景 | 推荐组合 | 重点增加的流程 |
+|---|---|---|
+| Agent 规划、记忆、工具能力 | `agent-ai,computer-science` | 能力拆解、竞争机制、等预算基线、任务评测 |
+| Agent 框架、运行时、错误恢复 | `agent-ai,computer-science,engineering` | 架构取舍、故障注入、幂等性、延迟与成本 |
+| 医疗文献 Agent | `agent-ai,computer-science,biomedicine` | 医学文献路线、研究设计评价、任务与临床证据分层 |
+| 人机协作与 Agent 用户研究 | `agent-ai,social-sciences` | 人类监督、用户实验、测量与混杂控制 |
+| 食品或农业 Agent 应用 | `agent-ai,food-agriculture` | 领域数据、专项数据库、应用评价与可复现分析 |
+| 已有论文、只做选刊 | 对应领域 + `--stage journal` | 画像、召回、单刊、费用、索引与投稿顺序 |
 
-地区规则独立设置：`--region international`、`china` 或 `turkey`。中文目录、CNKI/万方/维普、NPPA、TR Dizin/DergiPark 等是有条件的来源路线，不是全部内置 API。
+其他阶段包括 `explore`、`review`、`design`、`experiment`、`dossier`、`write`、`audit`、`submit`、`revise`、`disseminate` 和 `full`。地区路线可选 `international`、`china`、`turkey`。
 
 ## 41 项能力详情
 
-下表解释实际覆盖内容。全部模块的输入、输出、边界和对应来源见[能力注册表](skills/scholar-route/references/capabilities.md)与[逐项来源映射](docs/source-audit.md)。
-
 <!-- CAPABILITIES:START -->
 
-| 能力 ID | 能力 | 具体产物与边界 |
+| 能力 ID | 能力 | 具体产物 |
 |---|---|---|
-| `intake` | [目标、证据与限制](skills/scholar-route/references/data-contracts.md) | 整理研究对象、贡献类型、稿件阶段、语言、数据与预算；复用用户已给出的条件。 |
-| `field-map` | [领域结构与研究地图](skills/scholar-route/references/exploration.md) | 从综述和原始论文建立问题—方法—证据—局限地图，标出覆盖边界与未探索区域。 |
-| `search-protocol` | [检索协议与多语言查询](skills/scholar-route/references/exploration.md) | 生成中英文同义词、分库查询、时间范围、筛选标准和可重现的检索日志。 |
-| `paper-search` | [论文与开放科研资源检索](skills/scholar-route/references/sources-and-tools.md) | 通过四个原生适配器和可用宿主来源召回论文；记录失败、截断和访问状态。 |
-| `identifier-check` | [DOI、ISSN、版本与元数据校验](skills/scholar-route/references/data-contracts.md) | 检查 DOI/ISSN 格式、版本与引文身份；来源内容核实由宿主完成。 |
-| `evidence-review` | [筛选、提取、质量与证据综合](skills/scholar-route/references/exploration.md) | 筛选、数据提取、研究设计评价、叙述/范围/系统综述和可比较性检查。 |
-| `paper-notes` | [精读、笔记与主张关联](skills/scholar-route/references/exploration.md) | 精读方法、假设、数据、结果、局限与代码，连接到具体主张。 |
-| `novelty-audit` | [新颖性、反证与研究空白](skills/scholar-route/references/exploration.md) | 检索最近竞争者、相邻领域和经典方法，核实差异并寻找会推翻创新主张的基线。 |
-| `hypothesis-plan` | [可证伪假设与可行性](skills/scholar-route/references/exploration.md) | 提出可证伪问题、机制解释、可行性与最小验证实验；支持研究计划书。 |
-| `agent-capabilities` | [Agent 能力拆解与评测](skills/scholar-route/references/agent-research.md) | 覆盖意图、路由、规划、工具、RAG、记忆、验证、反思、协作、长任务等 14 类能力。 |
-| `agent-systems` | [Agent 程序、架构与运行实验](skills/scholar-route/references/agent-research.md) | 检查状态控制、接口、隔离、调度、恢复、存储、观测和部署 8 个程序层。 |
-| `experiment-plan` | [实验设计与效度](skills/scholar-route/references/exploration.md) | 把主张变成变量、对照、消融、指标、样本、停止条件和反证实验。 |
-| `statistics-robustness` | [统计、稳健性与不确定性](skills/scholar-route/references/publication.md) | 审查统计单位、依赖、混杂、泄漏、多重比较、不确定性与稳健性；有数据工具才实际计算。 |
-| `implementation` | [复现、代码实现与执行记录](skills/scholar-route/references/agent-research.md) | 读代码、复现基线、实现最小机制、控制预算、记录实际命令和运行结果；使用宿主执行工具。 |
-| `data-collection` | [数据计划、出处与再利用](skills/scholar-route/references/exploration.md) | 规划数据来源、许可、采样、版本、质量、拆分与复用条件。 |
-| `state-map` | [项目记录、关系图与断点恢复](skills/scholar-route/references/data-contracts.md) | 保存八类证据实体、历史版本与关系；恢复项目，导出报告、Mermaid 图和 BibTeX。 |
-| `manuscript-profile` | [稿件画像与贡献类型](skills/scholar-route/references/journal-selection.md) | 提炼问题、贡献、方法角色、证据、读者、文章类型和选刊限制。 |
-| `venue-discovery` | [多来源期刊与候选召回](skills/scholar-route/references/journal-selection.md) | 相似论文、专业刊、出版商匹配器、目录与可选本地索引互补召回。 |
-| `venue-identity` | [期刊/会议身份与 ISSN](skills/scholar-route/references/journal-selection.md) | 核对期刊名称、ISSN、出版社、官方入口、改名及期刊/会议差异。 |
-| `journal-dossier` | [单刊全景与作者指南](skills/scholar-route/references/journal-selection.md) | 完整调查单刊的范围、近刊先例、要求、费用、时效、政策和未知项。 |
-| `indexing-metrics` | [索引、分区、年份与类别](skills/scholar-route/references/journal-selection.md) | 核实 SCIE/SSCI/ESCI 等索引，分开保存 JCR/SJR/CAS 的年度与类别。 |
-| `costs-timelines` | [费用路径与审稿时间定义](skills/scholar-route/references/journal-selection.md) | 区分强制费用/可选 OA/减免条件，以及初审、外审、录用和发表时间。 |
-| `journal-integrity` | [出版透明度与风险证据](skills/scholar-route/references/journal-selection.md) | 核查身份与政策透明度，记录具体风险证据；不靠 OA 缺失或低价格贴标签。 |
-| `fit-comparison` | [适配、证据与三态筛选](skills/scholar-route/references/journal-selection.md) | 保留符合、待核实、排除三类候选，把适配判断与证据覆盖分开。 |
-| `submission-plan` | [可解释投稿顺序](skills/scholar-route/references/journal-selection.md) | 按范围、证据和实际约束解释投稿顺序，列出改进与改投条件。 |
-| `argument-audit` | [论证与实验叙事重构](skills/scholar-route/references/publication.md) | 重建问题、机制、结果和结论的证据关系，指出跳步、过度主张和缺少比较。 |
-| `manuscript-writing` | [科学写作、润色与数值保真](skills/scholar-route/references/publication.md) | 中文/英文科学写作与润色，保留数字、术语、TeX 与引用；支持提案文本。 |
-| `citation-audit` | [引文、BibTeX 与引用支持](skills/scholar-route/references/publication.md) | 核实引用身份、版本、位置与内容支持，整理引用元数据和 BibTeX。 |
-| `figure-table-audit` | [图表、单位与可视化检查](skills/scholar-route/references/publication.md) | 核对图表数据、单位、样本数、标注、可读性和期刊要求；实际编辑依赖宿主绘图工具。 |
-| `peer-review` | [分角色审稿与异议归并](skills/scholar-route/references/publication.md) | 以互补视角模拟严格审稿，归并异议和可执行修改，不预测真实编辑决定。 |
-| `venue-formatting` | [期刊模板、改投与排版](skills/scholar-route/references/publication.md) | 读取当前文章类型/阶段要求，改投重排、检查模板并通过宿主编译/渲染。 |
-| `cover-letter` | [投稿信](skills/scholar-route/references/publication.md) | 依据真实贡献与期刊范围写投稿信，保留未确认声明。 |
-| `presubmission-inquiry` | [投稿前询问信](skills/scholar-route/references/publication.md) | 草拟有针对性的投稿前询问信；仅在已有授权范围内发送。 |
-| `reviewer-discovery` | [审稿人候选与利益冲突](skills/scholar-route/references/publication.md) | 通过文献核实候选专长、身份与适用利益冲突，不编造邮箱或同意。 |
-| `authorship-credit` | [署名、CRediT 与声明核实](skills/scholar-route/references/publication.md) | 收集实际贡献，协助 CRediT 与署名声明，标出需要作者决定的内容。 |
-| `submission-preflight` | [Quick/Full 投稿预检](skills/scholar-route/references/publication.md) | Quick/Full 预检稿件、图表、声明、附件、数据代码与投稿要求。 |
-| `revision-response` | [逐条返修与修改定位](skills/scholar-route/references/publication.md) | 逐条拆解审稿意见，连接回复、真实改动与定位，支持有依据的异议/申诉。 |
-| `proof-check` | [清样核对](skills/scholar-route/references/publication.md) | 比对录用稿和清样的文字、数值、公式、作者信息、参考文献与排版变化。 |
-| `dissemination` | [发表后传播与公开材料](skills/scholar-route/references/publication.md) | 基于已发表证据草拟摘要、海报/可编辑展示材料和传播内容；导出依赖宿主。 |
-| `postpublication-correction` | [更正与发表后问题处理](skills/scholar-route/references/publication.md) | 整理错误、影响范围和证据，草拟按期刊政策处理的更正沟通。 |
-| `regional-indexing` | [中文/土耳其期刊与目录](skills/scholar-route/references/domains.md) | 条件调用中文目录、NPPA、CNKI/万方/维普，以及 TR Dizin/DergiPark 路由。 |
+| `intake` | [目标、证据与限制](skills/scholar-route/references/data-contracts.md) | 研究目标、贡献类型、稿件阶段、语言、预算和已有证据清单。 |
+| `field-map` | [领域结构与研究地图](skills/scholar-route/references/exploration.md) | 问题—方法—证据—研究缺口地图，以及下一轮探索入口。 |
+| `search-protocol` | [检索协议与多语言查询](skills/scholar-route/references/exploration.md) | 中英文查询词、数据库路线、时间范围、筛选标准与查询日志。 |
+| `paper-search` | [论文与开放科研资源检索](skills/scholar-route/references/sources-and-tools.md) | 多源论文记录、检索状态与来源信息；四个原生 API 统一导入。 |
+| `identifier-check` | [DOI、ISSN、版本与元数据校验](skills/scholar-route/references/data-contracts.md) | DOI、ISSN、元数据、预印本和正式版本的身份与关联记录。 |
+| `evidence-review` | [筛选、提取、质量与证据综合](skills/scholar-route/references/exploration.md) | 文献筛选表、证据提取表、质量评价和跨研究综合。 |
+| `paper-notes` | [精读、笔记与主张关联](skills/scholar-route/references/exploration.md) | 问题、机制、数据、结果、代码和主张关联的精读笔记。 |
+| `novelty-audit` | [新颖性、反证与研究空白](skills/scholar-route/references/exploration.md) | 最近竞争方法、相邻领域先例、创新差异和反证清单。 |
+| `hypothesis-plan` | [可证伪假设与可行性](skills/scholar-route/references/exploration.md) | 可证伪假设、机制解释、可行性分析与最小验证实验。 |
+| `agent-capabilities` | [Agent 能力拆解与评测](skills/scholar-route/references/agent-research.md) | 14 类 Agent 能力的机制拆解、比较基线和评价协议。 |
+| `agent-systems` | [Agent 程序、架构与运行实验](skills/scholar-route/references/agent-research.md) | 8 个程序层的架构分析、故障模型、运行轨迹与系统实验。 |
+| `experiment-plan` | [实验设计与效度](skills/scholar-route/references/exploration.md) | 变量、对照、消融、指标、样本、资源预算和停止条件。 |
+| `statistics-robustness` | [统计、稳健性与不确定性](skills/scholar-route/references/publication.md) | 统计单位、置信区间、混杂、泄漏、多重比较与稳健性检查。 |
+| `implementation` | [复现、代码实现与执行记录](skills/scholar-route/references/agent-research.md) | 基线复现、最小机制实现、等预算运行与命令和结果记录。 |
+| `data-collection` | [数据计划、出处与再利用](skills/scholar-route/references/exploration.md) | 数据出处、许可、采样、版本、质量、拆分和再利用计划。 |
+| `state-map` | [项目记录、关系图与断点恢复](skills/scholar-route/references/data-contracts.md) | 持久项目账本、关系图、版本历史、断点恢复与报告导出。 |
+| `manuscript-profile` | [稿件画像与贡献类型](skills/scholar-route/references/journal-selection.md) | 研究问题、贡献、方法角色、证据、读者和文章类型画像。 |
+| `venue-discovery` | [多来源期刊与候选召回](skills/scholar-route/references/journal-selection.md) | 由相似论文、专业刊、出版社匹配器及索引合并生成候选池。 |
+| `venue-identity` | [期刊/会议身份与 ISSN](skills/scholar-route/references/journal-selection.md) | 刊名、ISSN、出版社、官方入口、改名记录与发表载体类型。 |
+| `journal-dossier` | [单刊全景与作者指南](skills/scholar-route/references/journal-selection.md) | 单刊范围、同刊先例、文章类型、费用、时间和作者要求档案。 |
+| `indexing-metrics` | [索引、分区、年份与类别](skills/scholar-route/references/journal-selection.md) | 按体系、年度和学科类别保存索引身份与分区事实。 |
+| `costs-timelines` | [费用路径与审稿时间定义](skills/scholar-route/references/journal-selection.md) | 必缴费用、可选 OA、减免条件、货币与不同审稿时间端点。 |
+| `journal-integrity` | [出版透明度与风险证据](skills/scholar-route/references/journal-selection.md) | 期刊身份、政策透明度、同行评审与出版风险的具体证据。 |
+| `fit-comparison` | [适配、证据与三态筛选](skills/scholar-route/references/journal-selection.md) | 符合、待核实、排除三类候选，以及各项条件和适配比较理由。 |
+| `submission-plan` | [可解释投稿顺序](skills/scholar-route/references/journal-selection.md) | 可解释的主投/备选顺序、补强任务和改投触发条件。 |
+| `argument-audit` | [论证与实验叙事重构](skills/scholar-route/references/publication.md) | 问题—机制—实验—结论的论证链，以及缺少比较和逻辑跳步。 |
+| `manuscript-writing` | [科学写作、润色与数值保真](skills/scholar-route/references/publication.md) | 中文或英文论文段落、润色与结构调整，保持数值、术语和引用一致。 |
+| `citation-audit` | [引文、BibTeX 与引用支持](skills/scholar-route/references/publication.md) | 引用身份、版本、内容支持和位置检查，以及 BibTeX 整理。 |
+| `figure-table-audit` | [图表、单位与可视化检查](skills/scholar-route/references/publication.md) | 图表数据、单位、样本数、标注、可读性与目标刊要求检查。 |
+| `peer-review` | [分角色审稿与异议归并](skills/scholar-route/references/publication.md) | 多视角模拟审稿、关键异议、证据定位和可执行修改建议。 |
+| `venue-formatting` | [期刊模板、改投与排版](skills/scholar-route/references/publication.md) | 当前作者指南、文章类型要求、模板适配和改投排版清单。 |
+| `cover-letter` | [投稿信](skills/scholar-route/references/publication.md) | 围绕真实贡献与期刊范围撰写的投稿信。 |
+| `presubmission-inquiry` | [投稿前询问信](skills/scholar-route/references/publication.md) | 具有明确适配问题和研究摘要的投稿前询问信。 |
+| `reviewer-discovery` | [审稿人候选与利益冲突](skills/scholar-route/references/publication.md) | 按专长、论文和利益冲突条件组织的审稿人候选资料。 |
+| `authorship-credit` | [署名、CRediT 与声明核实](skills/scholar-route/references/publication.md) | 作者实际贡献、CRediT 角色和声明的统一记录。 |
+| `submission-preflight` | [Quick/Full 投稿预检](skills/scholar-route/references/publication.md) | Quick/Full 两级稿件、图表、声明、附件与数据代码预检。 |
+| `revision-response` | [逐条返修与修改定位](skills/scholar-route/references/publication.md) | 逐条意见、回复、实际改动与稿件定位的返修对照表。 |
+| `proof-check` | [清样核对](skills/scholar-route/references/publication.md) | 录用稿与清样的文字、数值、公式、署名、引用和排版差异。 |
+| `dissemination` | [发表后传播与公开材料](skills/scholar-route/references/publication.md) | 基于发表结果的通俗摘要、海报、展示与公开材料草稿。 |
+| `postpublication-correction` | [更正与发表后问题处理](skills/scholar-route/references/publication.md) | 错误影响分析、证据整理和更正沟通材料。 |
+| `regional-indexing` | [中文/土耳其期刊与目录](skills/scholar-route/references/domains.md) | 中文和土耳其期刊的目录、身份与地区投稿路线。 |
 
 <!-- CAPABILITIES:END -->
 
-## Agent 研究的专项覆盖
+每项能力的来源特点、实现文件、冲突规则与测试入口集中在 [覆盖与修复索引](docs/COVERAGE.md)。
 
-### 能力研究：14 个能力族
+## Agent 专项：能力与程序都覆盖
 
-| 能力族 | 主要研究角度 |
-|---|---|
-| 意图与任务定义 | 歧义消解、约束保持、成功判据 |
-| 路由与委派 | 模型、工具、角色选择，拒绝与升级机制 |
-| 规划与分解 | 长短程规划、搜索、重规划与反应式执行 |
-| 工具使用 | 选择、参数、顺序、输出解释与契约错误 |
-| 检索与依据 | RAG、混合检索、重排、引用和证据利用 |
-| 记忆与上下文 | 存储、更新、遗忘、过时知识、来源与会话隔离 |
-| 推理与验证 | 有效检查、错误发现、误拒和虚假信心 |
-| 反思与适应 | 反馈改变机制、持久收益、与简单重试的比较 |
-| 多 Agent 协作 | 强单 Agent、同预算集成、通信结构与冲突处理 |
-| 长任务执行 | 状态保持、中断恢复、依赖与停止行为 |
-| 学习与优化 | 参数、策略、提示优化，调优与评测拆分 |
-| 多模态与具身行为 | 感知不确定性、动作反馈与仿真/真实差异 |
-| 人类监督 | 介入时机、质量、人力成本和协作效果 |
-| 可靠性与误用抵抗 | 不可信输入、权限边界、数据隔离与安全失败 |
+**14 个能力族：** 意图与任务定义、路由与委派、规划与分解、工具使用、检索与依据、记忆与上下文、推理与验证、反馈与适应、多 Agent 协作、长任务执行、学习与优化、多模态与具身行为、人类监督、可靠性与误用抵抗。
 
-### 程序研究：8 个系统层
+**8 个程序层：** 控制器/状态、工具接口、执行隔离、调度、恢复、记忆/存储、可观测性、部署/复现。
 
-覆盖 **控制器/状态、工具接口、执行隔离、调度、恢复、记忆/存储、可观测性、部署/复现**。会检查实际代码与代表性轨迹，把架构选择关联到工作负载要求、替代设计和可推翻该设计的实验。
+例如，研究“多 Agent 更有效”时，比较强单 Agent、同总 token/调用预算和顺序集成；研究“记忆更可靠”时，测试过期、冲突和跨任务污染；研究“恢复更好”时，测中断、重试、幂等性、重复副作用和最终任务结果。协议在 [Agent 研究指南](skills/scholar-route/references/agent-research.md)。
 
-例如，“增加多个 Agent”需要与强单 Agent、同总 token/调用预算、顺序集成进行比较；“记忆更可靠”需要测试过期、冲突、跨任务污染和回收；“恢复更好”需要测中断、重试、幂等性、重复副作用与最终任务结果。具体协议见 [Agent 研究指南](skills/scholar-route/references/agent-research.md)。
+## 这些来源如何互补
 
-## 选刊如何判断“相对好投”
+本轮逐项核对了原清单中的 17 个现行来源仓库。139 条来源映射均有对应能力 ID、固定版本和文件证据；41 项能力均有工作流入口。
 
-本技能把这个要求转为可核验的问题：**是否符合范围和文章类型、是否有真正可比的近期论文、稿件证据能否支撑贡献、费用和时间条件是否可接受、哪些退稿风险能通过修改降低**。投稿顺序可以使用“冲刺 / 主投 / 备选”作为策略标签，但不会产生个人录用概率或保证录用。
-
-| 候选池 | 进入条件 | 后续行动 |
+| 参考来源 | 保留的特点 | 互补方式 |
 |---|---|---|
-| `eligible` 符合记录条件 | 已记录且符合全部硬约束 | 继续人工核实科学适配与具体投稿路线 |
-| `unverified` 待核实 | 没有已知违反，但至少一个决定性事实缺失、过时、冲突或证据不满足要求 | 明确指出缺失字段和核验任务 |
-| `excluded` 排除 | 至少一个已核实事实违反硬约束 | 保留原候选、原因和其余未知项 |
+| [zero565656/journal-recommender](https://github.com/zero565656/journal-recommender) | 摘要画像与投稿梯队 | 先形成投稿梯队，再用单刊档案与多源核验补齐证据。 |
+| [kkunkunya/journal-research-agent-plugins](https://github.com/kkunkunya/journal-research-agent-plugins) | 中英文、多数据库发现与权威核验分工 | 广泛发现候选，再由本地索引和单刊调查提高深度。 |
+| [keros68/xiaoyu-skill](https://github.com/keros68/xiaoyu-skill) | 相似论文反查期刊、本地索引及选刊模式切换 | 保留相似论文反查与可更新索引，缺失的关键字段转入核验队列。 |
+| [huangwb8/ChineseResearchLaTeX](https://github.com/huangwb8/ChineseResearchLaTeX) | 从候选发现深入到单刊全景调查 | 保留发现与单刊调查，计算机研究补充 DBLP、arXiv 和系统评测路线。 |
+| [hztopcu/journal-fit-finder](https://github.com/hztopcu/journal-fit-finder) | 主题、方法、读者、文种与出版商多样性比较 | 综合主题、方法、读者和文种，搭配投稿规划与结构化期刊档案。 |
+| [yujie-jason-zhang/polish_skill](https://github.com/yujie-jason-zhang/polish_skill) | 精读、创新审计、论证重构、写作与回复衔接 | 论文修改衔接证据审查和投稿要求，统一记录引用、数字和修改。 |
+| [yaotingsun/academic-publishing-skills](https://github.com/yaotingsun/academic-publishing-skills) | 投稿前询问至清样、更正的发表生命周期 | 将选刊接到询问、投稿、返修、清样和更正流程。 |
+| [regisely/superpapers](https://github.com/regisely/superpapers) | 复现驱动的问题发现、实验计划与稳健性 | 把研究问题连到可复现实验，加入 Agent 能力和系统研究的比较协议。 |
+| [sokolmarek/researcher](https://github.com/sokolmarek/researcher) | 研究流水线、代码分析、竞争方法与版本管理 | 用持续项目记录连接代码分析、竞争方法、实验与写作。 |
+| [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | 论文身份、综述方法、证据批判与模板检查 | 用文献身份、综述和批判评价支持选刊及 ML/系统论证。 |
+| [Orchestra-Research/AI-Research-SKILLs](https://github.com/Orchestra-Research/AI-Research-SKILLs) | 区分 ML 能力贡献与系统设计贡献 | 分清能力创新与程序贡献，再匹配对应实验和期刊要求。 |
+| [Zaious/journal-atlas](https://github.com/Zaious/journal-atlas) | 结构化期刊档案与证据等级、档案更新 | 结构化保存单刊证据，配合多源召回持续更新档案。 |
+| [alexishuang1901-hub/journal-finder](https://github.com/alexishuang1901-hub/journal-finder) | 由文献定位发表社区、本地索引维护 | 用参考文献发现发表社区，再补跨库发现与单刊核验。 |
+| [yibeixiaobai/journal-selector](https://github.com/yibeixiaobai/journal-selector) | 中文期刊条件和国内目录路径 | 保留中文目录条件，并入统一身份、费用与投稿路线。 |
+| [brycewang-stanford/Awesome-Journal-Skills](https://github.com/brycewang-stanford/Awesome-Journal-Skills) | 学科与具体发表场所的写作要求 | 把具体刊会要求接到范围识别、文种与投稿预检。 |
+| [PangenomeAI/academic-skills-food-nutrition](https://github.com/PangenomeAI/academic-skills-food-nutrition) | 食品农业专项检索、研究计划和展示流程 | 食品农业专项路线与通用证据审查、实验设计互补。 |
+| [HosungYou/LongTable](https://github.com/HosungYou/LongTable) | 项目访谈、互补审稿视角与持续证据包 | 项目访谈与互补审稿视角持续更新同一证据包。 |
 
-`eligible` 只说明当前记录满足代码规则，不证明外部来源真实支持该事实。可选的 0–5 适配分是带依据的人工判断，与资格、证据覆盖、分区和录用机会分别处理。展示短名单默认同出版社最多两本；未知出版社共同归组，其他候选仍保留。
+完整模块级出处见 [来源审计](docs/source-audit.md)，提交与文件路径保存在 [upstreams.json](skills/scholar-route/assets/upstreams.json)。
 
-对于费用敏感研究，必须核实具体发表路径。可选 OA 不等于必须支付 APC；有条件减免不等于确定免费；APC 为零也不能忽略强制版面、彩图或投稿费。不同货币的非零费用不做隐含换算。动态事实在实际决策前重新核验。
+## 冲突如何处理，保留了什么
 
-## 冲突怎样统一
+| 冲突 | 整合后的行为 | 验证入口 |
+|---|---|---|
+| 学科不同，默认数据库和研究规则不同 | 按研究对象组合来源；医学 Agent 同时保留计算机与医学路线 | 288 种领域/阶段/地区组合与交叉领域测试 |
+| 期刊字段缺失，却要做硬筛选 | 明确符合、待核实、排除三类，保留缺失字段 | 三态筛选、过时证据与冲突事实测试 |
+| JCR、SJR、中科院分区被混用 | 按体系、年度、学科类别分别比较 | 精确分区与同版本矛盾测试 |
+| 可选 OA 被当成强制费用 | 按实际发表路径保存必缴费、可选费和减免条件 | 零费用、货币、完整费用和 OA 测试 |
+| 首次决定、外审、录用和发表时间混在一起 | 四个端点分别保留 | 时间字段保存与导出测试 |
+| 数量模板要求固定候选数 | 按实际证据生成短名单，保留出版社多样性 | 不补空位、排序稳定性和出版社上限测试 |
+| 新旧证据相互覆盖 | 保存冲突双方和历史，核验后显式解决 | 冲突重导入、解决与幂等测试 |
+| 润色、审稿、格式检查相互越权 | 一个修改负责人，证据核查与格式核查分工 | 15 个工作流冲突场景及处理产物 |
 
-所有适用能力通过统一的证据标准、数据契约和阶段接口协作。明显冲突的默认值改为领域条件或用户参数。完整规则见 [CF01–CF33](skills/scholar-route/references/conflicts.md)。
+33 条规则的逐项对应关系见 [冲突—测试索引](docs/COVERAGE.md)，工作流场景的输入、处理结果和取舍见 [场景审查](docs/WORKFLOW-REVIEW.md)。
 
-| 原有做法之间的冲突 | ScholarRoute 的处理 |
+## 实测结果
+
+| 检查 | 本轮结果 |
 |---|---|
-| 固定推荐数量、录用率分桶、所谓保底刊 | 依据证据解释顺序；不足数量如实交付，不捏造概率 |
-| JCR、SJR、中科院分区混用；WoS 被当作 SCIE | 保存体系、年份、类别和负责机构证据，分开筛选 |
-| 未知费用当零、缺字段直接删除候选 | 三态筛选，保留未知和缺口；费用记录完整强制成本与适用条件 |
-| 初审、外审、录用、发表时间混为一谈 | 每个时间字段保存端点、统计口径与观察期 |
-| 医学数据库和固定时间窗强制用于所有学科 | 按领域组合来源，说明查询边界；方法学标准依实际设计选择 |
-| 单一出版商偏好、以命中文章数量代表匹配 | 多来源召回、比较真实论文、控制展示集中度 |
-| 只有 DOI 或摘要就声称全文核验 | 保存阅读深度和版本；引用身份与内容支持分别核实 |
-| 多角色意见被当作独立专家证据 | 标注模拟审查，归并异议；不通过投票预测编辑决定 |
-| 计划、演示或静态检查被当作真实实验 | 分别记录 proposed/planned/running/completed 与实际命令结果 |
-| 不同模块反复询问、覆盖已有项目 | 复用授权与上下文、追加历史；仅对真正阻塞的决定提问 |
-| 上游专有数据库、模板或缺失许可证 | 独立实现通用能力，记录出处；不复制受限制材料 |
-| 列出外部工具就声称全自动集成 | 标明原生、宿主执行和可选依赖三种执行方式 |
+| Python 自动化回归 | **118/118 通过**：原有 89 项 + 新增 29 项 |
+| 路由组合 | **288/288 组合通过**，作为一项参数组合回归执行 |
+| 来源与实现索引 | **17 个来源、139 条映射、41 项能力、33 条冲突**通过一致性检查 |
+| 程序冲突 | **18 条**规则关联实际行为测试 |
+| 工作流冲突 | **15 条**固定场景已应用规则并保存处理结果 |
+| 合成端到端示例 | 初始化、证据导入、候选筛选、图与报告导出完成 |
 
-## 哪些功能是可执行代码
+自动化测试记录与工作流审查分别保存。详情、命令及验证范围见 [本轮验收](docs/AUDIT-2026-10-20.md)；每次提交的 Python 3.11/3.12 结果可在 [GitHub Actions](https://github.com/PresleyRen/scholar-route/actions) 查看，运行产物包含对应源码与测试日志。
 
-| 执行方式 | v1.0.0 的具体实现 |
+## 怎样快速定位不足并扩展
+
+先按**症状、能力 ID 或来源名**查找：
+
+```bash
+python tools/coverage_audit.py --find "费用"
+python tools/coverage_audit.py --find agent-systems
+python tools/coverage_audit.py --find journal-recommender
+```
+
+返回：能力、工作流文件、原生实现位置、来源、冲突 ID 和相关测试。
+
+| 发现的问题 | 从哪里开始 | 修改与验证 |
+|---|---|---|
+| 某个领域没被正确识别 | `assets/domains.json`、`scripts/route_core.py` | 调整领域配置，运行路由与交叉领域测试 |
+| 论文搜不到或响应解析不对 | `scripts/scholarly_sources.py`、`search_import.py` | 加入成功、空结果、错误响应、截断和身份保真用例 |
+| 期刊费用、分区或状态判断不对 | `scripts/venue_audit.py`、`project_store.py` | 先添加失败样例，再改约束或事实规则 |
+| Agent 实验不够有说服力 | `references/agent-research.md`、`exploration.md` | 加入竞争机制、对照/消融和新的场景处理结果 |
+| 写作、审稿或返修出现缺口 | `references/publication.md` | 明确输入与产物，补充具体稿件/意见场景 |
+| 新上游技能有值得吸收的特点 | `assets/upstreams.json`、`assets/modules.json` | 记录固定版本、特点、统一能力和冲突取舍 |
+| 项目恢复、图或历史不正确 | `scripts/project_store.py`、`reports.py` | 增加状态、幂等、历史和导出回归 |
+
+上表路径相对于 `skills/scholar-route/`。完整维护链路：
+
+```text
+症状 → 能力 ID → 来源特点 → 工作流/实现 → 最小失败样例
+                                              │
+                                              ▼
+                    更新索引与 README ← 回归通过 ← 修复或补充
+```
+
+```bash
+python tools/update_readme.py
+python tools/coverage_audit.py --write
+python tools/validate_package.py
+python tools/update_readme.py --check
+python tools/coverage_audit.py --check
+python tests/run.py
+```
+
+注册表、README、来源映射和测试索引由这些检查保持同步。
+
+## 项目文件与输出
+
+```text
+skills/scholar-route/
+├── SKILL.md                  统一入口与自动触发描述
+├── assets/
+│   ├── domains.json          领域与检索来源配置
+│   ├── modules.json          41 项能力注册表
+│   └── upstreams.json        139 条来源特点与固定版本映射
+├── references/               研究、选刊、Agent、发表与冲突工作流
+└── scripts/                  路由、检索、状态、评估和导出
+
+tools/coverage_audit.py       从问题定位能力、文件与测试
+docs/COVERAGE.md              来源互补、模块和冲突索引
+docs/WORKFLOW-REVIEW.md       15 个工作流场景与处理结果
+tests/test_conflict_matrix.py 新增冲突与覆盖回归
+```
+
+| 项目产物 | 内容 |
 |---|---|
-| **原生 Python** | 领域/阶段路由、JSON 证据记录、DOI 规范化、ISSN 校验、关系和历史检查、事实冲突、费用/索引等约束评估、四个论文检索适配器、五类报告导出 |
-| **宿主 Agent 工作流** | 真实阅读、科学判断、研究问题设计、代码实现、运行实验、统计分析、论文写作、审稿和投稿材料准备；需要宿主对应工具与数据 |
-| **可选外部集成** | PubMed/PMC、Semantic Scholar、HF Papers、WoS/Scopus/DOAJ、出版商匹配器、地区目录、HF 数据/训练/评测/跟踪、Word/PDF/LaTeX/图表等；使用实际可用且适用的工具 |
+| `project.json` | 八类证据实体、关联、修订号和历史 |
+| `REPORT.md` | 研究条件、证据、主张、候选与下一步 |
+| `MAP.md` | 当前实体关系图与清单 |
+| `journals.csv` | 候选期刊与筛选状态 |
+| `references.bib` | 引用记录 |
+| `assessment.json` | 可由程序继续处理的条件评估 |
 
-本项目不内置 GPU 训练系统、FAISS 全量期刊索引、浏览器代理、全文订阅访问、自动编辑部通信或一键投稿服务。没有对应工具时，交付可继续执行的计划和明确的依赖；不会把工具不可用表述成任务已完成。相关接口依据和访问限制见[来源与工具](skills/scholar-route/references/sources-and-tools.md)及 [API 契约](skills/scholar-route/references/sources-api.md)。
+记录结构、事实字段和导入样例见 [数据契约](skills/scholar-route/references/data-contracts.md)与[记录示例](skills/scholar-route/references/record-examples.md)。
 
-### CLI 命令
+## 来源版本与许可
 
-| 命令 | 用途 |
-|---|---|
-| `route` | 根据主题、领域、地区和阶段返回模块路线 |
-| `init` | 创建或恢复同一主题项目 |
-| `record` | 登记 source/paper/journal/claim/hypothesis/experiment/decision/search |
-| `constraints` | 合并更新选刊限制，未给出的字段保持不变 |
-| `resolve` | 用来源与理由解决当前待审事实冲突 |
-| `search` | 运行一个原生论文查询，可原子导入已创建项目 |
-| `import-search` | 原子导入已保存的原生查询结果包 |
-| `assess` | 分池并生成可解释的候选评估 |
-| `validate` | 检查记录结构、身份、关系、日期、数值与历史 |
-| `report` | 从当前项目生成报告，不增加项目修订号 |
-| `capabilities` / `doctor` | 查看能力注册表和本地环境依赖 |
+本项目原创实现采用 [MIT License](LICENSE)。参考来源及其许可证按固定提交记录，详见[来源审计](docs/source-audit.md)。
 
-原生检索每次只读受限第一页，默认不声称完整检索；单次上限 100 条、响应上限 2 MiB、超时范围 1–60 秒。分页穷尽、科学筛选和全文阅读属于后续工作。HTTP 200 但响应结构错误仍会失败；接口失败不会变成“未找到相关论文”。原生导入保留预印本身份与版本，不因关联期刊 DOI 自动升级为正式期刊文章。
-
-## 项目保存和交付
-
-`project.json` 保存八类实体、稳定项目 ID、UTC 时间、修订号、关联关系和逐次历史。局部修改采用锁与原子替换；同一记录无变化时不产生虚假修订。事实变更保留旧证据；费用的货币、条件和完整性改变也会进入冲突审查。
-
-网络来源记录 URL、检索日期与已审查状态；**本地证据可以记录路径与 SHA-256，无须虚构网页地址**。哈希用于标识记录的文件版本，不证明科学结论，也不会自动归档文件。
-
-`report` 生成：
-
-| 文件 | 内容 |
-|---|---|
-| `REPORT.md` | 约束、证据、候选、主张、未知项和项目状态 |
-| `MAP.md` | 已记录实体关系的 Mermaid 图与清单；大图只展示前 60 条边并明确限制 |
-| `journals.csv` | 含筛选状态的期刊/投稿候选表，处理表格公式注入 |
-| `references.bib` | 按记录类型导出的 BibTeX |
-| `assessment.json` | 可供后续工具读取的约束评估 |
-
-详细协议、预算和替代解释可以保存在实体的 `notes` 中；确定性报告不会展开全部任意 `notes` 字段，完整内容仍在 `project.json`，宿主据此编写研究方案。
-
-v1 的确定性报告标签为中文。项目语言用于指导宿主写作，CLI 不会自动翻译论文内容。实际研究项目应保存在独立的项目位置；本公开技能仓库只包含原创说明、代码和明确标注的合成示例。
-
-## 来源与许可
-
-下列来源在 **2026-10-20** 核验。全部 41 项能力均可追溯到相关来源映射；每条映射记录参考提交、文件证据、检查深度、整合方式和未采用内容。大型来源只审计相关研究/发表模块，未声称逐文件执行其整个生态。
+<details>
+<summary>查看 17 个来源的版本与映射数量</summary>
 
 <!-- SOURCES:START -->
 
@@ -313,27 +365,4 @@ v1 的确定性报告标签为中文。项目语言用于指导宿主写作，CL
 
 <!-- SOURCES:END -->
 
-原始工作流、代码和文档以本仓库 [MIT License](LICENSE) 发布。上表只记录上游自身的许可证声明，不改变其条款；没有复制上游技能正文、程序、模板、数据库或论文全文。无许可证来源仅参考通用能力问题。详细记录位于 [source-audit.md](docs/source-audit.md) 和 [upstreams.json](skills/scholar-route/assets/upstreams.json)。
-
-## 测试与可复核性
-
-测试以虚构来源、临时项目和受控响应完成，不调用付费模型、不声称期刊推荐准确率或研究结论被实证验证。
-
-- **89 项自动化回归通过**，覆盖项目生命周期、数据校验、身份/版本、事实冲突、硬约束、排序、导出、四个接口解析、错误响应、原子导入和本地证据。
-- 全新 Agent 前向试跑覆盖期刊筛选、跨领域 Agent 研究规划和本地笔记证据登记；保留实际发现的问题与修复记录。
-- 来源审计与包校验检查 41 项能力映射、17 个固定提交、引用路径和技能元数据。
-- 首轮四个 API 在网络沙箱均返回 `network_error`；随后通过获准的网络访问补测，**Crossref 与 arXiv 各成功取得并解析 1 条记录**。OpenAlex 返回 HTTP 429，DBLP 返回非成功状态，二者仍未验证成功检索。
-
-确切测试数量、命令、试跑范围和后续 CI 状态见 [docs/VALIDATION.md](docs/VALIDATION.md)；首轮网络结果在 [live-smoke.json](docs/live-smoke.json)，补测与成功记录在 [live-smoke-authorized.json](docs/live-smoke-authorized.json)。
-
-## 扩展与维护
-
-新增领域时，更新 `assets/domains.json` 与领域参考；新增能力时，更新 `assets/modules.json`、对应工作流和来源映射；新增接口时，提供成功、错误、空值、截断、身份保真和无密钥泄漏测试。外部期刊数据更新不能覆盖历史事实。
-
-```bash
-python tools/update_readme.py
-python tools/validate_package.py
-python tests/run.py
-```
-
-`update_readme.py` 只同步 README 中的领域、能力与来源表。它不会替代来源重新核验。提出改进时，请附领域、输入范围、复现命令、实际行为和期望行为；共享前去除未公开稿件、凭据和受限制数据。
+</details>

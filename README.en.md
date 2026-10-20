@@ -1,165 +1,219 @@
-# ScholarRoute · 研途
+# ScholarRoute
 
-**From a research field to evidence-linked questions, reproducible experiments, and a publication route.**
+**Turn a research field, Agent project or manuscript into an evidence map, testable questions, experiment plans and a submission route.**
 
-ScholarRoute is a unified skill for research agents. It organizes literature, claims, hypotheses, experiments, journal facts, and decisions around the actual contribution and research stage. Its emphasis is LLM Agent capability research, Agent software and systems, and cost-sensitive journal selection.
+ScholarRoute combines literature exploration, Agent research, experiments, writing, journal selection and publication workflows through one skill entry point. It routes by **domain, contribution type and project stage**, keeping evidence and decisions in a durable project record.
 
-[中文](README.md) · [Skill entry](skills/scholar-route/SKILL.md) · [Capability registry](skills/scholar-route/references/capabilities.md) · [Source audit](docs/source-audit.md)
+[中文](README.md) · [Skill](skills/scholar-route/SKILL.md) · [Coverage and repair index](docs/COVERAGE.md) · [Source audit](docs/source-audit.md) · [Validation](docs/AUDIT-2026-10-20.md)
 
-## Coverage
+## What you get
 
-Version 1.0.0 includes **8 domain profiles, 41 workflow modules, 17 consulted repositories, 139 provenance mappings, 33 conflict rules, and 4 native search adapters**.
+| Starting point | Work performed | Deliverables |
+|---|---|---|
+| A research field | Map reviews, methods, evidence, competitors and open questions | Field map, candidate questions and search protocol |
+| An Agent idea or program | Separate capability contributions from systems contributions; compare alternatives | Falsifiable hypothesis, baselines, ablations and minimal experiment |
+| Experiment results | Connect problem, mechanism, results and conclusions | Paper outline, scientific prose, citation and figure checks |
+| A manuscript | Discover venues and investigate comparable papers, scope, indexing, costs and timelines | Journal dossiers, candidate pools and submission order |
+| Reviewer comments | Link each concern to evidence, changes and manuscript locations | Revision plan and point-by-point response |
+| An existing project | Resume the evidence ledger and history | Updated map, decisions and next actions |
 
-The mappings include upstream skills, submodes, and domain variants. They are attribution and integration records, not 139 executable plugins. Upstream packages need not be installed. Full commit references, inspection depth, adopted capabilities, and exclusions are recorded in the [provenance manifest](skills/scholar-route/assets/upstreams.json).
+## Version 1.1.0
 
-The workflow covers field exploration, multilingual search, evidence synthesis, novelty assessment, experiments, manuscript positioning, journal dossiers, writing and citation audits, submission preparation, revisions, proofs, and post-publication work. “Full” means planning every applicable stage and completing what available evidence and resources permit. It does not imply exhaustive literature coverage or completed experiments.
+- **8 composable domain profiles and 41 unified capabilities.**
+- **17 reference repositories and 139 source-feature mappings**, covering skills, submodes and domain variants.
+- **33 integration rules:** 18 linked to executable behavior tests and 15 to documented workflow scenarios.
+- **118 Python regressions passing**, including 288 domain/stage/region routing combinations.
+- Four native scholarly adapters: OpenAlex, Crossref, DBLP and arXiv.
+- Standard-library Python utilities for routing, durable evidence, fact conflicts, venue constraints and exports.
 
-## Install and start
+The implementation has three cooperating layers: native Python utilities handle deterministic work; the host Agent follows the reading, research and writing workflows; host tools provide browsing, execution, graphics and specialist database access. The source-feature inventory explains how the 139 mapped upstream features contribute to the 41 modules.
 
-The core requires **Python 3.11+ and the standard library**.
+## Text workflow map
+
+```text
+Field / notes / Agent code / manuscript
+  -> domain + contribution + stage + practical constraints
+  -> search -> identity/version checks -> reading -> evidence map
+  -> competitors -> novelty audit -> hypothesis -> minimal experiment
+       |                                      |
+       +-- Agent capabilities                 +-- Agent systems
+           planning, memory, tools, RAG            state, scheduling, recovery
+       +------------------+-----------------------+
+                          v
+       implementation -> matched-budget baselines -> ablations -> robustness
+                          |                 |
+                          |                 +-> update questions and map
+                          v
+       argument + writing + citations + figures + simulated peer review
+       venue discovery -> dossier -> indexing/cost/time -> fit comparison
+                             | eligible / unverified / excluded
+                             v
+       submission package -> revision -> proofs -> dissemination/correction
+
+All stages share project.json, provenance, history and decision records.
+Repair loop: symptom -> capability -> source trait -> implementation -> test.
+```
+
+## Quick start
 
 ```bash
 git clone https://github.com/PresleyRen/scholar-route.git
 cd scholar-route
 python tests/run.py
 python tools/validate_package.py
-python skills/scholar-route/scripts/scholar_route.py doctor
+python tools/coverage_audit.py --check
+python examples/run_demo.py --project ./work/demo
 ```
 
-The installable skill directory is [skills/scholar-route](skills/scholar-route), with SKILL.md as its single entry point. Use the host's skill installer or local skill support. For Codex CLI/IDE, place the directory under a project's `.agents/skills/scholar-route/` or your personal `~/.agents/skills/scholar-route/`; compare existing versions before replacing anything. Other hosts may use different locations or selectors.
-
-A repository download or release does not automatically install the skill or establish marketplace availability. Once the host has loaded it, a request can be:
+Requires Python 3.11+. Install the entire `skills/scholar-route/` directory in the host's skill directory. For Codex, project and personal locations are `.agents/skills/scholar-route/` and `~/.agents/skills/scholar-route/`; see the [official skill documentation](https://learn.chatgpt.com/docs/build-skills).
 
 ```text
-Use $scholar-route to explore LLM Agent memory and recovery.
-Separate capability and systems contributions. Build an evidence map,
-identify strong simple alternatives, and propose falsifiable questions
-with equal-budget comparisons and a minimum experiment.
-Keep unknowns explicit and continue the existing research project.
+Use $scholar-route to investigate long-term memory and failure recovery
+in LLM Agents. Resume the existing project, map the literature and competing
+mechanisms, then design equal-budget baselines, ablations and a minimal test.
+Distinguish capability and systems contributions. Build an SCIE submission
+route from the manuscript evidence, prioritizing no-mandatory-fee options.
 ```
 
-## Run the CLI
-
-From the repository root:
+Direct CLI example:
 
 ```bash
 python skills/scholar-route/scripts/scholar_route.py route \
   --topic "LLM Agent memory and recovery" \
   --domains agent-ai,computer-science --stage full
-
 python skills/scholar-route/scripts/scholar_route.py init \
-  --project ./work/agent-memory \
-  --topic "LLM Agent memory and recovery" \
+  --project ./work/agent-memory --topic "LLM Agent memory and recovery" \
   --domains agent-ai,computer-science --language en
-
-python skills/scholar-route/scripts/scholar_route.py validate \
-  --project ./work/agent-memory
-
+python skills/scholar-route/scripts/scholar_route.py search \
+  --provider crossref --query "language agent memory" \
+  --limit 5 --project ./work/agent-memory
 python skills/scholar-route/scripts/scholar_route.py report \
   --project ./work/agent-memory
 ```
 
-For an offline demonstration using explicitly fictional evidence:
+The offline demo uses labeled synthetic journals and produces all five exports. Real projects use imported search records and investigated venue facts.
+
+## Domain and stage routing
+
+| Domain ID | Emphasis |
+|---|---|
+| `agent-ai` | Agent capabilities, mechanisms and systems |
+| `computer-science` | Computer science, NLP and software engineering |
+| `engineering` | Engineering, control and applied AI |
+| `biomedicine` | Biomedical literature and study-design appraisal |
+| `social-sciences` | Social science, psychology, education and HCI |
+| `food-agriculture` | Food, nutrition and agriculture |
+| `humanities` | Humanities, history and philosophy |
+| `general` | Adaptable cross-domain exploration |
+
+Combine profiles: a medical-literature Agent uses `agent-ai,computer-science,biomedicine`; a runtime-recovery project can add `engineering`. Stages are `explore`, `review`, `design`, `experiment`, `journal`, `dossier`, `write`, `audit`, `submit`, `revise`, `disseminate` and `full`. Regional routes are `international`, `china` and `turkey`.
+
+## All 41 capabilities
+
+| Capability IDs | Output |
+|---|---|
+| `intake` | Research goals, contribution type, language, budget and evidence inventory |
+| `field-map` | Problem–method–evidence map and unexplored connections |
+| `search-protocol` | Queries, sources, windows, screening and reproducible search log |
+| `paper-search` | Multi-source scholarly records and retrieval status |
+| `identifier-check` | DOI/ISSN identity, metadata and report-version relationships |
+| `evidence-review` | Screening, extraction, quality appraisal and synthesis |
+| `paper-notes` | Structured reading notes connected to claims |
+| `novelty-audit` | Competitors, prior mechanisms, differentiators and counterexamples |
+| `hypothesis-plan` | Falsifiable hypotheses, feasibility and minimal tests |
+| `agent-capabilities` | Mechanism analysis and evaluation for 14 capability families |
+| `agent-systems` | Architecture, workload and failure analysis across 8 runtime layers |
+| `experiment-plan` | Controls, ablations, metrics, samples, budgets and stopping conditions |
+| `statistics-robustness` | Statistical units, uncertainty, leakage and robustness checks |
+| `implementation` | Reproduction, implementation and recorded execution |
+| `data-collection` | Provenance, licensing, sampling, versions and splits |
+| `state-map` | Persistent ledger, relationship map, history and resume |
+| `manuscript-profile` | Problem, contribution, methods, evidence, audience and article type |
+| `venue-discovery` | Candidate pool from similar papers, specialist venues and indexes |
+| `venue-identity` | Exact venue identity, ISSN, publisher and publication type |
+| `journal-dossier` | Scope, precedents, requirements, costs and timeline dossier |
+| `indexing-metrics` | Index and quartile facts by system, edition and category |
+| `costs-timelines` | Mandatory/optional fees, waivers, currency and time endpoints |
+| `journal-integrity` | Concrete identity, transparency and publication-risk evidence |
+| `fit-comparison` | Eligible, unverified and excluded pools with reasons |
+| `submission-plan` | Justified submission order, improvements and switching criteria |
+| `argument-audit` | Claim–evidence structure and missing comparisons |
+| `manuscript-writing` | Scientific drafting and editing with consistent values and citations |
+| `citation-audit` | Identity, version, claim support and bibliography |
+| `figure-table-audit` | Values, units, sample counts, readability and venue requirements |
+| `peer-review` | Complementary simulated reviews and actionable repairs |
+| `venue-formatting` | Current author instructions and template adaptation |
+| `cover-letter` | Contribution- and scope-specific cover letter |
+| `presubmission-inquiry` | Focused editorial inquiry draft |
+| `reviewer-discovery` | Expertise and conflict-of-interest candidate records |
+| `authorship-credit` | Actual contributions, CRediT roles and declarations |
+| `submission-preflight` | Quick/Full package checks |
+| `revision-response` | Comment–response–change–location mapping |
+| `proof-check` | Accepted-manuscript and proof comparison |
+| `dissemination` | Summaries, presentation and public-material drafts |
+| `postpublication-correction` | Error impact, evidence and correction communication |
+| `regional-indexing` | Chinese and Turkish directory and submission routes |
+
+The [coverage index](docs/COVERAGE.md) links each module to its workflow, implementation, source features and conflict checks. The [source audit](docs/source-audit.md) records the complete 17-source, 139-feature inventory.
+
+## Agent-specific depth
+
+**14 capability families:** task definition, routing, planning, tool use, retrieval, memory, reasoning/verification, feedback/adaptation, multi-Agent cooperation, long-horizon execution, learning, multimodal/embodied behavior, human oversight, reliability and misuse resistance.
+
+**8 program layers:** controller/state, tool interfaces, isolation, scheduling, recovery, memory/storage, observability and deployment/reproduction.
+
+Examples include equal-token and equal-call comparisons for multi-Agent claims; stale, conflicting and cross-task records for memory; and interruption, retries, idempotency and duplicate effects for recovery. See [Agent research protocols](skills/scholar-route/references/agent-research.md).
+
+## Integration choices and tests
+
+The integration preserves useful workflow contributions while selecting explicit rules for conflicting behavior: field-aware retrieval, three-state candidate eligibility, exact quartile identities, mandatory versus optional fees, separate review-time endpoints, provenance-preserving updates and complementary review roles.
+
+**118 automated tests** comprise the existing 89 plus 29 new routing, conflict and coverage checks. One parameter-combination test covers **288 routes**. **18 conflict rules** link executable tests; **15 workflow conflicts** have saved inputs, applied outputs and review decisions. Workflow scenarios and Python test results are recorded separately in the [audit report](docs/AUDIT-2026-10-20.md).
+
+GitHub Actions runs Python 3.11 and 3.12, retaining exact tested source and logs as artifacts. The [workflow scenario review](docs/WORKFLOW-REVIEW.md) records qualitative decisions; the original release's API probes and usability cases remain in [historical validation](docs/VALIDATION.md).
+
+## Locate a weakness and extend the skill
 
 ```bash
-python examples/run_demo.py --project ./work/demo
+python tools/coverage_audit.py --find "APC"
+python tools/coverage_audit.py --find agent-systems
+python tools/coverage_audit.py --find journal-recommender
 ```
 
-With suitable network access, this command searches and imports a bounded result into an existing project:
+Results identify capability IDs, workflow files, native support code, sources, conflict IDs and tests.
+
+```text
+symptom -> capability -> source trait -> workflow/code -> failing example
+                                                   |
+                                                   v
+                  regenerate docs <- tests pass <- improve implementation
+```
+
+| Improvement | Starting point under `skills/scholar-route/` |
+|---|---|
+| New domain | `assets/domains.json`, `references/domains.md`, `scripts/route_core.py` |
+| New upstream feature | `assets/upstreams.json`, `assets/modules.json`, corresponding reference |
+| Retrieval/parser issue | `scripts/scholarly_sources.py`, `scripts/search_import.py` |
+| Fee/index/eligibility issue | `scripts/venue_audit.py`, `scripts/project_store.py` |
+| Agent experiments | `references/agent-research.md`, `references/exploration.md` |
+| Writing/review/revision | `references/publication.md` |
+| Resume/history/export issue | `scripts/project_store.py`, `scripts/reports.py` |
+
+After a change:
 
 ```bash
-python skills/scholar-route/scripts/scholar_route.py search \
-  --provider openalex --query "language agent memory" \
-  --limit 5 --project ./work/agent-memory
+python tools/update_readme.py
+python tools/coverage_audit.py --write
+python tools/validate_package.py
+python tools/update_readme.py --check
+python tools/coverage_audit.py --check
+python tests/run.py
 ```
 
-The other provider values are `crossref`, `dblp`, and `arxiv`. Each native request fetches a bounded first page: at most 100 records, a 2 MiB response, and a 1–60 second timeout. It does not exhaust pagination or read full papers. Invalid payloads, failed requests, and successful empty results remain distinct. See the [API contract](skills/scholar-route/references/sources-api.md).
+Add an executable regression for deterministic behavior, or a saved input/output review scenario for host-Agent workflows. Update the source-feature and conflict index together.
 
-| Command | Purpose |
-|---|---|
-| route / capabilities / doctor | Inspect routing, modules, and local dependencies |
-| init | Create or resume a project for the same topic |
-| record | Add or version-merge an evidence record |
-| constraints / resolve | Update constraints or resolve an evidenced fact conflict |
-| search / import-search | Query a provider or import a saved native envelope |
-| assess / validate / report | Screen candidates, check structure, and export state |
+## Project outputs
 
-Prepare record JSON using the [data contract](skills/scholar-route/references/data-contracts.md) and [examples](skills/scholar-route/references/record-examples.md), then use `record --project PATH --kind source --input source.json`. Add sources before papers and dependent claims. Do not edit project identity or revision fields manually.
+`project.json` stores eight entity types, links, revisions and history. Exports are `REPORT.md`, `MAP.md`, `journals.csv`, `references.bib` and `assessment.json`. The v1 CLI emits Chinese report labels; the project language guides the host's research and manuscript writing.
 
-## Route by the research object
-
-| Domain ID | Focus |
-|---|---|
-| agent-ai | LLM Agent capabilities and systems |
-| computer-science | Software, NLP, retrieval, and computing |
-| engineering | Engineering, control, robotics, and applied AI |
-| biomedicine | Biology, medicine, and public health |
-| social-sciences | Psychology, education, economics, and HCI |
-| food-agriculture | Food science, nutrition, and agriculture |
-| humanities | History, philosophy, linguistics, and interpretation |
-| general | Emerging or unclassified research |
-
-Keyword routing is a suggestion; `--domains` supplies explicit choices. Combine profiles when the question warrants it. A biomedical literature Agent needs relevant provenance checks, while clinical requirements depend on the actual study design. Region overlays are `international`, `china`, and `turkey`. Regional databases and catalogs are source routes, not additional bundled APIs.
-
-## Agent research
-
-The [Agent research guide](skills/scholar-route/references/agent-research.md) covers **14 capability families**:
-
-1. Intent and task formulation.
-2. Routing and delegation.
-3. Planning and decomposition.
-4. Tool use.
-5. Retrieval and grounding.
-6. Memory and context.
-7. Reasoning and verification.
-8. Reflection and adaptation.
-9. Multi-agent coordination.
-10. Long-horizon execution.
-11. Learning and optimization.
-12. Multimodal or embodied action.
-13. Human oversight.
-14. Reliability and misuse resistance.
-
-Its **8 system layers** are controller/state, tool boundaries, execution isolation, scheduling, recovery, memory/storage, observability, and deployment/reproducibility.
-
-Research plans connect mechanisms to workloads, strong simple baselines, ablations, held-out tasks, contamination controls, resource accounting, uncertainty, and failure traces. Systems claims require actual code inspection and end-to-end measurements. Extra agents, retries, or tokens must not silently explain an apparent mechanism gain. A planned benchmark, mocked service check, and live experiment establish different things.
-
-## Journal selection and unknown costs
-
-[Journal selection](skills/scholar-route/references/journal-selection.md) evaluates scope, article type, comparable publications, evidence completeness, practical constraints, and repairable rejection risks. It does not predict personal acceptance probabilities.
-
-| Pool | Meaning |
-|---|---|
-| eligible | Recorded evidence satisfies the requested hard constraints |
-| unverified | No verified violation, but a decisive fact is missing, stale, conflicted, or insufficiently evidenced |
-| excluded | At least one verified fact violates a hard constraint |
-
-Eligibility is a rule-based assessment of records, not proof of scientific fit. Optional 0–5 fit scores are explicit qualitative judgments. Keep fit, evidence coverage, ranking systems, and submission strategy separate.
-
-Unknown fees remain unknown. Optional open access is not a mandatory APC; a conditional waiver is not confirmed free publication. Include all mandatory page, color, submission, and publication charges for the chosen route, with currency and date. Nonzero currencies are not silently converted.
-
-Verify SCIE/SSCI/ESCI separately, and preserve JCR/SJR/CAS year and category. Distinguish first decision, external review, acceptance, and publication times. Refresh changing facts before decisions. Conference literature remains useful research evidence while conferences stay outside journal-only candidate pools.
-
-## Execution boundaries and project state
-
-| Layer | What it provides |
-|---|---|
-| Native Python | Routing, evidence/history, identifiers, conflicts, constraint checks, four search adapters, and exports |
-| Host workflow | Reading, scientific judgment, coding, experiments, statistics, writing, review, and preparation |
-| Optional external tools | Additional databases, journal indexes, training/evaluation services, and document/rendering tools when actually available |
-
-PubMed/PMC, Semantic Scholar, WoS/Scopus, Hugging Face, and Word/PDF/LaTeX tools are host-managed routes; listing them does not provide an integration.
-
-No full-text subscription, GPU runtime, universal journal database, or automatic submission service is bundled. The [33 conflict rules](skills/scholar-route/references/conflicts.md) reconcile incompatible assumptions while preserving user scope, evidence, uncertainty, and authorization. Preparing a draft does not authorize sending, paying, or publishing.
-
-`project.json` stores eight collections: sources, papers, journals, claims, hypotheses, experiments, decisions, and searches. Updates preserve history with locking and atomic replacement. Local evidence can retain its real path and SHA-256; format validation neither archives the file nor proves its scientific content.
-
-Exports are `REPORT.md`, `MAP.md`, `journals.csv`, `references.bib`, and `assessment.json`. Version 1 report labels are Chinese; the project language guides host writing without automatically translating evidence. Keep private research projects outside this public skill repository.
-
-## Validation, provenance, and license
-
-The [tests](tests/run.py) use fictional data, temporary projects, and controlled provider responses. They check storage, validation, identities, conflicts, screening, exports, parsers, imports, and local evidence. The [field evaluation](docs/evaluations/field-case.md) preserves actual first-run findings and limitations.
-
-Initial probes returned `network_error` in the restricted environment; see [first results](docs/live-smoke.json). With authorized network access, Crossref and arXiv each subsequently returned one parsed record. OpenAlex returned HTTP 429 and DBLP a non-success response, so successful retrieval for those two remains unverified. [Follow-up evidence](docs/live-smoke-authorized.json) preserves both attempts and limits. The Python 3.11/3.12 CI matrix also passed; see the [validation report](docs/VALIDATION.md). These checks do not establish scientific novelty, empirical results, or recommendation accuracy.
-
-ScholarRoute's original instructions, schemas, code, and documentation use the [MIT License](LICENSE). The [source audit](docs/source-audit.md) links the 17 consulted repositories, pinned commits, licensing observations, and 139 mappings. Upstream licenses remain their own; upstream code, prompt text, datasets, publisher templates, and article full text are not bundled. No-license sources informed independently written general workflows without importing their protected materials.
+See [data contracts](skills/scholar-route/references/data-contracts.md) and [record examples](skills/scholar-route/references/record-examples.md) for import formats. Original implementation is published under the [MIT License](LICENSE); source versions and license declarations are recorded in the [source audit](docs/source-audit.md).

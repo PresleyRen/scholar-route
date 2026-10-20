@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.0 — 2026-10-20
+
+- Re-audited the complete tracked inventory: 17 sources, 139 feature mappings, 41 capabilities and 33 integration rules.
+- Added `coverage_audit.py` to validate mappings and locate repair paths by symptom, capability ID or source name.
+- Added 29 regression tests; 118 total, including 288 domain/stage/region combinations.
+- Linked 18 integration rules to executable behavior tests and documented 15 workflow conflict scenarios with applied outputs.
+- Rebuilt Chinese and English READMEs around purpose, concrete outputs, text workflow diagrams, capability coverage and extension paths.
+- Added a generated source/complementarity/module/test index and retained tested source plus logs in CI artifacts.
+- Preserved the existing research and publication workflow contracts in the skill references.
+
 ## 1.0.0 — 2026-10-20
 
 Initial public release of **ScholarRoute · 研途**.

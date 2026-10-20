@@ -73,3 +73,18 @@ Delegate independent search, methods review and venue verification when availabl
 3. Validate project records and regenerate the report/map after substantive changes. Inspect artifacts; structural validation cannot replace scientific or visual review.
 4. Summarize work, actual tests/experiments, limitations and the next decision. State search boundaries rather than claiming all field knowledge is exhausted.
 5. Save through supported persistent storage or the authorized Git repository. Keep unpublished project data and credentials out of public skill repositories.
+
+
+## Maintain and extend this skill
+
+When asked to audit coverage, diagnose a missing capability or extend a field,
+trace the stable module ID in `assets/modules.json` to its reference and source
+features in `assets/upstreams.json`. Preserve the source commit and feature name.
+In a full repository checkout, run `python tools/coverage_audit.py --find QUERY`
+from the repository root to locate implementation files, conflict IDs and tests.
+`docs/COVERAGE.md` is the generated repair index; `docs/WORKFLOW-REVIEW.md` holds
+workflow scenarios. An installed skill can inspect its bundled registries directly.
+Add a failing behavioral regression for program changes; keep workflow outputs
+and reviews separate from automated test counts. Regenerate the index and README,
+then run the complete suite. Keep README focused on purpose, outputs, operation,
+capability coverage and observed test results; put detailed contracts in references.
