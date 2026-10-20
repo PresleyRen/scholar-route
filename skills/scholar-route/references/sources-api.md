@@ -104,7 +104,12 @@ key redaction, duplicate handling, input bounds, and network-error envelopes.
 
 On 2026-10-20, one live smoke request for each provider was attempted from the build
 runtime (`agent memory`, limit 1, timeout 8 seconds). All four returned
-`network_error`; no successful direct runtime connection was established. Therefore
-live end-to-end provider connectivity is **unverified in that runtime**. The live
-attempts are recorded in `live-smoke.json`; they are not successful retrieval tests
-and do not indicate that the providers returned zero relevant papers.
+`network_error` in the network-isolated execution. The first attempts are retained
+in the repository `docs/live-smoke.json`; they do not indicate zero relevant papers.
+
+Later authorized network probes on the same date retrieved and parsed one metadata
+record each from Crossref and arXiv. OpenAlex returned HTTP 429; DBLP returned a
+non-success HTTP response. Successful retrieval from these latter providers remains
+unverified. The separate diagnostics and normalized successful records are in
+`docs/live-smoke-authorized.json` at repository level. These bounded metadata checks
+do not verify relevance, exhaustive coverage, full text, or authenticated access.

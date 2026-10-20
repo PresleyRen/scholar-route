@@ -1,0 +1,108 @@
+{
+  "checked_on": "2026-10-20",
+  "scope": "Public, keyless GET metadata queries only; limit 1, timeout 10 seconds. No retries of rate-limited or failed providers.",
+  "initial_authorized_probes": [
+    {
+      "provider": "openalex",
+      "source_url": "https://api.openalex.org/works?search=agent+memory&per_page=1&page=1",
+      "retrieved_at": "2026-10-20T06:07:20+00:00",
+      "error": {
+        "code": "http_429",
+        "message": "Provider returned HTTP 429.",
+        "retryable": true
+      },
+      "warnings": []
+    },
+    {
+      "provider": "crossref",
+      "source_url": "https://api.crossref.org/works?query.bibliographic=agent+memory&rows=1",
+      "retrieved_at": "2026-10-20T06:07:20+00:00",
+      "error": null,
+      "warnings": []
+    },
+    {
+      "provider": "dblp",
+      "source_url": "https://dblp.org/search/publ/api?q=agent+memory&format=json&h=1&f=0&c=0",
+      "retrieved_at": "2026-10-20T06:07:21+00:00",
+      "error": {
+        "code": "http_error",
+        "message": "Provider returned a non-success status.",
+        "retryable": false
+      },
+      "warnings": []
+    },
+    {
+      "provider": "arxiv",
+      "source_url": "https://export.arxiv.org/api/query?search_query=all%3A%22agent+memory%22&start=0&max_results=1&sortBy=relevance&sortOrder=descending",
+      "retrieved_at": "2026-10-20T06:07:22+00:00",
+      "error": null,
+      "warnings": [
+        "arXiv plain query uses an all-field phrase; use arxiv_advanced for explicit boolean syntax."
+      ]
+    }
+  ],
+  "successful_record_verification": [
+    {
+      "provider": "crossref",
+      "query": "agent memory",
+      "source_url": "https://api.crossref.org/works?query.bibliographic=agent+memory&rows=1",
+      "documentation_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "retrieved_at": "2026-10-20T06:08:27+00:00",
+      "error": null,
+      "warnings": [],
+      "completeness": {
+        "returned": 1,
+        "requested": 1,
+        "exhaustive": false,
+        "reason": "A bounded first page from one provider; no systematic-review completeness claim.",
+        "provider_reported_total": 794781
+      },
+      "observed_records": [
+        {
+          "id": "doi:10.2139/ssrn.7160321",
+          "title": "Does Memory Credit Travel? Paired Factorial Audits of LLM-Agent Memory",
+          "doi": "10.2139/ssrn.7160321",
+          "url": "https://doi.org/10.2139/ssrn.7160321",
+          "venue_type": "preprint",
+          "version": null
+        }
+      ]
+    },
+    {
+      "provider": "arxiv",
+      "query": "agent memory",
+      "source_url": "https://export.arxiv.org/api/query?search_query=all%3A%22agent+memory%22&start=0&max_results=1&sortBy=relevance&sortOrder=descending",
+      "documentation_url": "https://info.arxiv.org/help/api/user-manual.html",
+      "retrieved_at": "2026-10-20T06:08:28+00:00",
+      "error": null,
+      "warnings": [
+        "arXiv plain query uses an all-field phrase; use arxiv_advanced for explicit boolean syntax."
+      ],
+      "completeness": {
+        "returned": 1,
+        "requested": 1,
+        "exhaustive": false,
+        "reason": "A bounded first page from one provider; no systematic-review completeness claim.",
+        "provider_reported_total": 576
+      },
+      "observed_records": [
+        {
+          "id": "http://arxiv.org/abs/2607.13157v1",
+          "title": "Oracle Agent Memory as an Enterprise Memory Substrate for Long-Horizon AI Agents",
+          "doi": null,
+          "url": "http://arxiv.org/abs/2607.13157v1",
+          "venue_type": "preprint",
+          "version": null
+        }
+      ]
+    }
+  ],
+  "diagnostic_note": "The first diagnostic wrapper retained error state but did not retain record counts. Crossref and arXiv were then queried once more to preserve records and completeness from the native envelope. These follow-up requests are reported separately, not reconstructed as initial results.",
+  "summary": {
+    "crossref": "one metadata record retrieved and parsed",
+    "arxiv": "one preprint record retrieved and parsed",
+    "openalex": "HTTP 429; no valid paper retrieval verified",
+    "dblp": "non-success HTTP response; no valid paper retrieval verified"
+  },
+  "limits": "A metadata smoke test does not establish search relevance, exhaustive coverage, full-text access, authenticated access, scientific support or journal indexing."
+}

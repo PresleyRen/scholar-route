@@ -13,4 +13,4 @@ Initial public release of **ScholarRoute · 研途**.
 - 89 offline regressions and three fresh-agent usability cases. Local evidence and evidence-map omissions discovered in forward use were repaired before publication.
 - Chinese README with complete capability details, English guide, source audit, data contracts and validation records.
 
-Live scholarly API connectivity was blocked in the creation environment and remains unverified. Workflow coverage does not bundle upstream runtimes, guarantee acceptance, install the skill in every host or report unperformed research experiments.
+Initial network-isolated API probes failed. Authorized follow-up probes retrieved one parsed record each from Crossref and arXiv; OpenAlex was rate-limited and DBLP returned a non-success response. The Python 3.11/3.12 GitHub CI matrix passed. Workflow coverage does not bundle upstream runtimes, guarantee acceptance, install the skill in every host or report unperformed research experiments.

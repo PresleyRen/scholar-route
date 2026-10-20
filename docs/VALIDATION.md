@@ -12,7 +12,7 @@
 | 官方技能结构检查 | `quick_validate.py` 返回 `Skill is valid!` | 技能元数据与基本结构符合检查器规则 |
 | 本地包完整性 | 用 `tools/validate_package.py` 验证 | 名称、入口、参考链接、Python 语法、41 项映射及来源提交完整 |
 | 文档同步 | `tools/update_readme.py --check` | README 三张注册表与 JSON 配置相符 |
-| 四个真实论文 API | 均为 `network_error`，当前执行环境禁止建立网络连接 | **服务连通性未验证**，不能视为真实空结果或接口已在线通过 |
+| 真实论文 API | 首轮网络隔离失败；获准联网补测后 Crossref/arXiv 各解析 1 条记录，OpenAlex 为 429，DBLP 为非成功状态 | 两个成功的元数据烟雾测试；另外两个未验证成功检索，不代表全量检索或全文验证 |
 | 科研实验、训练与投稿 | **未执行** | 本项目测试不会产生研究结论、录用率或真实投稿状态 |
 
 最后一次本地回归输出：
@@ -23,7 +23,7 @@ Ran 89 tests in 0.648s
 OK
 ```
 
-完整测试名与结果保存在 [test-output.txt](test-output.txt)。Python 3.11+ 是声明的最低运行范围；本地实际解释器为 3.12.14。GitHub Actions 配置提供 3.11 与 3.12 的独立矩阵，远程是否执行成功须以仓库 Actions 的具体运行记录为准，不能由配置存在推断。
+完整测试名与结果保存在 [test-output.txt](test-output.txt)。Python 3.11+ 是声明的最低运行范围；本地实际解释器为 3.12.14。GitHub Actions 的 **Python 3.11 与 3.12 两个任务均已成功**，包检查、文档同步、89 项回归和合成端到端示例全部通过。实际记录为 [run 39378341894](https://github.com/PresleyRen/scholar-route/actions/runs/39378341894)，对应 [源码提交 16d199d](https://github.com/PresleyRen/scholar-route/commit/16d199d261caf56a1feec9db0bbb20c00604044c)。后续文档补充不改变受测程序。
 
 ## 如何复现
 
@@ -84,7 +84,9 @@ OpenAlex、Crossref、DBLP、arXiv 的正常、空值、缺失字段、单条/�
 
 [live-smoke.json](live-smoke.json) 保留 provider、公开请求 URL、时间、计数、错误与警告。四个 provider 都在当前网络沙箱返回 `network_error`。记录中的 `count: 0` 是没有取得有效响应后的结构字段，不是科学意义上的零相关论文。
 
-适配器代码和离线解析通过测试，并不等同提供方现在的生产服务兼容性、限额或鉴权政策已测试。使用前应在获准联网的目标环境运行一条小查询，检查 `ok/error`、边界和实际来源；需要认证时只使用该提供方合法凭据与允许的接口。
+随后经自动审批允许访问公开网络，执行各 provider 一条 keyless 查询（limit 1、timeout 10）。Crossref 与 arXiv 成功解析响应；OpenAlex 返回 `http_429`，DBLP 返回 `http_error`。没有重试限流或失败来源。首次诊断包装仅保存了错误状态而遗漏记录数，因此又对两个成功来源各查询一次，保存规范化记录和 `completeness`，如实分开记录在 [live-smoke-authorized.json](live-smoke-authorized.json)。
+
+最终 Crossref 和 arXiv 均保存了 1 条有效元数据记录，保留其预印本身份；该结果不证明相关性、科学结论或正式期刊收录。OpenAlex/DBLP 成功检索、全部提供方的鉴权访问、稳定可用性和全量分页仍未验证。使用时检查 `error`、`records` 与 `completeness`；需要认证时使用提供方允许的凭据和接口。
 
 ## 发布与安装边界
 

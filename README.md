@@ -322,9 +322,9 @@ v1 的确定性报告标签为中文。项目语言用于指导宿主写作，CL
 - **89 项自动化回归通过**，覆盖项目生命周期、数据校验、身份/版本、事实冲突、硬约束、排序、导出、四个接口解析、错误响应、原子导入和本地证据。
 - 全新 Agent 前向试跑覆盖期刊筛选、跨领域 Agent 研究规划和本地笔记证据登记；保留实际发现的问题与修复记录。
 - 来源审计与包校验检查 41 项能力映射、17 个固定提交、引用路径和技能元数据。
-- 四个真实 API 曾在当前执行环境试探；网络受限，均返回 `network_error`。因此**真实服务连通性未验证**，不能把离线接口测试称为在线通过。
+- 首轮四个 API 在网络沙箱均返回 `network_error`；随后通过获准的网络访问补测，**Crossref 与 arXiv 各成功取得并解析 1 条记录**。OpenAlex 返回 HTTP 429，DBLP 返回非成功状态，二者仍未验证成功检索。
 
-确切测试数量、命令、试跑范围和后续 CI 状态见 [docs/VALIDATION.md](docs/VALIDATION.md)；原始网络结果在 [live-smoke.json](docs/live-smoke.json)。
+确切测试数量、命令、试跑范围和后续 CI 状态见 [docs/VALIDATION.md](docs/VALIDATION.md)；首轮网络结果在 [live-smoke.json](docs/live-smoke.json)，补测与成功记录在 [live-smoke-authorized.json](docs/live-smoke-authorized.json)。
 
 ## 扩展与维护
 
