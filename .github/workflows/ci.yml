@@ -29,8 +29,26 @@ jobs:
       - name: Check README registry tables
         run: python tools/update_readme.py --check
       - name: Run offline regression suite
-        run: python tests/run.py
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p work/validation
+          python tests/run.py 2>&1 | tee work/validation/tests.txt
       - name: Run synthetic end-to-end demo
         run: |
           python examples/run_demo.py --project ./work/ci-demo
           python skills/scholar-route/scripts/scholar_route.py validate --project ./work/ci-demo
+      - name: Package exact tested source
+        if: always()
+        run: |
+          mkdir -p work/validation
+          git archive --format=zip --output=work/validation/scholar-route-source.zip HEAD
+          git rev-parse HEAD > work/validation/commit.txt
+      - name: Preserve source and test evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4, checked 2026-10-20
+        with:
+          name: scholar-route-python-${{ matrix.python-version }}
+          path: work/validation/
+          if-no-files-found: error
+          retention-days: 14
