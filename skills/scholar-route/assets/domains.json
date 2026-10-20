@@ -1,0 +1,188 @@
+[
+  {
+    "id": "agent-ai",
+    "title": "LLM Agent 能力与系统",
+    "keywords": [
+      "llm",
+      "language agent",
+      "agentic",
+      "multi-agent",
+      "智能体",
+      "大模型",
+      "工具调用",
+      "multi agent",
+      "agent memory",
+      "Agent 能力",
+      "Agent 系统"
+    ],
+    "sources": [
+      "OpenAlex",
+      "DBLP",
+      "arXiv",
+      "Semantic Scholar",
+      "Crossref",
+      "Hugging Face Papers"
+    ]
+  },
+  {
+    "id": "computer-science",
+    "title": "计算机、软件工程与 NLP",
+    "keywords": [
+      "computer science",
+      "software",
+      "nlp",
+      "machine learning",
+      "retrieval",
+      "rag",
+      "计算机",
+      "软件",
+      "自然语言",
+      "检索",
+      "程序",
+      "编程"
+    ],
+    "sources": [
+      "DBLP",
+      "OpenAlex",
+      "arXiv",
+      "Semantic Scholar",
+      "Crossref",
+      "ACM Digital Library",
+      "IEEE Xplore"
+    ]
+  },
+  {
+    "id": "engineering",
+    "title": "工程、控制与应用 AI",
+    "keywords": [
+      "engineering",
+      "robot",
+      "robotics",
+      "control system",
+      "energy",
+      "manufacturing",
+      "工程",
+      "机器人",
+      "能源",
+      "控制",
+      "制造"
+    ],
+    "sources": [
+      "OpenAlex",
+      "Crossref",
+      "IEEE Xplore",
+      "Scopus"
+    ]
+  },
+  {
+    "id": "biomedicine",
+    "title": "生物、医学与公共健康",
+    "keywords": [
+      "medical",
+      "clinical",
+      "biomedical",
+      "biomedicine",
+      "patient",
+      "drug",
+      "health",
+      "genomic",
+      "oncology",
+      "medicine",
+      "医学",
+      "临床",
+      "患者",
+      "药物",
+      "疾病",
+      "公共卫生",
+      "基因"
+    ],
+    "sources": [
+      "PubMed",
+      "PMC",
+      "Europe PMC",
+      "bioRxiv",
+      "medRxiv",
+      "OpenAlex",
+      "Crossref"
+    ]
+  },
+  {
+    "id": "social-sciences",
+    "title": "社会科学、心理、教育与 HCI",
+    "keywords": [
+      "social science",
+      "psychology",
+      "education",
+      "economics",
+      "hci",
+      "human-computer",
+      "survey",
+      "心理",
+      "社会",
+      "经济",
+      "教育",
+      "人机交互",
+      "问卷"
+    ],
+    "sources": [
+      "OpenAlex",
+      "Crossref",
+      "Semantic Scholar",
+      "Scopus",
+      "Web of Science",
+      "ERIC"
+    ]
+  },
+  {
+    "id": "food-agriculture",
+    "title": "食品、营养与农业",
+    "keywords": [
+      "food",
+      "nutrition",
+      "agriculture",
+      "crop",
+      "食品",
+      "营养",
+      "农业",
+      "作物",
+      "农学"
+    ],
+    "sources": [
+      "PubMed",
+      "OpenAlex",
+      "Crossref",
+      "AGRICOLA"
+    ]
+  },
+  {
+    "id": "humanities",
+    "title": "人文、历史与哲学",
+    "keywords": [
+      "humanities",
+      "philosophy",
+      "history",
+      "linguistics",
+      "历史",
+      "哲学",
+      "人文",
+      "语言学"
+    ],
+    "sources": [
+      "OpenAlex",
+      "Crossref",
+      "JSTOR",
+      "disciplinary bibliographies"
+    ]
+  },
+  {
+    "id": "general",
+    "title": "通用领域自适应",
+    "keywords": [],
+    "sources": [
+      "OpenAlex",
+      "Crossref",
+      "Semantic Scholar",
+      "DOAJ"
+    ]
+  }
+]

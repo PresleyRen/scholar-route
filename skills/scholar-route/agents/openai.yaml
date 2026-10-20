@@ -1,0 +1,4 @@
+interface:
+  display_name: "ScholarRoute · 研途"
+  short_description: "Explore a field, build evidence, and plan publication"
+  default_prompt: "Use $scholar-route to explore my research field, assess the evidence, and build a verified journal and publication plan."

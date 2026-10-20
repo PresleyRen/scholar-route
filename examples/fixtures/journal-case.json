@@ -1,0 +1,369 @@
+{
+  "fictional": true,
+  "manuscript": {
+    "topic": "LLM Agent recovery under a fixed tool-call budget",
+    "contribution": "system reliability",
+    "constraints": {
+      "require_journal": true,
+      "required_index": "SCIE",
+      "max_mandatory_fee": {
+        "amount": 0,
+        "currency": "USD"
+      }
+    }
+  },
+  "project_records": {
+    "schema_version": 1,
+    "project_id": "0900ead3-2f15-44c6-a82f-cf483272fe52",
+    "topic": "FICTIONAL DEMO — Agent recovery research",
+    "language": "zh-CN",
+    "domains": [
+      "agent-ai",
+      "computer-science"
+    ],
+    "region": "international",
+    "stage": "full",
+    "constraints": {
+      "require_journal": true,
+      "required_index": "SCIE",
+      "max_mandatory_fee": {
+        "amount": 0,
+        "currency": "USD"
+      }
+    },
+    "created_at": "2026-10-20T04:17:25+00:00",
+    "updated_at": "2026-10-20T04:17:25+00:00",
+    "revision": 10,
+    "records": {
+      "sources": [
+        {
+          "id": "fixture-publisher",
+          "title": "Fictional test evidence — publisher",
+          "url": "https://example.org/fixtures/publisher",
+          "type": "publisher",
+          "accessed_at": "2026-10-20",
+          "verified": true,
+          "note": "SYNTHETIC FIXTURE: not an observed publisher, index or paper."
+        },
+        {
+          "id": "fixture-index",
+          "title": "Fictional test evidence — index",
+          "url": "https://example.org/fixtures/index",
+          "type": "index",
+          "accessed_at": "2026-10-20",
+          "verified": true,
+          "note": "SYNTHETIC FIXTURE: not an observed publisher, index or paper."
+        },
+        {
+          "id": "fixture-paper",
+          "title": "Fictional test evidence — paper",
+          "url": "https://example.org/fixtures/paper",
+          "type": "paper",
+          "accessed_at": "2026-10-20",
+          "verified": true,
+          "note": "SYNTHETIC FIXTURE: not an observed publisher, index or paper."
+        }
+      ],
+      "papers": [
+        {
+          "id": "paper-one",
+          "title": "Fictional equal-budget Agent recovery study",
+          "doi": "10.5555/scholarroute-fixture-1",
+          "year": 2025,
+          "venue": "Fictional Journal A",
+          "venue_type": "journal",
+          "read_status": "abstract",
+          "authors": [
+            "Fixture Author"
+          ],
+          "source_ids": [
+            "fixture-paper"
+          ]
+        }
+      ],
+      "journals": [
+        {
+          "id": "journal-a",
+          "title": "Fictional Journal A",
+          "issns": [
+            "1234-5679"
+          ],
+          "source_ids": [
+            "fixture-publisher"
+          ],
+          "facts": {
+            "venue_type": {
+              "value": "journal",
+              "verification": "verified",
+              "source_ids": [
+                "fixture-publisher"
+              ],
+              "checked_at": "2026-10-20"
+            },
+            "publisher": {
+              "value": "Fictional Publisher A",
+              "verification": "verified",
+              "source_ids": [
+                "fixture-publisher"
+              ],
+              "checked_at": "2026-10-20"
+            },
+            "indexing": {
+              "value": [
+                "SCIE"
+              ],
+              "verification": "verified",
+              "source_ids": [
+                "fixture-index"
+              ],
+              "checked_at": "2026-10-20"
+            },
+            "mandatory_fee": {
+              "value": 0,
+              "verification": "verified",
+              "source_ids": [
+                "fixture-publisher"
+              ],
+              "checked_at": "2026-10-20",
+              "currency": "USD",
+              "includes_all_mandatory": true
+            }
+          },
+          "fit": {
+            "score": 4,
+            "rationale": "Fixture only: mechanism and readership align.",
+            "assessed_at": "2026-10-20",
+            "source_ids": [
+              "fixture-paper"
+            ],
+            "paper_ids": [
+              "paper-one"
+            ]
+          }
+        },
+        {
+          "id": "journal-b",
+          "title": "Fictional Journal B",
+          "issns": [
+            "2049-3630"
+          ],
+          "source_ids": [
+            "fixture-publisher"
+          ],
+          "facts": {
+            "venue_type": {
+              "value": "journal",
+              "verification": "verified",
+              "source_ids": [
+                "fixture-publisher"
+              ],
+              "checked_at": "2026-10-20"
+            },
+            "publisher": {
+              "value": "Fictional Publisher A",
+              "verification": "verified",
+              "source_ids": [
+                "fixture-publisher"
+              ],
+              "checked_at": "2026-10-20"
+            },
+            "indexing": {
+              "value": [
+                "SCIE"
+              ],
+              "verification": "verified",
+              "source_ids": [
+                "fixture-index"
+              ],
+              "checked_at": "2026-10-20"
+            }
+          },
+          "fit": {
+            "score": 4,
+            "rationale": "Fixture only: mechanism and readership align.",
+            "assessed_at": "2026-10-20",
+            "source_ids": [
+              "fixture-paper"
+            ],
+            "paper_ids": [
+              "paper-one"
+            ]
+          }
+        },
+        {
+          "id": "venue-c",
+          "title": "Fictional Conference C",
+          "issns": [
+            "2434-561X"
+          ],
+          "source_ids": [
+            "fixture-publisher"
+          ],
+          "facts": {
+            "venue_type": {
+              "value": "conference",
+              "verification": "verified",
+              "source_ids": [
+                "fixture-publisher"
+              ],
+              "checked_at": "2026-10-20"
+            },
+            "publisher": {
+              "value": "Fictional Publisher A",
+              "verification": "verified",
+              "source_ids": [
+                "fixture-publisher"
+              ],
+              "checked_at": "2026-10-20"
+            },
+            "indexing": {
+              "value": [
+                "SCIE"
+              ],
+              "verification": "verified",
+              "source_ids": [
+                "fixture-index"
+              ],
+              "checked_at": "2026-10-20"
+            },
+            "mandatory_fee": {
+              "value": 0,
+              "verification": "verified",
+              "source_ids": [
+                "fixture-publisher"
+              ],
+              "checked_at": "2026-10-20",
+              "currency": "USD",
+              "includes_all_mandatory": true
+            }
+          },
+          "fit": {
+            "score": 4,
+            "rationale": "Fixture only: mechanism and readership align.",
+            "assessed_at": "2026-10-20",
+            "source_ids": [
+              "fixture-paper"
+            ],
+            "paper_ids": [
+              "paper-one"
+            ]
+          }
+        }
+      ],
+      "claims": [
+        {
+          "id": "claim-one",
+          "text": "Selective retries may improve recovery under a fixed budget.",
+          "status": "proposed",
+          "paper_ids": [
+            "paper-one"
+          ]
+        }
+      ],
+      "hypotheses": [
+        {
+          "id": "hypothesis-one",
+          "text": "Failure-aware retry beats fixed retry at equal calls.",
+          "status": "planned",
+          "claim_ids": [
+            "claim-one"
+          ]
+        }
+      ],
+      "experiments": [
+        {
+          "id": "experiment-one",
+          "text": "Compare recovery policies on held-out fault traces.",
+          "status": "planned",
+          "hypothesis_ids": [
+            "hypothesis-one"
+          ]
+        }
+      ],
+      "decisions": [],
+      "searches": []
+    },
+    "history": [
+      {
+        "revision": 1,
+        "at": "2026-10-20T04:17:25+00:00",
+        "action": "record",
+        "kind": "source",
+        "id": "fixture-publisher",
+        "previous": null
+      },
+      {
+        "revision": 2,
+        "at": "2026-10-20T04:17:25+00:00",
+        "action": "record",
+        "kind": "source",
+        "id": "fixture-index",
+        "previous": null
+      },
+      {
+        "revision": 3,
+        "at": "2026-10-20T04:17:25+00:00",
+        "action": "record",
+        "kind": "source",
+        "id": "fixture-paper",
+        "previous": null
+      },
+      {
+        "revision": 4,
+        "at": "2026-10-20T04:17:25+00:00",
+        "action": "record",
+        "kind": "paper",
+        "id": "paper-one",
+        "previous": null
+      },
+      {
+        "revision": 5,
+        "at": "2026-10-20T04:17:25+00:00",
+        "action": "record",
+        "kind": "journal",
+        "id": "journal-a",
+        "previous": null
+      },
+      {
+        "revision": 6,
+        "at": "2026-10-20T04:17:25+00:00",
+        "action": "record",
+        "kind": "journal",
+        "id": "journal-b",
+        "previous": null
+      },
+      {
+        "revision": 7,
+        "at": "2026-10-20T04:17:25+00:00",
+        "action": "record",
+        "kind": "journal",
+        "id": "venue-c",
+        "previous": null
+      },
+      {
+        "revision": 8,
+        "at": "2026-10-20T04:17:25+00:00",
+        "action": "record",
+        "kind": "claim",
+        "id": "claim-one",
+        "previous": null
+      },
+      {
+        "revision": 9,
+        "at": "2026-10-20T04:17:25+00:00",
+        "action": "record",
+        "kind": "hypothesis",
+        "id": "hypothesis-one",
+        "previous": null
+      },
+      {
+        "revision": 10,
+        "at": "2026-10-20T04:17:25+00:00",
+        "action": "record",
+        "kind": "experiment",
+        "id": "experiment-one",
+        "previous": null
+      }
+    ]
+  }
+}

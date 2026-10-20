@@ -1,0 +1,518 @@
+[
+  {
+    "id": "intake",
+    "title": "目标、证据与限制",
+    "stages": [
+      "explore",
+      "review",
+      "design",
+      "experiment",
+      "journal",
+      "dossier",
+      "write",
+      "audit",
+      "submit",
+      "revise",
+      "disseminate"
+    ],
+    "reference": "references/data-contracts.md",
+    "execution": "host_workflow",
+    "description": "整理研究对象、贡献类型、稿件阶段、语言、数据与预算；复用用户已给出的条件。"
+  },
+  {
+    "id": "field-map",
+    "title": "领域结构与研究地图",
+    "stages": [
+      "explore",
+      "review",
+      "design"
+    ],
+    "reference": "references/exploration.md",
+    "execution": "host_workflow",
+    "description": "从综述和原始论文建立问题—方法—证据—局限地图，标出覆盖边界与未探索区域。"
+  },
+  {
+    "id": "search-protocol",
+    "title": "检索协议与多语言查询",
+    "stages": [
+      "explore",
+      "review",
+      "design",
+      "journal"
+    ],
+    "reference": "references/exploration.md",
+    "execution": "host_workflow",
+    "description": "生成中英文同义词、分库查询、时间范围、筛选标准和可重现的检索日志。"
+  },
+  {
+    "id": "paper-search",
+    "title": "论文与开放科研资源检索",
+    "stages": [
+      "explore",
+      "review",
+      "design",
+      "experiment",
+      "journal"
+    ],
+    "reference": "references/sources-and-tools.md",
+    "execution": "host_and_bundled_support",
+    "description": "通过四个原生适配器和可用宿主来源召回论文；记录失败、截断和访问状态。"
+  },
+  {
+    "id": "identifier-check",
+    "title": "DOI、ISSN、版本与元数据校验",
+    "stages": [
+      "explore",
+      "review",
+      "journal",
+      "dossier",
+      "audit",
+      "submit"
+    ],
+    "reference": "references/data-contracts.md",
+    "execution": "host_and_bundled_support",
+    "description": "检查 DOI/ISSN 格式、版本与引文身份；来源内容核实由宿主完成。"
+  },
+  {
+    "id": "evidence-review",
+    "title": "筛选、提取、质量与证据综合",
+    "stages": [
+      "explore",
+      "review",
+      "design",
+      "audit"
+    ],
+    "reference": "references/exploration.md",
+    "execution": "host_workflow",
+    "description": "筛选、数据提取、研究设计评价、叙述/范围/系统综述和可比较性检查。"
+  },
+  {
+    "id": "paper-notes",
+    "title": "精读、笔记与主张关联",
+    "stages": [
+      "explore",
+      "review",
+      "design",
+      "write"
+    ],
+    "reference": "references/exploration.md",
+    "execution": "host_workflow",
+    "description": "精读方法、假设、数据、结果、局限与代码，连接到具体主张。"
+  },
+  {
+    "id": "novelty-audit",
+    "title": "新颖性、反证与研究空白",
+    "stages": [
+      "explore",
+      "review",
+      "design",
+      "audit"
+    ],
+    "reference": "references/exploration.md",
+    "execution": "host_workflow",
+    "description": "检索最近竞争者、相邻领域和经典方法，核实差异并寻找会推翻创新主张的基线。"
+  },
+  {
+    "id": "hypothesis-plan",
+    "title": "可证伪假设与可行性",
+    "stages": [
+      "explore",
+      "design",
+      "experiment"
+    ],
+    "reference": "references/exploration.md",
+    "execution": "host_workflow",
+    "description": "提出可证伪问题、机制解释、可行性与最小验证实验；支持研究计划书。"
+  },
+  {
+    "id": "agent-capabilities",
+    "title": "Agent 能力拆解与评测",
+    "stages": [
+      "explore",
+      "design",
+      "experiment",
+      "audit"
+    ],
+    "reference": "references/agent-research.md",
+    "execution": "host_workflow",
+    "domains": [
+      "agent-ai"
+    ],
+    "description": "覆盖意图、路由、规划、工具、RAG、记忆、验证、反思、协作、长任务等 14 类能力。"
+  },
+  {
+    "id": "agent-systems",
+    "title": "Agent 程序、架构与运行实验",
+    "stages": [
+      "explore",
+      "design",
+      "experiment",
+      "audit"
+    ],
+    "reference": "references/agent-research.md",
+    "execution": "host_workflow",
+    "domains": [
+      "agent-ai",
+      "computer-science"
+    ],
+    "description": "检查状态控制、接口、隔离、调度、恢复、存储、观测和部署 8 个程序层。"
+  },
+  {
+    "id": "experiment-plan",
+    "title": "实验设计与效度",
+    "stages": [
+      "design",
+      "experiment",
+      "audit",
+      "revise"
+    ],
+    "reference": "references/exploration.md",
+    "execution": "host_workflow",
+    "description": "把主张变成变量、对照、消融、指标、样本、停止条件和反证实验。"
+  },
+  {
+    "id": "statistics-robustness",
+    "title": "统计、稳健性与不确定性",
+    "stages": [
+      "design",
+      "experiment",
+      "audit",
+      "revise"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "审查统计单位、依赖、混杂、泄漏、多重比较、不确定性与稳健性；有数据工具才实际计算。"
+  },
+  {
+    "id": "implementation",
+    "title": "复现、代码实现与执行记录",
+    "stages": [
+      "design",
+      "experiment",
+      "revise"
+    ],
+    "reference": "references/agent-research.md",
+    "execution": "host_workflow",
+    "description": "读代码、复现基线、实现最小机制、控制预算、记录实际命令和运行结果；使用宿主执行工具。"
+  },
+  {
+    "id": "data-collection",
+    "title": "数据计划、出处与再利用",
+    "stages": [
+      "review",
+      "design",
+      "experiment"
+    ],
+    "reference": "references/exploration.md",
+    "execution": "host_workflow",
+    "description": "规划数据来源、许可、采样、版本、质量、拆分与复用条件。"
+  },
+  {
+    "id": "state-map",
+    "title": "项目记录、关系图与断点恢复",
+    "stages": [
+      "explore",
+      "review",
+      "design",
+      "experiment",
+      "journal",
+      "dossier",
+      "write",
+      "audit",
+      "submit",
+      "revise",
+      "disseminate"
+    ],
+    "reference": "references/data-contracts.md",
+    "execution": "host_and_bundled_support",
+    "description": "保存八类证据实体、历史版本与关系；恢复项目，导出报告、Mermaid 图和 BibTeX。"
+  },
+  {
+    "id": "manuscript-profile",
+    "title": "稿件画像与贡献类型",
+    "stages": [
+      "journal",
+      "dossier",
+      "write",
+      "audit",
+      "submit"
+    ],
+    "reference": "references/journal-selection.md",
+    "execution": "host_workflow",
+    "description": "提炼问题、贡献、方法角色、证据、读者、文章类型和选刊限制。"
+  },
+  {
+    "id": "venue-discovery",
+    "title": "多来源期刊与候选召回",
+    "stages": [
+      "journal"
+    ],
+    "reference": "references/journal-selection.md",
+    "execution": "host_workflow",
+    "description": "相似论文、专业刊、出版商匹配器、目录与可选本地索引互补召回。"
+  },
+  {
+    "id": "venue-identity",
+    "title": "期刊/会议身份与 ISSN",
+    "stages": [
+      "journal",
+      "dossier",
+      "submit"
+    ],
+    "reference": "references/journal-selection.md",
+    "execution": "host_workflow",
+    "description": "核对期刊名称、ISSN、出版社、官方入口、改名及期刊/会议差异。"
+  },
+  {
+    "id": "journal-dossier",
+    "title": "单刊全景与作者指南",
+    "stages": [
+      "journal",
+      "dossier",
+      "write",
+      "submit"
+    ],
+    "reference": "references/journal-selection.md",
+    "execution": "host_workflow",
+    "description": "完整调查单刊的范围、近刊先例、要求、费用、时效、政策和未知项。"
+  },
+  {
+    "id": "indexing-metrics",
+    "title": "索引、分区、年份与类别",
+    "stages": [
+      "journal",
+      "dossier",
+      "submit"
+    ],
+    "reference": "references/journal-selection.md",
+    "execution": "host_workflow",
+    "description": "核实 SCIE/SSCI/ESCI 等索引，分开保存 JCR/SJR/CAS 的年度与类别。"
+  },
+  {
+    "id": "costs-timelines",
+    "title": "费用路径与审稿时间定义",
+    "stages": [
+      "journal",
+      "dossier",
+      "submit"
+    ],
+    "reference": "references/journal-selection.md",
+    "execution": "host_workflow",
+    "description": "区分强制费用/可选 OA/减免条件，以及初审、外审、录用和发表时间。"
+  },
+  {
+    "id": "journal-integrity",
+    "title": "出版透明度与风险证据",
+    "stages": [
+      "journal",
+      "dossier",
+      "submit"
+    ],
+    "reference": "references/journal-selection.md",
+    "execution": "host_workflow",
+    "description": "核查身份与政策透明度，记录具体风险证据；不靠 OA 缺失或低价格贴标签。"
+  },
+  {
+    "id": "fit-comparison",
+    "title": "适配、证据与三态筛选",
+    "stages": [
+      "journal",
+      "dossier"
+    ],
+    "reference": "references/journal-selection.md",
+    "execution": "host_and_bundled_support",
+    "description": "保留符合、待核实、排除三类候选，把适配判断与证据覆盖分开。"
+  },
+  {
+    "id": "submission-plan",
+    "title": "可解释投稿顺序",
+    "stages": [
+      "journal",
+      "submit"
+    ],
+    "reference": "references/journal-selection.md",
+    "execution": "host_workflow",
+    "description": "按范围、证据和实际约束解释投稿顺序，列出改进与改投条件。"
+  },
+  {
+    "id": "argument-audit",
+    "title": "论证与实验叙事重构",
+    "stages": [
+      "write",
+      "audit",
+      "revise"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "重建问题、机制、结果和结论的证据关系，指出跳步、过度主张和缺少比较。"
+  },
+  {
+    "id": "manuscript-writing",
+    "title": "科学写作、润色与数值保真",
+    "stages": [
+      "write",
+      "revise"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "中文/英文科学写作与润色，保留数字、术语、TeX 与引用；支持提案文本。"
+  },
+  {
+    "id": "citation-audit",
+    "title": "引文、BibTeX 与引用支持",
+    "stages": [
+      "write",
+      "audit",
+      "submit",
+      "revise"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "核实引用身份、版本、位置与内容支持，整理引用元数据和 BibTeX。"
+  },
+  {
+    "id": "figure-table-audit",
+    "title": "图表、单位与可视化检查",
+    "stages": [
+      "write",
+      "audit",
+      "submit",
+      "revise"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "核对图表数据、单位、样本数、标注、可读性和期刊要求；实际编辑依赖宿主绘图工具。"
+  },
+  {
+    "id": "peer-review",
+    "title": "分角色审稿与异议归并",
+    "stages": [
+      "audit",
+      "revise"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "以互补视角模拟严格审稿，归并异议和可执行修改，不预测真实编辑决定。"
+  },
+  {
+    "id": "venue-formatting",
+    "title": "期刊模板、改投与排版",
+    "stages": [
+      "write",
+      "submit",
+      "revise"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "读取当前文章类型/阶段要求，改投重排、检查模板并通过宿主编译/渲染。"
+  },
+  {
+    "id": "cover-letter",
+    "title": "投稿信",
+    "stages": [
+      "submit"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "依据真实贡献与期刊范围写投稿信，保留未确认声明。"
+  },
+  {
+    "id": "presubmission-inquiry",
+    "title": "投稿前询问信",
+    "stages": [
+      "journal",
+      "submit"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "草拟有针对性的投稿前询问信；仅在已有授权范围内发送。"
+  },
+  {
+    "id": "reviewer-discovery",
+    "title": "审稿人候选与利益冲突",
+    "stages": [
+      "submit"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "通过文献核实候选专长、身份与适用利益冲突，不编造邮箱或同意。"
+  },
+  {
+    "id": "authorship-credit",
+    "title": "署名、CRediT 与声明核实",
+    "stages": [
+      "submit",
+      "revise"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "收集实际贡献，协助 CRediT 与署名声明，标出需要作者决定的内容。"
+  },
+  {
+    "id": "submission-preflight",
+    "title": "Quick/Full 投稿预检",
+    "stages": [
+      "audit",
+      "submit"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "Quick/Full 预检稿件、图表、声明、附件、数据代码与投稿要求。"
+  },
+  {
+    "id": "revision-response",
+    "title": "逐条返修与修改定位",
+    "stages": [
+      "revise"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "逐条拆解审稿意见，连接回复、真实改动与定位，支持有依据的异议/申诉。"
+  },
+  {
+    "id": "proof-check",
+    "title": "清样核对",
+    "stages": [
+      "revise"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "比对录用稿和清样的文字、数值、公式、作者信息、参考文献与排版变化。"
+  },
+  {
+    "id": "dissemination",
+    "title": "发表后传播与公开材料",
+    "stages": [
+      "disseminate"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "基于已发表证据草拟摘要、海报/可编辑展示材料和传播内容；导出依赖宿主。"
+  },
+  {
+    "id": "postpublication-correction",
+    "title": "更正与发表后问题处理",
+    "stages": [
+      "disseminate"
+    ],
+    "reference": "references/publication.md",
+    "execution": "host_workflow",
+    "description": "整理错误、影响范围和证据，草拟按期刊政策处理的更正沟通。"
+  },
+  {
+    "id": "regional-indexing",
+    "title": "中文/土耳其期刊与目录",
+    "stages": [
+      "journal",
+      "dossier",
+      "submit"
+    ],
+    "reference": "references/domains.md",
+    "execution": "host_workflow",
+    "regions": [
+      "china",
+      "turkey"
+    ],
+    "description": "条件调用中文目录、NPPA、CNKI/万方/维普，以及 TR Dizin/DergiPark 路由。"
+  }
+]

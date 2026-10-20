@@ -1,0 +1,3181 @@
+{
+  "schema_version": 1,
+  "project": "ScholarRoute",
+  "audit_date": "2026-10-20",
+  "scope": "Sources discussed in the journal/research skill survey, expanded to relevant adjacent modules in those packages; not a claim to copy every skill in every upstream repository.",
+  "originality": "Original instructions, schemas, routing and support scripts. No upstream code, journal dataset, publisher template, article full text or prompt text is bundled by this audit.",
+  "runtime_contract": "host_workflow means the hosting agent follows ScholarRoute instructions using available tools. optional_external_tool means the service/library must actually be available and invoked; this manifest does not provide that integration.",
+  "coverage_count": {
+    "source_repositories": 17,
+    "provenance_entries": 139,
+    "count_warning": "Entries include grouped skills and submodes; the count is not a count of independent executable functions."
+  },
+  "sources": [
+    {
+      "id": "zero-journal-recommender",
+      "repository": "zero565656/journal-recommender",
+      "url": "https://github.com/zero565656/journal-recommender",
+      "reference_commit": "407aff106677aac090bf2d177155db15e3593126",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "not found",
+        "status": "no_license_file_found_in_recursive_tree_and_no_github_license_metadata",
+        "url": "https://github.com/zero565656/journal-recommender/tree/407aff106677aac090bf2d177155db15e3593126",
+        "reuse": "No source text, code, templates or data imported. General capabilities are independently implemented."
+      },
+      "scope": "摘要画像、投稿偏好、带证据的候选筛选和多档提交顺序。",
+      "modules": [
+        {
+          "name": "journal-recommender",
+          "capability_summary": "用范围、同刊先例、已核验约束生成可比较候选；提交顺序不是录用概率。",
+          "capability_ids": [
+            "venue-discovery",
+            "manuscript-profile",
+            "submission-plan"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "SKILL.md",
+              "blob_sha": "8610d9703f4af48744f18accf4508e360687ef2b",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/zero565656/journal-recommender/blob/407aff106677aac090bf2d177155db15e3593126/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "从摘要估算 CAS 基线并自动映射保底录用倾向。",
+        "强制 2+2+1 数量及反复询问已经给出的偏好。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "journal-research-plugins",
+      "repository": "kkunkunya/journal-research-agent-plugins",
+      "url": "https://github.com/kkunkunya/journal-research-agent-plugins",
+      "reference_commit": "d902e4cb07443f079cbb5085f2de2820a1a09f79",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "按学科和中英文投稿路线组合候选发现、身份核验、指标调查和社区证据。",
+      "modules": [
+        {
+          "name": "journal-research-orchestrator",
+          "capability_summary": "合并中英文路线，候选发现、核验和风险分析保持独立。",
+          "capability_ids": [
+            "intake",
+            "field-map",
+            "state-map"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-en/skills/journal-research-orchestrator/SKILL.md",
+              "blob_sha": "17621d9ee2acfd059c90c79dfcb111490d94f18b",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-en/skills/journal-research-orchestrator/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "ai-journal-match",
+          "capability_summary": "生医可选 JANE；出版社 Finder 按当前可用接口人工或工具辅助核验。",
+          "capability_ids": [
+            "venue-discovery"
+          ],
+          "stage": "select",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-en/skills/ai-journal-match/SKILL.md",
+              "blob_sha": "fa4f23bae53de027ea53855a7916c3c421b47d09",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-en/skills/ai-journal-match/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "openalex-explore",
+          "capability_summary": "检索论文后聚合期刊；OpenAlex 记录不等于 SCIE 证明。",
+          "capability_ids": [
+            "paper-search"
+          ],
+          "stage": "explore",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-en/skills/openalex-explore/SKILL.md",
+              "blob_sha": "0d6a31d7da27007540b5f62012f0a3d1b2acb607",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-en/skills/openalex-explore/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "crossref-validator",
+          "capability_summary": "用 DOI/ISSN 与标题交叉核验注册元数据。",
+          "capability_ids": [
+            "identifier-check",
+            "venue-identity"
+          ],
+          "stage": "investigate",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-en/skills/crossref-validator/SKILL.md",
+              "blob_sha": "1280eae190ac53b63896064efb8699d51fe59758",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-en/skills/crossref-validator/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "dblp-cs-explore",
+          "capability_summary": "对 CS 论文和 venue 补召回，明确期刊与会议类别。",
+          "capability_ids": [
+            "paper-search",
+            "venue-discovery"
+          ],
+          "stage": "explore",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-en/skills/dblp-cs-explore/SKILL.md",
+              "blob_sha": "55c17e78bd6a0f149724e078fe09310b33ccc05b",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-en/skills/dblp-cs-explore/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "bison-oa-explore",
+          "capability_summary": "OA 候选建议仍需逐刊核实费用、范围与投稿渠道。",
+          "capability_ids": [
+            "venue-discovery",
+            "costs-timelines"
+          ],
+          "stage": "select",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-en/skills/bison-oa-explore/SKILL.md",
+              "blob_sha": "9623360dfb28027141a922a94bdb860b836798a1",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-en/skills/bison-oa-explore/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "arxiv-preprint-explore",
+          "capability_summary": "追踪预印本到正式出版物；arXiv 本身不是期刊。",
+          "capability_ids": [
+            "identifier-check",
+            "paper-search"
+          ],
+          "stage": "explore",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-en/skills/arxiv-preprint-explore/SKILL.md",
+              "blob_sha": "3da892f6cb04260e2798acd862f26638c0d8ba26",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-en/skills/arxiv-preprint-explore/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "google-scholar-explore",
+          "capability_summary": "作为合法可访问时的补充召回；不宣称穷尽。",
+          "capability_ids": [
+            "paper-search"
+          ],
+          "stage": "explore",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-en/skills/google-scholar-explore/SKILL.md",
+              "blob_sha": "94abc1804ab9d1ad717e9e04400c6deffc19f0bd",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-en/skills/google-scholar-explore/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "letpub-sci-journal-review",
+          "capability_summary": "经验时间与录用比例标明社区样本和日期，官方字段另核。",
+          "capability_ids": [
+            "journal-dossier",
+            "costs-timelines"
+          ],
+          "stage": "investigate",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-en/skills/letpub-sci-journal-review/SKILL.md",
+              "blob_sha": "5819ab5f568f34c4c72df51db0c5f0e692e62dcb",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-en/skills/letpub-sci-journal-review/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "journal-authority-check",
+          "capability_summary": "按字段向其权威来源核查，并保留未核验状态。",
+          "capability_ids": [
+            "indexing-metrics"
+          ],
+          "stage": "investigate",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-en/skills/journal-authority-check/SKILL.md",
+              "blob_sha": "47992c6ca755a4cf1c3cf8c0c7e64c51c303fd69",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-en/skills/journal-authority-check/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "predatory-risk-check",
+          "capability_summary": "检查身份、透明度、撤销收录和明确警示；输出有依据的风险线索。",
+          "capability_ids": [
+            "journal-integrity"
+          ],
+          "stage": "investigate",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-en/skills/predatory-risk-check/SKILL.md",
+              "blob_sha": "dc5dc1a359b6343f86f11ecfdcddb4a33a622fe6",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-en/skills/predatory-risk-check/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "cn-orchestrator",
+          "capability_summary": "根据语言、机构目录、学科与文章类型选中文路线。",
+          "capability_ids": [
+            "regional-indexing",
+            "venue-discovery"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-cn/skills/cn-orchestrator/SKILL.md",
+              "blob_sha": "ad850f3635304db25f2ab234accc3607394c5b77",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-cn/skills/cn-orchestrator/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "cn-discover-by-catalog",
+          "capability_summary": "读取用户可合法使用的当前目录并保留版本。",
+          "capability_ids": [
+            "regional-indexing",
+            "indexing-metrics"
+          ],
+          "stage": "select",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-cn/skills/cn-discover-by-catalog/SKILL.md",
+              "blob_sha": "98df1868f1aa9ae3b95844b8e9c10811ddd05809",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-cn/skills/cn-discover-by-catalog/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "cn-discover-by-paper",
+          "capability_summary": "中文论文反推候选期刊，频次不等于录用率。",
+          "capability_ids": [
+            "regional-indexing",
+            "paper-search"
+          ],
+          "stage": "explore",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-cn/skills/cn-discover-by-paper/SKILL.md",
+              "blob_sha": "e32e7246acfe0d7f539a147a616938ce7ace3d49",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-cn/skills/cn-discover-by-paper/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "easyscholar-rank",
+          "capability_summary": "聚合标签仅作线索，官方目录和年份优先。",
+          "capability_ids": [
+            "indexing-metrics"
+          ],
+          "stage": "investigate",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-cn/skills/easyscholar-rank/SKILL.md",
+              "blob_sha": "14aff936e88b19f93edfcd3b774961b695dc9d94",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-cn/skills/easyscholar-rank/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "muchong-cn-journal-review",
+          "capability_summary": "社区评价与官方规则分栏。",
+          "capability_ids": [
+            "regional-indexing",
+            "costs-timelines"
+          ],
+          "stage": "investigate",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-cn/skills/muchong-cn-journal-review/SKILL.md",
+              "blob_sha": "228b6d8300dd07cf92c2d75bdd7922a315826596",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-cn/skills/muchong-cn-journal-review/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "nppa-validator",
+          "capability_summary": "按需核验 CN 号及主办信息；验证码或权限阻塞时给人工核验入口。",
+          "capability_ids": [
+            "regional-indexing",
+            "venue-identity"
+          ],
+          "stage": "investigate",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-research-cn/skills/nppa-validator/SKILL.md",
+              "blob_sha": "41a0317068fbf913e8297c4aa22058416b50e13e",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/kkunkunya/journal-research-agent-plugins/blob/d902e4cb07443f079cbb5085f2de2820a1a09f79/plugins/journal-research-cn/skills/nppa-validator/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "把 LetPub 或 easyScholar 转述当成当前官方收录证明。",
+        "因不在 DOAJ、APC 高低或年发文量直接判定掠夺性。",
+        "固化某年度目录、CAS 停更说法、抓取层级、密钥位置或必填 2+2+1。",
+        "把 JANE 之外尚未实现的 publisher adapter 当成已完成能力。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "sci-select",
+      "repository": "keros68/xiaoyu-skill",
+      "url": "https://github.com/keros68/xiaoyu-skill",
+      "reference_commit": "d8b26a741beae6d474db08f9fe8bc857f0490a95",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/keros68/xiaoyu-skill/blob/d8b26a741beae6d474db08f9fe8bc857f0490a95/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "独立的相似论文与专科期刊召回、稿件画像、已知期刊查询及 Quick/Full 投稿要求核对。",
+      "modules": [
+        {
+          "name": "sci-select",
+          "capability_summary": "保留稿件指纹、独立召回、按发文量校正的先例解释及来源状态。",
+          "capability_ids": [
+            "venue-discovery",
+            "manuscript-profile",
+            "submission-plan"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/sci-select/SKILL.md",
+              "blob_sha": "bf9836abd85b7f1b6064fb1e0a9f1a26e845d7f1",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/keros68/xiaoyu-skill/blob/d8b26a741beae6d474db08f9fe8bc857f0490a95/skills/sci-select/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "sci-select:known-journal-lookup",
+          "capability_summary": "只查已知期刊所需字段，不强迫重新推荐。",
+          "capability_ids": [
+            "journal-dossier"
+          ],
+          "stage": "investigate",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/sci-select/SKILL.md",
+              "blob_sha": "bf9836abd85b7f1b6064fb1e0a9f1a26e845d7f1",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/keros68/xiaoyu-skill/blob/d8b26a741beae6d474db08f9fe8bc857f0490a95/skills/sci-select/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "sci-select:presubmission-check",
+          "capability_summary": "分轻量硬性检查与用户要求的完整同刊分析；未读取规则不声称已满足。",
+          "capability_ids": [
+            "submission-preflight"
+          ],
+          "stage": "submit",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/sci-select/SKILL.md",
+              "blob_sha": "bf9836abd85b7f1b6064fb1e0a9f1a26e845d7f1",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/keros68/xiaoyu-skill/blob/d8b26a741beae6d474db08f9fe8bc857f0490a95/skills/sci-select/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "sci-select:index-and-benchmark-maintenance",
+          "capability_summary": "数据需授权、记录版本与缺失；人工独立标签完成前不报告推荐准确率。",
+          "capability_ids": [
+            "state-map",
+            "indexing-metrics"
+          ],
+          "stage": "maintain",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/sci-select/SKILL.md",
+              "blob_sha": "bf9836abd85b7f1b6064fb1e0a9f1a26e845d7f1",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/keros68/xiaoyu-skill/blob/d8b26a741beae6d474db08f9fe8bc857f0490a95/skills/sci-select/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "继承旧索引中的时间敏感值或受限制数据。",
+        "因关键字段缺失而静默删除候选。",
+        "把客观分区或适配度改写为投稿安全性。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "chinese-research-latex",
+      "repository": "huangwb8/ChineseResearchLaTeX",
+      "url": "https://github.com/huangwb8/ChineseResearchLaTeX",
+      "reference_commit": "d288ea832e4b2ffca5a0cca97576d3413391a342",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/huangwb8/ChineseResearchLaTeX/blob/d288ea832e4b2ffca5a0cca97576d3413391a342/license.txt",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "单刊官方要求及社区调查，以及分阶段候选筛选。",
+      "modules": [
+        {
+          "name": "paper-know-journal",
+          "capability_summary": "调查文章类型、作者指南、费用路径、周转定义、图表和数据代码政策。",
+          "capability_ids": [
+            "journal-dossier"
+          ],
+          "stage": "investigate",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/paper-know-journal/SKILL.md",
+              "blob_sha": "0376a50bc196880a536d659700a8a39873ac57e5",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/huangwb8/ChineseResearchLaTeX/blob/d288ea832e4b2ffca5a0cca97576d3413391a342/skills/paper-know-journal/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "paper-select-journal",
+          "capability_summary": "保留画像→候选→核验的分阶段收敛，使用领域数据库和可配置时间窗口。",
+          "capability_ids": [
+            "venue-discovery",
+            "manuscript-profile",
+            "submission-plan"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/paper-select-journal/SKILL.md",
+              "blob_sha": "cd1e5076ad4f16d7a1a1783cafcfb9eb0077c84c",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/huangwb8/ChineseResearchLaTeX/blob/d288ea832e4b2ffca5a0cca97576d3413391a342/skills/paper-select-journal/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "固定 2023IF.xlsx、IF 小于 3 的通用排除规则。",
+        "把 PubMed 近三个月作为所有学科必经检索。",
+        "强制隐藏目录、特定作者 bug 上报流程及模板默认值。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "journal-fit-finder",
+      "repository": "hztopcu/journal-fit-finder",
+      "url": "https://github.com/hztopcu/journal-fit-finder",
+      "reference_commit": "2624d0b40a444951157c626c01bda73c65c60b23",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/hztopcu/journal-fit-finder/blob/2624d0b40a444951157c626c01bda73c65c60b23/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "全文或摘要适配度、语言/地区/索引路由、出版社多样性及改写定位建议。",
+      "modules": [
+        {
+          "name": "journal-fit-finder",
+          "capability_summary": "用户语言优先；土耳其、拉美、亚洲等地区资源仅在相关时加载；所有评分注明推断。",
+          "capability_ids": [
+            "fit-comparison",
+            "submission-plan"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "journal-fit-finder/SKILL.md",
+              "blob_sha": "5edad35de9ff09f3d783294fcb5646f75278844d",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/hztopcu/journal-fit-finder/blob/2624d0b40a444951157c626c01bda73c65c60b23/journal-fit-finder/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "从地区或指标推断个人录用率。",
+        "把第三方网站存在等同官方索引或期刊合法性。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "polish-skill",
+      "repository": "yujie-jason-zhang/polish_skill",
+      "url": "https://github.com/yujie-jason-zhang/polish_skill",
+      "reference_commit": "9b2a86ca6ac88879a3d3490fecdb909673fd1562",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/yujie-jason-zhang/polish_skill/blob/9b2a86ca6ac88879a3d3490fecdb909673fd1562/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "从文献笔记、问题驱动综述和新意审计，到论证、实验审计、选刊、润色及回复。",
+      "modules": [
+        {
+          "name": "read-paper-to-notes",
+          "capability_summary": "区分作者报告、证据位置、阅读者推断与未知。",
+          "capability_ids": [
+            "paper-notes"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "read-paper-to-notes/SKILL.md",
+              "blob_sha": "efb0bd75230c8e9d2b16e63fbd54777969a7a983",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yujie-jason-zhang/polish_skill/blob/9b2a86ca6ac88879a3d3490fecdb909673fd1562/read-paper-to-notes/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "idea-novelty-auditor",
+          "capability_summary": "新意相对已检索文献，保留检索范围与最接近工作。",
+          "capability_ids": [
+            "novelty-audit"
+          ],
+          "stage": "design",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "idea-novelty-auditor/SKILL.md",
+              "blob_sha": "ccf1e57ec22a231ebfa154acb8d4d51c39fe5b99",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yujie-jason-zhang/polish_skill/blob/9b2a86ca6ac88879a3d3490fecdb909673fd1562/idea-novelty-auditor/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "problem-driven-literature-review",
+          "capability_summary": "围绕问题、方法类别、证据与争议组织综述。",
+          "capability_ids": [
+            "evidence-review"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "problem-driven-literature-review/SKILL.md",
+              "blob_sha": "d38ad2e16af65005abb1a1922c7e986cb096d7e5",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yujie-jason-zhang/polish_skill/blob/9b2a86ca6ac88879a3d3490fecdb909673fd1562/problem-driven-literature-review/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "paper-argument-reconstructor",
+          "capability_summary": "把贡献、论据、实验和段落目的连成可追溯论证。",
+          "capability_ids": [
+            "argument-audit",
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "paper-argument-reconstructor/SKILL.md",
+              "blob_sha": "ac9f1c2dcbc7e2a3c01841106e6093ed4b953246",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yujie-jason-zhang/polish_skill/blob/9b2a86ca6ac88879a3d3490fecdb909673fd1562/paper-argument-reconstructor/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "experiment-section-auditor",
+          "capability_summary": "对已有计划提最小必要补证，不捏造实验或可用资源。",
+          "capability_ids": [
+            "argument-audit",
+            "experiment-plan"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "experiment-section-auditor/SKILL.md",
+              "blob_sha": "bda98da2fb7ef4052873f143d7663d4be863b79b",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yujie-jason-zhang/polish_skill/blob/9b2a86ca6ac88879a3d3490fecdb909673fd1562/experiment-section-auditor/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "journal-recommender",
+          "capability_summary": "新生成和仅核验模式分开，保留原候选及差异记录。",
+          "capability_ids": [
+            "venue-discovery",
+            "manuscript-profile",
+            "submission-plan"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "journal-recommender/SKILL.md",
+              "blob_sha": "695a087fd4d04dca76b5944f89614270f698747f",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yujie-jason-zhang/polish_skill/blob/9b2a86ca6ac88879a3d3490fecdb909673fd1562/journal-recommender/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "paper-polisher",
+          "capability_summary": "保护数字、引用、术语和 TeX 结构，报告未确定含义。",
+          "capability_ids": [
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "paper-polisher/SKILL.md",
+              "blob_sha": "e67765b31e10ddd0ab4f83b5af504c0c2059af84",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yujie-jason-zhang/polish_skill/blob/9b2a86ca6ac88879a3d3490fecdb909673fd1562/paper-polisher/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "paper-cover-letter",
+          "capability_summary": "用真实贡献、期刊匹配与已确认声明写初投稿信。",
+          "capability_ids": [
+            "cover-letter"
+          ],
+          "stage": "submit",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "paper-cover-letter/SKILL.md",
+              "blob_sha": "76691cb6ce51dd52fe2641a1f82b83c86dfcb591",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yujie-jason-zhang/polish_skill/blob/9b2a86ca6ac88879a3d3490fecdb909673fd1562/paper-cover-letter/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "paper-response-to-reviewers",
+          "capability_summary": "逐条回复并关联修订位置；不同意时说明证据。",
+          "capability_ids": [
+            "revision-response"
+          ],
+          "stage": "revise",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "paper-response-to-reviewers/SKILL.md",
+              "blob_sha": "1a20e37b77ad39bfa0f4e05a3a276045b48c2c16",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yujie-jason-zhang/polish_skill/blob/9b2a86ca6ac88879a3d3490fecdb909673fd1562/paper-response-to-reviewers/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "四组各约十本的强制膨胀、任何主张更易录用的安全档保证。",
+        "将 LetPub 简体中文特定站点作为所有学科完成工作的前提。",
+        "正文语言修改时扩写未经证实的科学结论。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "academic-publishing-skills",
+      "repository": "yaotingsun/academic-publishing-skills",
+      "url": "https://github.com/yaotingsun/academic-publishing-skills",
+      "reference_commit": "3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "Apache-2.0",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "覆盖选刊、初投稿、修订、校样和发表后材料的 18 个模块。",
+      "modules": [
+        {
+          "name": "journal-selector",
+          "capability_summary": "适配、客观指标、成本和证据完整性分开。",
+          "capability_ids": [
+            "fit-comparison",
+            "submission-plan"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-selector/skills/journal-selector/SKILL.md",
+              "blob_sha": "a55aad529544b273cd79edad841bcbc0377132a0",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/journal-selector/skills/journal-selector/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "presubmission-inquiry",
+          "capability_summary": "先核实是否接受预询问及正确渠道，仅生成可审阅草稿。",
+          "capability_ids": [
+            "presubmission-inquiry"
+          ],
+          "stage": "submit",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/presubmission-inquiry/skills/presubmission-inquiry/SKILL.md",
+              "blob_sha": "bfbf1c992c65e7f745459a82eeb53f76bf26e002",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/presubmission-inquiry/skills/presubmission-inquiry/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "journal-reformatter",
+          "capability_summary": "遵循目标当前阶段指南；不改动科学含义。",
+          "capability_ids": [
+            "venue-formatting"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-reformatter/skills/journal-reformatter/SKILL.md",
+              "blob_sha": "3e3dfb8996a6ebe5ddf9f002215a780782980583",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/journal-reformatter/skills/journal-reformatter/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "manuscript-copyeditor",
+          "capability_summary": "语言与排版修订独立于方法和结构评议。",
+          "capability_ids": [
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/manuscript-copyeditor/skills/manuscript-copyeditor/SKILL.md",
+              "blob_sha": "f0ac7cab7002c1223c575516e7af2cc5943d5cdb",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/manuscript-copyeditor/skills/manuscript-copyeditor/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "citation-auditor",
+          "capability_summary": "分别找支持文献和核验已有引用；纳入相反证据与撤稿状态。",
+          "capability_ids": [
+            "citation-audit"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/citation-auditor/skills/citation-auditor/SKILL.md",
+              "blob_sha": "68586fbaea3409fcb17bfa2d0dc9aefbb5a55510",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/citation-auditor/skills/citation-auditor/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "reviewer-recommender",
+          "capability_summary": "从相关论文定位专家并查利益冲突；身份与联系方式必须核验。",
+          "capability_ids": [
+            "reviewer-discovery"
+          ],
+          "stage": "submit",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/reviewer-recommender/skills/reviewer-recommender/SKILL.md",
+              "blob_sha": "31dbaf1355b712a79852c8f78de9aa49962d8606",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/reviewer-recommender/skills/reviewer-recommender/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "authorship-credit",
+          "capability_summary": "整理贡献与适用规范，实际署名顺序和批准由作者决定。",
+          "capability_ids": [
+            "authorship-credit"
+          ],
+          "stage": "submit",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/authorship-credit/skills/authorship-credit/SKILL.md",
+              "blob_sha": "0d64f699c89029a97c4c556d02f5d5bfb3de69d8",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/authorship-credit/skills/authorship-credit/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "cover-letter-writer",
+          "capability_summary": "不伪造伦理、原创性、全体作者批准或数据链接。",
+          "capability_ids": [
+            "cover-letter"
+          ],
+          "stage": "submit",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/cover-letter-writer/skills/cover-letter-writer/SKILL.md",
+              "blob_sha": "8b9d7e719ce9ad6243ecd88d0b7f4c501a3ff020",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/cover-letter-writer/skills/cover-letter-writer/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "submission-screener",
+          "capability_summary": "核对数字、文件、声明与目标指南；按证据指出缺项。",
+          "capability_ids": [
+            "submission-preflight"
+          ],
+          "stage": "submit",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/submission-screener/skills/submission-screener/SKILL.md",
+              "blob_sha": "dc809b635cc683f6b0d070791d470672452f4768",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/submission-screener/skills/submission-screener/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "statistical-rigor-helper",
+          "capability_summary": "按实际设计选择统计框架并检查泄漏、混杂和伪重复。",
+          "capability_ids": [
+            "statistics-robustness",
+            "experiment-plan"
+          ],
+          "stage": "design",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/statistical-rigor-helper/skills/statistical-rigor-helper/SKILL.md",
+              "blob_sha": "6b1798f7e6028e973ddb8824c190d53b77faf392",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/statistical-rigor-helper/skills/statistical-rigor-helper/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "figure-checker",
+          "capability_summary": "需要原图和源数据才可核验图值，不做无依据不端指控。",
+          "capability_ids": [
+            "figure-table-audit"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/figure-checker/skills/figure-checker/SKILL.md",
+              "blob_sha": "b62536e7b199c85b2533fbe7264b4b7e7bdfa466",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/figure-checker/skills/figure-checker/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "table-checker",
+          "capability_summary": "检查单位、精度、合计、注释及报告一致性。",
+          "capability_ids": [
+            "figure-table-audit"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/table-checker/skills/table-checker/SKILL.md",
+              "blob_sha": "ad4681b86e567150cb9b6211fc17c4dec443e775",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/table-checker/skills/table-checker/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "review-simulator",
+          "capability_summary": "模拟不同角色的建设性意见，显式标注非独立人类评审。",
+          "capability_ids": [
+            "peer-review"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/review-simulator/skills/review-simulator/SKILL.md",
+              "blob_sha": "e8e63c5c671dc361e3021961c715e42d2d12e479",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/review-simulator/skills/review-simulator/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "journal-submission-checklist",
+          "capability_summary": "按研究设计和目标要求选 PRISMA/CONSORT/STROBE/ARRIVE 等适用清单。",
+          "capability_ids": [
+            "submission-preflight"
+          ],
+          "stage": "submit",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/journal-submission-checklist/skills/journal-submission-checklist/SKILL.md",
+              "blob_sha": "5fad07a3ded981759199a51c81dc7c4949cb4fc4",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/journal-submission-checklist/skills/journal-submission-checklist/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "revision-responder",
+          "capability_summary": "草拟、审计或有证据的申诉三种模式，记录每条修订。",
+          "capability_ids": [
+            "revision-response"
+          ],
+          "stage": "revise",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/revision-responder/skills/revision-responder/SKILL.md",
+              "blob_sha": "791c6b4b32363d381e18647ce0ffd2ae251e2252",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/revision-responder/skills/revision-responder/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "proof-checker",
+          "capability_summary": "以已接收版本为基线核对校样、作者查询、图表和补充件。",
+          "capability_ids": [
+            "proof-check"
+          ],
+          "stage": "proof",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/proof-checker/skills/proof-checker/SKILL.md",
+              "blob_sha": "25e4a8a537704b7cf0a1fd65e064ea339fa580f1",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/proof-checker/skills/proof-checker/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "research-disseminator",
+          "capability_summary": "写忠于论文的公众摘要、图形摘要方案及平台草稿。",
+          "capability_ids": [
+            "dissemination"
+          ],
+          "stage": "disseminate",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/research-disseminator/skills/research-disseminator/SKILL.md",
+              "blob_sha": "ca9f2459212d82c2c09b201048ffe63bd82bae91",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/research-disseminator/skills/research-disseminator/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "post-publication-corrector",
+          "capability_summary": "对已确认错误整理更正材料；通知类别与最终处理依期刊政策和编辑决定。",
+          "capability_ids": [
+            "postpublication-correction"
+          ],
+          "stage": "disseminate",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "plugins/post-publication-corrector/skills/post-publication-corrector/SKILL.md",
+              "blob_sha": "f15c5e264d1de271aee7cf1ae3aa3dc987a8b7f7",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yaotingsun/academic-publishing-skills/blob/3103f4d7d4a97fc3bf80a61ce4cb04dd21d4d88e/plugins/post-publication-corrector/skills/post-publication-corrector/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "无论用户语言都强制英文。",
+        "以生物医学证据规则作为所有研究领域的硬门槛。",
+        "把历史录用比例分桶后当作稿件被录用机会。",
+        "模拟评审中的录用结论被误写为真实编辑决定。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "superpapers",
+      "repository": "regisely/superpapers",
+      "url": "https://github.com/regisely/superpapers",
+      "reference_commit": "805a9a7369d57f01b67732645175ad0b7a8a3f23",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "可复现研究到论文编译的阶段流程，配合选刊和作者指南模块。",
+      "modules": [
+        {
+          "name": "academic-baseline",
+          "capability_summary": "记录问题、材料、假设和可用资源。",
+          "capability_ids": [
+            "intake",
+            "field-map"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/academic-baseline/SKILL.md",
+              "blob_sha": "173c5f8ea737b736f42c61f762bc9534aafd7266",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/academic-baseline/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "replication-driven-research",
+          "capability_summary": "先复现最近工作，再确定可检验差异。",
+          "capability_ids": [
+            "hypothesis-plan",
+            "experiment-plan"
+          ],
+          "stage": "design",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/replication-driven-research/SKILL.md",
+              "blob_sha": "ca33837a06f8a34c8b818203a9954c1f117fd36a",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/replication-driven-research/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "brainstorm",
+          "capability_summary": "列候选问题、否证方法和可行性，不声称已证明新颖。",
+          "capability_ids": [
+            "hypothesis-plan"
+          ],
+          "stage": "design",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/brainstorm/SKILL.md",
+              "blob_sha": "a455258c5306bd4b9e102916b801dd260033b4b3",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/brainstorm/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "write-plan",
+          "capability_summary": "安排依赖、实验、交付物和停止条件。",
+          "capability_ids": [
+            "hypothesis-plan",
+            "experiment-plan"
+          ],
+          "stage": "design",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/write-plan/SKILL.md",
+              "blob_sha": "2ac4bf2db0e3cc6b32b434d4fdc1b230d007b27f",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/write-plan/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "execute-plan",
+          "capability_summary": "按已有授权执行可逆步骤，保存实际运行记录。",
+          "capability_ids": [
+            "implementation"
+          ],
+          "stage": "execute",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/execute-plan/SKILL.md",
+              "blob_sha": "dd5818516e236992d08a0ea5cb5051ae4db17e25",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/execute-plan/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "literature-search",
+          "capability_summary": "多来源检索、筛选、去重和检索式记录。",
+          "capability_ids": [
+            "paper-search",
+            "search-protocol"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/literature-search/SKILL.md",
+              "blob_sha": "98e7b9bda70949b8d6ea275f7edc67a277177677",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/literature-search/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "citation-management",
+          "capability_summary": "规范 DOI、BibTeX、版本关系与引用位置。",
+          "capability_ids": [
+            "identifier-check",
+            "citation-audit"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/citation-management/SKILL.md",
+              "blob_sha": "d68d0697e011ce5eeb5830993c4669ff2150a772",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/citation-management/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "data-collection",
+          "capability_summary": "记录数据许可、抽样、清洗、版本和排除条件。",
+          "capability_ids": [
+            "data-collection"
+          ],
+          "stage": "execute",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/data-collection/SKILL.md",
+              "blob_sha": "12c50ca7aec1946f8b85e82e56178a37957c74c3",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/data-collection/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "statistical-modeling",
+          "capability_summary": "分析代码和结果需实际运行；不能通过文字模拟。",
+          "capability_ids": [
+            "statistics-robustness"
+          ],
+          "stage": "execute",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/statistical-modeling/SKILL.md",
+              "blob_sha": "524c3cf5d63831712d8fbaaa84a256e7e1336252",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/statistical-modeling/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "robustness-checks",
+          "capability_summary": "检查敏感性、替代解释、规格变化和负向结果。",
+          "capability_ids": [
+            "statistics-robustness"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/robustness-checks/SKILL.md",
+              "blob_sha": "c77615c9cffda194323e39e69de4571d98e15917",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/robustness-checks/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "paper-writing",
+          "capability_summary": "以已完成证据撰写方法、结果和讨论。",
+          "capability_ids": [
+            "argument-audit",
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/paper-writing/SKILL.md",
+              "blob_sha": "54b36bb5f98d1109c992c319751eb4841aa3a633",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/paper-writing/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "paper-review",
+          "capability_summary": "按主张与证据给修改建议。",
+          "capability_ids": [
+            "peer-review"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/paper-review/SKILL.md",
+              "blob_sha": "a9afe6eb48075848f5d9d76007c426e662d6c796",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/paper-review/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "tables-and-figures",
+          "capability_summary": "精确图表来自真实数据或确定性绘图工具。",
+          "capability_ids": [
+            "figure-table-audit",
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/tables-and-figures/SKILL.md",
+              "blob_sha": "3208cfcdbbfd7db61dfedeee0ea07c0c59dcb2f2",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/tables-and-figures/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "compile-latex",
+          "capability_summary": "依赖本机 LaTeX/Pandoc 等实际安装并检查编译输出。",
+          "capability_ids": [
+            "venue-formatting"
+          ],
+          "stage": "write",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/compile-latex/SKILL.md",
+              "blob_sha": "fca32d6589e600e6c091cc31e38b928522e26e82",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/compile-latex/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "journal-selection",
+          "capability_summary": "按学科选择候选，保持顺序为策略而非概率。",
+          "capability_ids": [
+            "venue-discovery",
+            "manuscript-profile",
+            "submission-plan"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/journal-selection/SKILL.md",
+              "blob_sha": "eea92bb0260ebb759901ba781ac48248cbdc42c6",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/journal-selection/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "journal-guidelines",
+          "capability_summary": "记录目标文章类型和提交阶段的当前官方规则。",
+          "capability_ids": [
+            "journal-dossier"
+          ],
+          "stage": "investigate",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/journal-guidelines/SKILL.md",
+              "blob_sha": "a70572b5618ad89d5e732c323cd0377d3b6eefd9",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/regisely/superpapers/blob/805a9a7369d57f01b67732645175ad0b7a8a3f23/skills/journal-guidelines/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "每个可逆阶段结束都强制等待批准。",
+        "把经济学或实证研究模板施加到所有领域。",
+        "将固定目标期刊格式绑定研究问题。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "researcher",
+      "repository": "sokolmarek/researcher",
+      "url": "https://github.com/sokolmarek/researcher",
+      "reference_commit": "e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "细分的研究检索、证据收敛、实验实现、论文产出与长期更新工作流。",
+      "modules": [
+        {
+          "name": "brainstorming",
+          "capability_summary": "候选想法与查证后的研究空白分开。",
+          "capability_ids": [
+            "hypothesis-plan"
+          ],
+          "stage": "design",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/brainstorming/SKILL.md",
+              "blob_sha": "691824e5c5bb92bc199b26f5e060eab636bcf185",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/brainstorming/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "citation-audit",
+          "capability_summary": "检查出处、位置、版本、支持力度和遗漏。",
+          "capability_ids": [
+            "citation-audit"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/citation-audit/SKILL.md",
+              "blob_sha": "76fe1a7b00d1d640f6b47eda5bdfe60599e64edf",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/citation-audit/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "citation-context",
+          "capability_summary": "区分引用是支持、反驳还是背景，并读取上下文。",
+          "capability_ids": [
+            "paper-notes",
+            "citation-audit"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/citation-context/SKILL.md",
+              "blob_sha": "9f60762eaac29ac97d10b09f22da3e41069b524f",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/citation-context/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "citation-management",
+          "capability_summary": "管理引用元数据和稳定引用键。",
+          "capability_ids": [
+            "identifier-check",
+            "citation-audit"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/citation-management/SKILL.md",
+              "blob_sha": "a48cc53d1e2ea8021a7bf74f51b68249b17dd8ac",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/citation-management/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "code-analysis",
+          "capability_summary": "审阅已有代码与论文主张、数据流程和依赖一致性。",
+          "capability_ids": [
+            "implementation",
+            "agent-systems"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/code-analysis/SKILL.md",
+              "blob_sha": "591c47e17adc9eac6a9d6a550e584b0bffbfbbc4",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/code-analysis/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "conference-finder",
+          "capability_summary": "仅在允许会议时启用，并明确非 SCI 期刊。",
+          "capability_ids": [
+            "venue-discovery"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/conference-finder/SKILL.md",
+              "blob_sha": "c4f2060d7bdbbcb89629f98d27d66bfda611ae85",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/conference-finder/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "contradiction-detection",
+          "capability_summary": "保留定义、设定和证据冲突，不强迫综合为共识。",
+          "capability_ids": [
+            "evidence-review"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/contradiction-detection/SKILL.md",
+              "blob_sha": "840bf87ab439920e1ff7747ce961b6b484cb1e5b",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/contradiction-detection/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "cover-letter",
+          "capability_summary": "写初投引介信，和修回逐条回复分开。",
+          "capability_ids": [
+            "cover-letter"
+          ],
+          "stage": "submit",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/cover-letter/SKILL.md",
+              "blob_sha": "22f40ffce5f8036d9f7e5c53663351594eee85bd",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/cover-letter/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "experiment-design",
+          "capability_summary": "定义变量、比较组、单位、评价和否证条件。",
+          "capability_ids": [
+            "experiment-plan"
+          ],
+          "stage": "design",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/experiment-design/SKILL.md",
+              "blob_sha": "ad69f4ec8587f312dfe102b3af017ef563dd9cef",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/experiment-design/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "extraction-tables",
+          "capability_summary": "每个抽取单元带来源位置和无法评估状态。",
+          "capability_ids": [
+            "paper-notes",
+            "evidence-review"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/extraction-tables/SKILL.md",
+              "blob_sha": "ab13b5efcd95c3af4774d68c29ec2cdf631050df",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/extraction-tables/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "fact-checking",
+          "capability_summary": "寻找支持和反驳单个具体主张的证据。",
+          "capability_ids": [
+            "citation-audit",
+            "argument-audit"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/fact-checking/SKILL.md",
+              "blob_sha": "1a7e0bb816d681d2893c987a357da3c59bee6ce7",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/fact-checking/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "figure-suggestions",
+          "capability_summary": "按论证目标设计图表类型、分面和图注。",
+          "capability_ids": [
+            "figure-table-audit"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/figure-suggestions/SKILL.md",
+              "blob_sha": "15852c8ff9e06623c6b2953dd0116e4cea10b812",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/figure-suggestions/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "image-prompt-crafting",
+          "capability_summary": "仅用于概念说明和封面；不可生成测量结果图。",
+          "capability_ids": [
+            "dissemination"
+          ],
+          "stage": "disseminate",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/image-prompt-crafting/SKILL.md",
+              "blob_sha": "08abcc3f8e87d08afd011d97844e2607f06b4744",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/image-prompt-crafting/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "implementation",
+          "capability_summary": "使用可用编程工具构建与运行基线、训练或评估；资源不足写阻塞。",
+          "capability_ids": [
+            "implementation"
+          ],
+          "stage": "execute",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/implementation/SKILL.md",
+              "blob_sha": "fa9d1966023a232bd4ee6b336f4c9de3f4ddf06d",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/implementation/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "journal-finder",
+          "capability_summary": "保留范围、费用和证据匹配，删除模板假指标。",
+          "capability_ids": [
+            "venue-discovery",
+            "manuscript-profile",
+            "submission-plan"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/journal-finder/SKILL.md",
+              "blob_sha": "2542002be623d4e0f2abdc15c56358f5bed3ae94",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/journal-finder/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "journal-formatting",
+          "capability_summary": "格式和期刊选择分开，当前官方指南覆盖旧配置。",
+          "capability_ids": [
+            "venue-formatting"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/journal-formatting/SKILL.md",
+              "blob_sha": "676ab6a79563e93384c369d89b35d7a94ed58ad5",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/journal-formatting/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "latex-tables",
+          "capability_summary": "从给定或已核实数据生成 LaTeX 表格。",
+          "capability_ids": [
+            "figure-table-audit",
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/latex-tables/SKILL.md",
+              "blob_sha": "59f55dc654feae52c4cb91a67a5bd6515db0550c",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/latex-tables/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "literature-monitoring",
+          "capability_summary": "复用保存检索式、游标和见过的记录；定时执行需真实调度器。",
+          "capability_ids": [
+            "state-map",
+            "search-protocol"
+          ],
+          "stage": "maintain",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/literature-monitoring/SKILL.md",
+              "blob_sha": "ef0231d41c8ea11a1f61d756d9ac7a3a21e96248",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/literature-monitoring/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "literature-search",
+          "capability_summary": "按领域数据库组合检索。",
+          "capability_ids": [
+            "paper-search",
+            "search-protocol"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/literature-search/SKILL.md",
+              "blob_sha": "e842b325c965e743a078c9b0af25393ec5bb4c46",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/literature-search/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "manuscript-setup",
+          "capability_summary": "初始化后非破坏性恢复项目、证据和决策。",
+          "capability_ids": [
+            "state-map"
+          ],
+          "stage": "maintain",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/manuscript-setup/SKILL.md",
+              "blob_sha": "40d5b361999cb68f01270657ea2b77f6ab76dde5",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/manuscript-setup/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "paper-drafting",
+          "capability_summary": "缺失数据留空或标记，不生成虚构结果。",
+          "capability_ids": [
+            "argument-audit",
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/paper-drafting/SKILL.md",
+              "blob_sha": "de29a1ebcbd520ff63bbeeb55287dbd4e476d5c9",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/paper-drafting/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "peer-review",
+          "capability_summary": "分角色审稿建议是模拟，无法证明专家一致同意。",
+          "capability_ids": [
+            "peer-review"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/peer-review/SKILL.md",
+              "blob_sha": "2bd3b27ba6f5a67a82b533ed706d00cfe1a008d4",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/peer-review/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "plotneuralnet",
+          "capability_summary": "按真实模型结构绘图，绘图库需独立安装。",
+          "capability_ids": [
+            "agent-systems",
+            "figure-table-audit"
+          ],
+          "stage": "write",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/plotneuralnet/SKILL.md",
+              "blob_sha": "98a791cd2ef70ebc7f50443958b51d17d3f2df8e",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/plotneuralnet/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "research-convergence",
+          "capability_summary": "把一致、分歧与结论适用范围做成可追溯地图。",
+          "capability_ids": [
+            "evidence-review",
+            "field-map"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/research-convergence/SKILL.md",
+              "blob_sha": "b9b25d9295f85027241c275f972b5c7a1d449acd",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/research-convergence/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "research-gaps",
+          "capability_summary": "区分未检索到、缺少证据、未解决以及可实施。",
+          "capability_ids": [
+            "novelty-audit",
+            "hypothesis-plan"
+          ],
+          "stage": "design",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/research-gaps/SKILL.md",
+              "blob_sha": "2530fb3e1b4c236042794cabfa32cb18c2ac1f88",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/research-gaps/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "research-pipeline",
+          "capability_summary": "保存阶段状态，复用已有授权，不强迫全部阶段运行。",
+          "capability_ids": [
+            "intake",
+            "field-map",
+            "state-map"
+          ],
+          "stage": "maintain",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/research-pipeline/SKILL.md",
+              "blob_sha": "6ed6d1b71a74feca62c8ce98288e24bc4c26b942",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/research-pipeline/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "response-to-reviewers",
+          "capability_summary": "逐条关联评审意见、修改与理由。",
+          "capability_ids": [
+            "revision-response"
+          ],
+          "stage": "revise",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/response-to-reviewers/SKILL.md",
+              "blob_sha": "7f8348dc09943ebbca7a88b4d99c20dcbf63a443",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/response-to-reviewers/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "revision-management",
+          "capability_summary": "保存版本、变更位置及已解决/待解决状态。",
+          "stage": "revise",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/revision-management/SKILL.md",
+              "blob_sha": "eadba109f9fbd6d8d2a52caf8a2f0eff5b96d4c6",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/revision-management/SKILL.md"
+            }
+          ],
+          "capability_ids": [
+            "revision-response",
+            "state-map"
+          ]
+        },
+        {
+          "name": "sota-finder",
+          "capability_summary": "指标带数据集版本、拆分、预算、日期和来源。",
+          "capability_ids": [
+            "agent-capabilities",
+            "agent-systems",
+            "evidence-review"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/sota-finder/SKILL.md",
+              "blob_sha": "54d13aee995eedf038bef4089956e3fe67962337",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/sota-finder/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "statistical-analysis",
+          "capability_summary": "方法选择、效应量、区间及元分析需要实际数据和工具。",
+          "capability_ids": [
+            "statistics-robustness"
+          ],
+          "stage": "execute",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/statistical-analysis/SKILL.md",
+              "blob_sha": "0e0bbbe875ba527757fa6e5e403a6a35e236b961",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/statistical-analysis/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "systematic-review",
+          "capability_summary": "保存协议与筛选账本；人类独立双筛需真实参与，模型分身不冒充。",
+          "capability_ids": [
+            "search-protocol",
+            "evidence-review"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/systematic-review/SKILL.md",
+              "blob_sha": "1d5098369362fe642016d45ed36d49abdfb5e32c",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/systematic-review/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "tikz-diagrams",
+          "capability_summary": "用代码表达流程和系统结构；必要时编译核验。",
+          "capability_ids": [
+            "agent-systems",
+            "figure-table-audit"
+          ],
+          "stage": "write",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/tikz-diagrams/SKILL.md",
+              "blob_sha": "50877ec539bd3e9a14a506f3c69589cca0fb0ea6",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/tikz-diagrams/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "visualization",
+          "capability_summary": "从真实表格生成可复现数据图。",
+          "capability_ids": [
+            "figure-table-audit",
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/visualization/SKILL.md",
+              "blob_sha": "9a53fa9ec6c301d7f47c991cb045fd4cede62d29",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/visualization/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "word-output",
+          "capability_summary": "按宿主可用文档能力导出并核验，不继承未实现的格式能力。",
+          "capability_ids": [
+            "venue-formatting"
+          ],
+          "stage": "write",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/word-output/SKILL.md",
+              "blob_sha": "683beb5dcc69d6b4d62cc264b69ebac5f9a80d80",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/word-output/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "writing-style-analysis",
+          "capability_summary": "只迁移风格，保留新稿事实和科学结论。",
+          "capability_ids": [
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/writing-style-analysis/SKILL.md",
+              "blob_sha": "23213a584ec730638edd9c3be06385c61adb1a8d",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/sokolmarek/researcher/blob/e4ddbf4eb8a93565a222c48797ed3e0dc6cf0945/skills/writing-style-analysis/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "模板中的具体期刊 IF、出版商、录用率数值作为真实数据。",
+        "把未实现的 Word 富内容或外部多模型评审写成现成能力。",
+        "固定模型供应商、自动人类共识、每阶段停等或个人能力评分。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "scientific-agent-skills",
+      "repository": "K-Dense-AI/scientific-agent-skills",
+      "url": "https://github.com/K-Dense-AI/scientific-agent-skills",
+      "reference_commit": "593377bb048752abb0152deab9fbb1083a6087df",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/K-Dense-AI/scientific-agent-skills/blob/593377bb048752abb0152deab9fbb1083a6087df/LICENSE.md",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "科研信息检索、综述、审稿、模板、引用、方法批判与发展性反馈。",
+      "modules": [
+        {
+          "name": "paper-lookup",
+          "capability_summary": "保留 18 类来源用途与来源记录；按宿主可用 API、连接器或合法检索实际调用。",
+          "capability_ids": [
+            "paper-search"
+          ],
+          "stage": "explore",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/paper-lookup/SKILL.md",
+              "blob_sha": "d0b277b07be6f2688fcc2bacee1b58c971ece2f7",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/K-Dense-AI/scientific-agent-skills/blob/593377bb048752abb0152deab9fbb1083a6087df/skills/paper-lookup/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "literature-review",
+          "capability_summary": "区分系统性/范围/叙述综述、记录与研究；元分析另需数据与运行环境。",
+          "capability_ids": [
+            "search-protocol",
+            "evidence-review"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/literature-review/SKILL.md",
+              "blob_sha": "5178dce6419cee412155e7b9dd523d5b2ef703f5",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/K-Dense-AI/scientific-agent-skills/blob/593377bb048752abb0152deab9fbb1083a6087df/skills/literature-review/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "peer-review",
+          "capability_summary": "建立受证据约束的评审草稿，尊重已存在的访问授权和适用保密规则。",
+          "capability_ids": [
+            "peer-review"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/peer-review/SKILL.md",
+              "blob_sha": "d4f3c3e3b5c19fec2518d569ded7e37ac96a964b",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/K-Dense-AI/scientific-agent-skills/blob/593377bb048752abb0152deab9fbb1083a6087df/skills/peer-review/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "venue-templates",
+          "capability_summary": "当前作者指南与提交阶段优先于模板默认。",
+          "capability_ids": [
+            "venue-formatting"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/venue-templates/SKILL.md",
+              "blob_sha": "74e9d03ff7d3cc4029cbafadf9ab93a27cb66712",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/K-Dense-AI/scientific-agent-skills/blob/593377bb048752abb0152deab9fbb1083a6087df/skills/venue-templates/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "citation-management",
+          "capability_summary": "检索并核验参考文献元数据、DOI 和引用格式。",
+          "capability_ids": [
+            "identifier-check",
+            "citation-audit"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/citation-management/SKILL.md",
+              "blob_sha": "b63b589d4d423969a63e032e62c2b74969147c1c",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/K-Dense-AI/scientific-agent-skills/blob/593377bb048752abb0152deab9fbb1083a6087df/skills/citation-management/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "scientific-critical-thinking",
+          "capability_summary": "按实验单位、混杂、偏差、因果范围与效应不确定性审查。",
+          "capability_ids": [
+            "peer-review",
+            "statistics-robustness"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/scientific-critical-thinking/SKILL.md",
+              "blob_sha": "2a2fc151b5b13e4e11ece7410f21a14d5b25e30d",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/K-Dense-AI/scientific-agent-skills/blob/593377bb048752abb0152deab9fbb1083a6087df/skills/scientific-critical-thinking/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "scholar-evaluation",
+          "capability_summary": "定性且可追溯的作品反馈；不评价人员或预测录用。",
+          "capability_ids": [
+            "peer-review"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "skills/scholar-evaluation/SKILL.md",
+              "blob_sha": "900bc621e6165f7ec27ba29095774fa464c4d368",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/K-Dense-AI/scientific-agent-skills/blob/593377bb048752abb0152deab9fbb1083a6087df/skills/scholar-evaluation/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "把 18 个检索 API 列表描述为 ScholarRoute 内置且全部已联通。",
+        "强迫所有领域使用生物医学证据分级。",
+        "把反馈评分转为录用、顶刊或人员能力判断。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "ai-research-skills",
+      "repository": "Orchestra-Research/AI-Research-SKILLs",
+      "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs",
+      "reference_commit": "773a52944ba4747a18bd4ae9ade53fff041adcbc",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/blob/773a52944ba4747a18bd4ae9ade53fff041adcbc/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "ML/AI 与系统论文的不同论证结构和评估要求。",
+      "modules": [
+        {
+          "name": "ml-paper-writing",
+          "capability_summary": "从仓库证据、最近工作和可核实结果形成 ML 论文论证。",
+          "capability_ids": [
+            "agent-capabilities",
+            "argument-audit",
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "20-ml-paper-writing/ml-paper-writing/SKILL.md",
+              "blob_sha": "2090941c1d1e6b619e5ab32147741546c8dbdb09",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/blob/773a52944ba4747a18bd4ae9ade53fff041adcbc/20-ml-paper-writing/ml-paper-writing/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "systems-paper-writing",
+          "capability_summary": "说明系统设计权衡、端到端性能、微基准、扩展性和替代方案。",
+          "capability_ids": [
+            "agent-systems",
+            "argument-audit",
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "20-ml-paper-writing/systems-paper-writing/SKILL.md",
+              "blob_sha": "c7607cfa79cd4114f0f2df071bcc4f9e24ef6b4d",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/blob/773a52944ba4747a18bd4ae9ade53fff041adcbc/20-ml-paper-writing/systems-paper-writing/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "把会议名单标记为 SCI 期刊。",
+        "固化提交年度、页数和会议时间。",
+        "宣称写作工具能替代真实实验。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "journal-atlas",
+      "repository": "Zaious/journal-atlas",
+      "url": "https://github.com/Zaious/journal-atlas",
+      "reference_commit": "574d27d84c270fc8da16df69d9bad929e5c341e0",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "CC-BY-SA-4.0 content; MIT scripts",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/Zaious/journal-atlas/blob/574d27d84c270fc8da16df69d9bad929e5c341e0/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "把期刊编辑范围、方法倾向和实际要求作为有出处的知识，而非只看指标。",
+      "modules": [
+        {
+          "name": "journal-atlas",
+          "capability_summary": "独立设计有出处的期刊画像与缺失项。",
+          "capability_ids": [
+            "journal-dossier"
+          ],
+          "stage": "investigate",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "README.md",
+              "blob_sha": "8adcd4570a81b2d3ab4919fa62240886d7825859",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/Zaious/journal-atlas/blob/574d27d84c270fc8da16df69d9bad929e5c341e0/README.md"
+            }
+          ]
+        },
+        {
+          "name": "journal-atlas-contribute",
+          "capability_summary": "按字段补充有来源的期刊知识或用户授权的经历，保留修订与核验状态；不向上游自动发布。",
+          "capability_ids": [
+            "journal-dossier",
+            "state-map"
+          ],
+          "stage": "maintain",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "README.md",
+              "blob_sha": "8adcd4570a81b2d3ab4919fa62240886d7825859",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/Zaious/journal-atlas/blob/574d27d84c270fc8da16df69d9bad929e5c341e0/README.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "复制或嵌入 CC BY-SA 的期刊条目、模板、文档。",
+        "将不完整语义档案扩张为广泛领域覆盖或把缺失当中性值。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "journal-finder-local",
+      "repository": "alexishuang1901-hub/journal-finder",
+      "url": "https://github.com/alexishuang1901-hub/journal-finder",
+      "reference_commit": "b8fb764bc4b60acb88538e579b165bf4745b3072",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/alexishuang1901-hub/journal-finder/blob/b8fb764bc4b60acb88538e579b165bf4745b3072/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "人文社科与环境健康交叉期刊的本地关键词/语义索引路径。",
+      "modules": [
+        {
+          "name": "find-journal",
+          "capability_summary": "可连接有权限的本地索引；没有语义模型时写明词法回退。",
+          "capability_ids": [
+            "venue-discovery",
+            "paper-search"
+          ],
+          "stage": "select",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "codex-skills/find-journal/SKILL.md",
+              "blob_sha": "c80cf306f69687a2244d50935a556981fad42b29",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/alexishuang1901-hub/journal-finder/blob/b8fb764bc4b60acb88538e579b165bf4745b3072/codex-skills/find-journal/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "local-index-refresh",
+          "capability_summary": "记录合法来源、版本、缺失字段和查询模型；当前值必须复核。",
+          "capability_ids": [
+            "state-map",
+            "indexing-metrics"
+          ],
+          "stage": "maintain",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "README.md",
+              "blob_sha": "55b794c5e626f78de6f433e6fdb16cb9ed7be465",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/alexishuang1901-hub/journal-finder/blob/b8fb764bc4b60acb88538e579b165bf4745b3072/README.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "复制当前 JCR 白名单、JIF/CAS 受限表格或固化期刊数量。",
+        "以国籍或机构占比估计个人录用率。",
+        "把 SPECTER2/FAISS 当作无依赖内置功能。",
+        "硬编码原作者电脑路径。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "cn-journal-selector",
+      "repository": "yibeixiaobai/journal-selector",
+      "url": "https://github.com/yibeixiaobai/journal-selector",
+      "reference_commit": "b5303f35310500302e4f72381451dc6d2d433bc8",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "not found",
+        "status": "no_license_file_found_in_recursive_tree_and_no_github_license_metadata",
+        "url": "https://github.com/yibeixiaobai/journal-selector/tree/b5303f35310500302e4f72381451dc6d2d433bc8",
+        "reuse": "No source text, code, templates or data imported. General capabilities are independently implemented."
+      },
+      "scope": "中文出版身份、机构认可、费用和时间约束的组合检查。",
+      "modules": [
+        {
+          "name": "journal-selector",
+          "capability_summary": "重写为机构认可与官方身份核验流程；只提供已核实官方投稿入口。",
+          "capability_ids": [
+            "regional-indexing",
+            "venue-discovery"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "SKILL.md",
+              "blob_sha": "80fc9447184df00ca0c9cef66dbbbb9495113929",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/yibeixiaobai/journal-selector/blob/b5303f35310500302e4f72381451dc6d2d433bc8/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "指定商业平台优先、强制导流按钮和直接采信平台报价。",
+        "低价、发文量或单一数据库未收录即定为不正规。",
+        "未验证录用率、个人身份资历推断和承诺见刊时间。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "awesome-journal-skills",
+      "repository": "brycewang-stanford/Awesome-Journal-Skills",
+      "url": "https://github.com/brycewang-stanford/Awesome-Journal-Skills",
+      "reference_commit": "932eb23331721b16e967c59f093781be1928b498",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/brycewang-stanford/Awesome-Journal-Skills/blob/932eb23331721b16e967c59f093781be1928b498/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "按具体期刊/会议和研究领域选择作者规则与稿件定位包。",
+      "modules": [
+        {
+          "name": "aamas-skills",
+          "capability_summary": "Agent 与多智能体会议侧的内容和规则核验；会议路径按需。",
+          "capability_ids": [
+            "agent-capabilities",
+            "venue-discovery"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": ".claude-plugin/marketplace.json",
+              "blob_sha": "f159ca5b0cba4b2b0adbb67a660b9ffbb85080a5",
+              "inspection_level": "marketplace_declaration_only",
+              "url": "https://github.com/brycewang-stanford/Awesome-Journal-Skills/blob/932eb23331721b16e967c59f093781be1928b498/.claude-plugin/marketplace.json",
+              "declared_package": "AAMAS-Skills"
+            }
+          ]
+        },
+        {
+          "name": "acl-skills",
+          "capability_summary": "NLP 评审、ARR 和提交规则需核实当前周期。",
+          "capability_ids": [
+            "agent-capabilities",
+            "venue-discovery"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": ".claude-plugin/marketplace.json",
+              "blob_sha": "f159ca5b0cba4b2b0adbb67a660b9ffbb85080a5",
+              "inspection_level": "marketplace_declaration_only",
+              "url": "https://github.com/brycewang-stanford/Awesome-Journal-Skills/blob/932eb23331721b16e967c59f093781be1928b498/.claude-plugin/marketplace.json",
+              "declared_package": "ACL-Skills"
+            }
+          ]
+        },
+        {
+          "name": "icse-skills",
+          "capability_summary": "软件工程贡献与实证/工件要求，会议不满足仅期刊约束。",
+          "capability_ids": [
+            "agent-systems",
+            "venue-discovery"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": ".claude-plugin/marketplace.json",
+              "blob_sha": "f159ca5b0cba4b2b0adbb67a660b9ffbb85080a5",
+              "inspection_level": "marketplace_declaration_only",
+              "url": "https://github.com/brycewang-stanford/Awesome-Journal-Skills/blob/932eb23331721b16e967c59f093781be1928b498/.claude-plugin/marketplace.json",
+              "declared_package": "ICSE-Skills"
+            }
+          ]
+        },
+        {
+          "name": "csj-skills",
+          "capability_summary": "仅指《计算机科学》(JSJKX)，不要扩张包的范围。",
+          "capability_ids": [
+            "regional-indexing",
+            "journal-dossier"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": ".claude-plugin/marketplace.json",
+              "blob_sha": "f159ca5b0cba4b2b0adbb67a660b9ffbb85080a5",
+              "inspection_level": "marketplace_declaration_only",
+              "url": "https://github.com/brycewang-stanford/Awesome-Journal-Skills/blob/932eb23331721b16e967c59f093781be1928b498/.claude-plugin/marketplace.json",
+              "declared_package": "Computer-Science-Journal-Skills"
+            }
+          ]
+        },
+        {
+          "name": "computer-science-conference-skills",
+          "capability_summary": "使用领域路由思路，所有具体 venue 按当前官方规则核查。",
+          "capability_ids": [
+            "venue-discovery"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": ".claude-plugin/marketplace.json",
+              "blob_sha": "f159ca5b0cba4b2b0adbb67a660b9ffbb85080a5",
+              "inspection_level": "marketplace_declaration_only",
+              "url": "https://github.com/brycewang-stanford/Awesome-Journal-Skills/blob/932eb23331721b16e967c59f093781be1928b498/.claude-plugin/marketplace.json",
+              "declared_package": "Computer-Science-Conference-Skills"
+            }
+          ]
+        },
+        {
+          "name": "engineering-technology-journal-skills",
+          "capability_summary": "工程期刊范围、应用证据和作者要求分开核验。",
+          "capability_ids": [
+            "journal-dossier"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": ".claude-plugin/marketplace.json",
+              "blob_sha": "f159ca5b0cba4b2b0adbb67a660b9ffbb85080a5",
+              "inspection_level": "marketplace_declaration_only",
+              "url": "https://github.com/brycewang-stanford/Awesome-Journal-Skills/blob/932eb23331721b16e967c59f093781be1928b498/.claude-plugin/marketplace.json",
+              "declared_package": "Engineering-Technology-Journal-Skills"
+            }
+          ]
+        },
+        {
+          "name": "discipline-breadth-and-per-journal-packs",
+          "capability_summary": "按实际学科装载所需规则；不宣称整个市场包已被安装或逐文件审计。",
+          "capability_ids": [
+            "intake",
+            "field-map",
+            "state-map"
+          ],
+          "stage": "select",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": ".claude-plugin/marketplace.json",
+              "blob_sha": "f159ca5b0cba4b2b0adbb67a660b9ffbb85080a5",
+              "inspection_level": "marketplace_declaration_only",
+              "url": "https://github.com/brycewang-stanford/Awesome-Journal-Skills/blob/932eb23331721b16e967c59f093781be1928b498/.claude-plugin/marketplace.json",
+              "declared_package": ".claude-plugin/marketplace.json"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "复制庞大 venue 配置、过期年度规则或出版社模板。",
+        "把《计算机科学》单刊包误认为国际 CS 期刊总包。",
+        "把 AAMAS、ACL、ICSE 等会议算进 SCI 期刊。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "food-nutrition-skills",
+      "repository": "PangenomeAI/academic-skills-food-nutrition",
+      "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition",
+      "reference_commit": "01b2158a48408a8d0e56238c04075080c793d53c",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "食品、营养与农业的领域研究流程和目标期刊作者规则路由。",
+      "modules": [
+        {
+          "name": "journal-selector",
+          "capability_summary": "选定食品/营养/农业期刊后映射作者要求；它在上游是共享过程。",
+          "capability_ids": [
+            "journal-dossier"
+          ],
+          "stage": "investigate",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "journal-selector/SKILL.md",
+              "blob_sha": "69f86b17a128a74f1b2d92920c9e48600c809266",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/journal-selector/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "food-research / agri-research",
+          "capability_summary": "在相应领域建立问题、文献与方法图谱。",
+          "capability_ids": [
+            "field-map"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "food-research/SKILL.md",
+              "blob_sha": "865d1c63ca9f427b3b12b72648b32ea3811ea1fe",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/food-research/SKILL.md"
+            },
+            {
+              "path": "agri-research/SKILL.md",
+              "blob_sha": "4436344b433105a2f73ace633a627cad1790be0a",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/agri-research/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "food-deep-research / agri-deep-research",
+          "capability_summary": "按研究设计与纳入范围组织深入综述。",
+          "capability_ids": [
+            "search-protocol",
+            "evidence-review"
+          ],
+          "stage": "explore",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "food-deep-research/SKILL.md",
+              "blob_sha": "9fc0f21d1f351b0174535548dcb4fa9faf12519d",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/food-deep-research/SKILL.md"
+            },
+            {
+              "path": "agri-deep-research/SKILL.md",
+              "blob_sha": "cd331c7613ae9ef6c7f8914f83b9cf94da8b8d73",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/agri-deep-research/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "food-paper / agri-paper",
+          "capability_summary": "依据真实食品/农业研究证据和期刊规范写作。",
+          "capability_ids": [
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "food-paper/SKILL.md",
+              "blob_sha": "cbcb4e42f52199096ee8faca31367af08a0d709b",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/food-paper/SKILL.md"
+            },
+            {
+              "path": "agri-paper/SKILL.md",
+              "blob_sha": "76a267e5911c0c81f0d5e86fcc9a56cfb630a2c5",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/agri-paper/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "food-review / agri-review",
+          "capability_summary": "应用相应的实验、样本和报告检查。",
+          "capability_ids": [
+            "peer-review",
+            "statistics-robustness"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "food-review/SKILL.md",
+              "blob_sha": "b7df065990fbb9744277d454dfd6b5568eade270",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/food-review/SKILL.md"
+            },
+            {
+              "path": "agri-review/SKILL.md",
+              "blob_sha": "86b8d1d45abcf75a9e9248014a6652294bc6013f",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/agri-review/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "food-pipeline / agri-pipeline",
+          "capability_summary": "共享状态和阶段编排。",
+          "capability_ids": [
+            "intake",
+            "field-map",
+            "state-map"
+          ],
+          "stage": "maintain",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "food-pipeline/SKILL.md",
+              "blob_sha": "a8bc96c61d648862471a492361c5f84d73980aa6",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/food-pipeline/SKILL.md"
+            },
+            {
+              "path": "agri-pipeline/SKILL.md",
+              "blob_sha": "5de030f59860982ada6d271d8afec85fb78bad89",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/agri-pipeline/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "food-fetch",
+          "capability_summary": "只读取有权访问的文献和数据。",
+          "capability_ids": [
+            "paper-search"
+          ],
+          "stage": "explore",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "food-fetch/SKILL.md",
+              "blob_sha": "8bbf964bdfce7ecf4354ccc1b5754576bf167f78",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/food-fetch/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "food-figure",
+          "capability_summary": "真实数据图和概念插图分开。",
+          "capability_ids": [
+            "figure-table-audit",
+            "manuscript-writing"
+          ],
+          "stage": "write",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "food-figure/SKILL.md",
+              "blob_sha": "2ffb07d06a08d715558060e0b40fa5d5624778f3",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/food-figure/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "food-proposal",
+          "capability_summary": "写问题、设计、资源和里程碑，不生成不存在的初步结果。",
+          "capability_ids": [
+            "hypothesis-plan",
+            "manuscript-writing"
+          ],
+          "stage": "design",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "food-proposal/SKILL.md",
+              "blob_sha": "7b2d8566336732223b85673b5967c3d82721e85b",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/food-proposal/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "food-ppt / agri-ppt",
+          "capability_summary": "需要宿主幻灯片生成和渲染工具。",
+          "capability_ids": [
+            "dissemination",
+            "manuscript-writing"
+          ],
+          "stage": "disseminate",
+          "integration_mode": "optional_external_tool",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "food-ppt/SKILL.md",
+              "blob_sha": "3cc23b3013740454369bc705294441e3e69c4537",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/food-ppt/SKILL.md"
+            },
+            {
+              "path": "agri-ppt/SKILL.md",
+              "blob_sha": "b51d3d2bd98e315685bbda1dd2a428b192e1ec36",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/PangenomeAI/academic-skills-food-nutrition/blob/01b2158a48408a8d0e56238c04075080c793d53c/agri-ppt/SKILL.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "复制期刊规则数据库或把旧覆盖数量当当前有效规则。",
+        "让食品领域模板决定 Agent/软件论文的研究设计。",
+        "把编排说明称为内置训练、实验或图像生成引擎。",
+        "按期刊分区机械排除 Q4 文献；证据综述按研究本身和协议纳入，不能把期刊声望当研究质量。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    },
+    {
+      "id": "longtable",
+      "repository": "HosungYou/LongTable",
+      "url": "https://github.com/HosungYou/LongTable",
+      "reference_commit": "eed627a85f0db7ea218beb56c61fde36c975a4e4",
+      "default_branch": "main",
+      "checked_on": "2026-10-20",
+      "license": {
+        "declaration": "MIT",
+        "status": "license_declaration_checked",
+        "url": "https://github.com/HosungYou/LongTable/blob/eed627a85f0db7ea218beb56c61fde36c975a4e4/LICENSE",
+        "reuse": "Reference only; no upstream source files or datasets imported."
+      },
+      "scope": "跨会话研究状态、证据谱系、明确分歧、同行讨论和可验证研究包。",
+      "modules": [
+        {
+          "name": "longtable-start",
+          "capability_summary": "保存研究问题、决策依据、未决项和当前状态。",
+          "capability_ids": [
+            "state-map"
+          ],
+          "stage": "maintain",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "README.md",
+              "blob_sha": "7ddf8bb2167395d2b8d264b22657b5de8bd6b8c8",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/HosungYou/LongTable/blob/eed627a85f0db7ea218beb56c61fde36c975a4e4/README.md"
+            }
+          ]
+        },
+        {
+          "name": "longtable-interview",
+          "capability_summary": "将张力转换为需要证据回答的具体问题，已清晰输入无需重复访谈。",
+          "capability_ids": [
+            "hypothesis-plan"
+          ],
+          "stage": "design",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "README.md",
+              "blob_sha": "7ddf8bb2167395d2b8d264b22657b5de8bd6b8c8",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/HosungYou/LongTable/blob/eed627a85f0db7ea218beb56c61fde36c975a4e4/README.md"
+            }
+          ]
+        },
+        {
+          "name": "longtable-reviewer / panel",
+          "capability_summary": "保留各角色分歧与合成依据；真实上游 panel 工具未嵌入。",
+          "capability_ids": [
+            "peer-review"
+          ],
+          "stage": "review",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "README.md",
+              "blob_sha": "7ddf8bb2167395d2b8d264b22657b5de8bd6b8c8",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/HosungYou/LongTable/blob/eed627a85f0db7ea218beb56c61fde36c975a4e4/README.md"
+            }
+          ]
+        },
+        {
+          "name": "venue-search-and-journal-profiles",
+          "capability_summary": "把范围、指南与同刊文章形式构成可审计的目标档案。",
+          "capability_ids": [
+            "journal-dossier"
+          ],
+          "stage": "investigate",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "README.md",
+              "blob_sha": "7ddf8bb2167395d2b8d264b22657b5de8bd6b8c8",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/HosungYou/LongTable/blob/eed627a85f0db7ea218beb56c61fde36c975a4e4/README.md"
+            }
+          ]
+        },
+        {
+          "name": "durable-checkpoints-and-evidence-package",
+          "capability_summary": "独立实现本项目的日志和引用关系，外部传输需另行连接。",
+          "capability_ids": [
+            "state-map"
+          ],
+          "stage": "maintain",
+          "integration_mode": "host_workflow",
+          "disposition": "adapted_as_original_workflow",
+          "upstream_evidence": [
+            {
+              "path": "README.md",
+              "blob_sha": "7ddf8bb2167395d2b8d264b22657b5de8bd6b8c8",
+              "inspection_level": "module_frontmatter_or_source_sections",
+              "url": "https://github.com/HosungYou/LongTable/blob/eed627a85f0db7ea218beb56c61fde36c975a4e4/README.md"
+            }
+          ]
+        }
+      ],
+      "not_adopted": [
+        "复制 Node/TypeScript CLI、provider hooks 或 MCP 并宣称内嵌。",
+        "强制单问题访谈节奏和所有阶段人工阻断。",
+        "把模型角色分工当作独立人类评审。"
+      ],
+      "upstream_runtime_tested": false,
+      "note": "Module entries are provenance mappings, not separately installed tools. Some entries describe submodes or grouped domain counterparts."
+    }
+  ],
+  "historical_sources": [
+    {
+      "repository": "keros68/sci-select",
+      "url": "https://github.com/keros68/sci-select",
+      "relationship": "Predecessor to keros68/xiaoyu-skill/skills/sci-select",
+      "inspection": "Earlier survey read original SKILL and README; current integration audit pins the successor above.",
+      "runtime_tested": false
+    }
+  ],
+  "scholarly_services": [
+    {
+      "name": "Crossref",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "OpenAlex",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "DBLP",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "Semantic Scholar",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "arXiv",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "PubMed",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "PMC",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "Europe PMC",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "bioRxiv",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "medRxiv",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "CORE",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "Unpaywall",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "OpenCitations",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "PubTator3",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "Zenodo",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "Figshare",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "ROR",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "BioStudies",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "DOAJ",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "B!SON",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    },
+    {
+      "name": "JANE",
+      "availability": "Check at task time; API or connector availability and access rights vary.",
+      "bundled_by_manifest": false
+    }
+  ],
+  "source_classes": [
+    "Official publisher/journal pages for scope, article formats, fees and submission policies.",
+    "Index owner and versioned official catalogs for coverage or rank claims.",
+    "Scholarly metadata APIs for discovery and DOI/ISSN metadata, within their actual remit.",
+    "Aggregators and community reports for clearly attributed leads or experience samples.",
+    "Local user-supplied catalogs only with license/access provenance; no unlicensed redistribution."
+  ],
+  "academic_boundaries": [
+    "No submission or acceptance outcome guarantee.",
+    "Do not equate lower quartiles, OA model, low fees or high publication volume with easier acceptance or poor integrity.",
+    "Do not treat a model panel as independent human screening or actual journal peer review.",
+    "Unknown is separate from failed filters; citations do not establish that a source supports a claim until checked.",
+    "Use source-level evidence quality for reviews; journal rank alone is not a study inclusion or evidence-quality criterion.",
+    "Sensitive author declarations and external communications require actual facts and existing user authorization."
+  ]
+}

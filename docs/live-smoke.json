@@ -1,0 +1,52 @@
+[
+  {
+    "provider": "openalex",
+    "source_url": "https://api.openalex.org/works?search=agent+memory&per_page=1&page=1",
+    "retrieved_at": "2026-10-20T03:07:30+00:00",
+    "count": 0,
+    "error": {
+      "code": "network_error",
+      "message": "Provider could not be reached within the request limits.",
+      "retryable": true
+    },
+    "warnings": []
+  },
+  {
+    "provider": "crossref",
+    "source_url": "https://api.crossref.org/works?query.bibliographic=agent+memory&rows=1",
+    "retrieved_at": "2026-10-20T03:07:30+00:00",
+    "count": 0,
+    "error": {
+      "code": "network_error",
+      "message": "Provider could not be reached within the request limits.",
+      "retryable": true
+    },
+    "warnings": []
+  },
+  {
+    "provider": "dblp",
+    "source_url": "https://dblp.org/search/publ/api?q=agent+memory&format=json&h=1&f=0&c=0",
+    "retrieved_at": "2026-10-20T03:07:30+00:00",
+    "count": 0,
+    "error": {
+      "code": "network_error",
+      "message": "Provider could not be reached within the request limits.",
+      "retryable": true
+    },
+    "warnings": []
+  },
+  {
+    "provider": "arxiv",
+    "source_url": "https://export.arxiv.org/api/query?search_query=all%3A%22agent+memory%22&start=0&max_results=1&sortBy=relevance&sortOrder=descending",
+    "retrieved_at": "2026-10-20T03:07:30+00:00",
+    "count": 0,
+    "error": {
+      "code": "network_error",
+      "message": "Provider could not be reached within the request limits.",
+      "retryable": true
+    },
+    "warnings": [
+      "arXiv plain query uses an all-field phrase; use arxiv_advanced for explicit boolean syntax."
+    ]
+  }
+]

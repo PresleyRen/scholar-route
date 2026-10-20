@@ -1,0 +1,36 @@
+name: Validate ScholarRoute
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, checked 2026-10-20
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5, checked 2026-10-20
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check package and source mappings
+        run: python tools/validate_package.py
+      - name: Check README registry tables
+        run: python tools/update_readme.py --check
+      - name: Run offline regression suite
+        run: python tests/run.py
+      - name: Run synthetic end-to-end demo
+        run: |
+          python examples/run_demo.py --project ./work/ci-demo
+          python skills/scholar-route/scripts/scholar_route.py validate --project ./work/ci-demo
