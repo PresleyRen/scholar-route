@@ -15,6 +15,10 @@ Use the explicit domain IDs below with the CLI. Automatic keywords suggest profi
 | `humanities` | History, philosophy, linguistics and related work | Primary texts, interpretations, context, provenance, counterarguments and disciplinary methods. |
 | `general` | Unrecognized or emerging fields | Establish an explicit vocabulary, primary sources, methods and evaluation unit; do not substitute a CS rubric automatically. |
 
+## Journal readership
+
+At journal selection, a domain such as `computer-science` is a starting point. Read the main table to identify what is predicted or changed, the unit being evaluated, and the baseline. Intent labels and tool choices may share input text but target different reviewers. Generating SQL for a question and improving a database query plan also address different audiences. A database used only to store logs is infrastructure. When ontology quality and cross-document retrieval both appear, use the measured contribution to name the primary readership and keep the secondary audience visible. If you only have a title or two equally plausible outcomes, state what evidence would decide. See [journal-selection.md](journal-selection.md) for the full procedure.
+
 ## Cross-domain cases
 
 - Clinical LLM decision-support Agent: Agent + CS + biomedicine. Software benchmark results do not establish clinical efficacy.

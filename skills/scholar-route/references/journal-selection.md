@@ -1,41 +1,47 @@
 # Journal discovery, dossier and evidence-based submission order
 
-## Workflow
+## Start from the manuscript
 
-1. Build a manuscript profile: object/question, mechanism, contribution type, method role, evidence level, intended readers, language, article type, keywords and known constraints. Derive terms from the content, not the LaTeX template.
-2. Route discovery by field. Combine similar papers, specialist venues, official journal lists and publisher matchers when useful. Use English/Chinese query variants and adjacent terminology where appropriate.
-3. Retrieve comparable publications, preferably including recent work under a justified window and seminal methodological precedents. Distinguish journal articles, conferences and preprints. Raw matching-paper volume is not a fit score; account for large-journal volume and inspect actual examples.
-4. Establish exact title, publisher, canonical URL and ISSN/eISSN/ISSN-L where supported. Preserve renamed titles and related editions. Similar names alone must not merge identities.
-5. Build the dossier and verify hard requirements with current competent sources. Use a known-journal route when the user already named a target.
-6. Put candidates into eligible, unverified or excluded pools. A source lookup failure creates a verification task, not a false numerical value or silent exclusion.
-7. Assess topic, methods, article type, readership and comparable-paper fit with reasons. Keep this judgment separate from fact coverage, reputation and practical constraints.
-8. Give an evidence-based submission order. Explain why a candidate comes first, which changes improve fit, what must be verified and when a different target makes sense. Do not describe any venue as a guaranteed acceptance.
-9. Refresh decisive facts before preparing the actual submission package, then use the publication workflow and Quick/Full preflight.
+For a short request such as “给这篇稿选刊”, open the project's abstract, contribution statement and main results table. Reuse its saved budget, index, publication deadlines, language and region preferences. Give the current request precedence. If only a topic is available, make a provisional shortlist and identify the missing comparison or result that could change the ranking. Use the journal stage for this task.
+
+Describe the measured contribution in one sentence: inputs, intervention, output, evaluation unit, primary metric and intended readers. Use the research question and main table to confirm the primary track, adding secondary tracks only where the manuscript supplies independent evidence. For AI manuscripts, run the router and then check its suggestions against the following distinctions.
+
+| Evidence in the main experiment | Where to look for comparable work |
+|---|---|
+| Utterance → intent, multiple labels, slots or abstention. Intent F1, recall or false acceptance. | NLP, dialogue and classification. Look for the same label regime and test conditions. |
+| Request → selected tool, arguments or next action. Tool-selection accuracy or invalid-call rate. | Agent tool use and routing. Service or component selection alone measures one step. |
+| Task → sequence of actions → checked final state. Task success, recovery, cost or latency across trajectories. | End-to-end Agent capabilities or systems. Separate work on orchestration overhead from work on the model's decisions. |
+| Natural language → SQL or database answer. Execution accuracy or result equivalence. | Database interfaces and semantic parsing (Text-to-SQL). A database that only stores Agent logs supplies infrastructure. |
+| Workload → learned estimate, index or execution plan. Cardinality error, plan quality, throughput or query latency. | AI for database systems (AI4DB). For a broad “DBAI” request, investigate both this track and database interfaces until the manuscript resolves the distinction. |
+| Class/relation or constraint model evaluated for coverage, validity or reuse; or document retrieval/answers evaluated for evidence and correctness. | Ontology resources or knowledge engineering for the former; retrieval/RAG for the latter. Combine when the paper measures the modeling contribution as well as downstream retrieval. |
+| AI applied to an industry or scientific task. Results are validated against domain outcomes, stakeholders or field-specific baselines. | Domain or applied journals read by the people who would use that result. Keep general AI venues in view if the paper also validates a transferable method. |
+
+## Discover and verify candidates
+
+1. Search for the closest journal papers in the manuscript's primary and secondary tracks, using task, baseline and metric in the query. Add specialist venues and regional journals. For a fee-sensitive English SCI search, prioritize verified zero or low mandatory fees. Include journals sponsored in China, Türkiye, Malaysia, Jordan, Serbia or other regions relevant to the request, alongside affordable international specialist venues. Geography guides discovery. The manuscript and journal's evidence determine fit. Apply hard index or budget exclusions only when requested or saved in the project.
+2. For the default fee-sensitive search, look for original Chinese author/blogger reports and identifiable editors’ public statements as leads, alongside database and journal searches. For example, search an exact journal title with “投稿经验 / 版面费 / 审稿周期”, then search the journal site for signed editorials, article-type criteria or calls. Use any screenshots or links already provided in the research project. Respect a narrower or offline-only request. For a claim such as “水刊”, “好发” or “沾边就收”, recover the original post or screenshot if available. Record platform, author, date, URL or supplied image location, exact journal title/ISSN and what was claimed. Search distinctive wording for an original when a post is a repost. Keep an unidentified title as an unresolved lead. Match the ISSN and official journal URL before assigning fees, ranks, turnaround or the statement to a journal.
+3. Look for what the speaker can establish. A reviewer describes individual practice. A named editor's editorial can describe a particular article type. A guest editor's call covers its special issue and dates. Check the current official author instructions or editorial policy for journal-wide criteria. When someone says incremental research is welcome, identify the exact contribution the policy accepts (such as a replication or a reusable resource) and the validation, license or documentation that article type requires. Give the post and the primary source separately; preserve any discrepancy.
+4. Open actual publications in the same journal. Record DOI or stable URL, year, article type, regular issue or special collection, and the specific shared task, method and evaluation. Include the most important difference. Read at least the abstract for a fit judgment and use the full paper when conclusions depend on experimental details. Record the search scope and unresolved fit if no comparable paper can be identified.
+5. Apply the dossier checks below, classify each candidate, and recommend a submission order. A new deadline, policy, scope or charge can change the order; refresh decisive facts before submission. For an explicitly named journal, go directly to its dossier.
 
 ## Minimum dossier
 
 | Dimension | Record |
 |---|---|
-| Identity | Exact title, ISSNs, publisher, official URL, title history and journal/conference distinction. |
-| Scope | Official scope, intended readers, accepted contribution/article types, explicit exclusions and exact supporting source. |
-| Comparable papers | Identified articles with DOI/URL, year, relevant mechanism/method, real similarity and mismatch. Read beyond metadata for fit judgments. |
-| Indexing | Responsible index authority, collection, checked date and identity match. Verify SCIE separately from ESCI or generic WoS. |
-| Metrics | Named system, edition/year, category and value. Distinguish JCR, SJR and CAS; do not infer unavailable JCR fields from CAS or a local title index. |
-| Charges | Chosen publication route, mandatory APC/page/color/submission charges, optional OA, currency, taxes if applicable, waivers/conditions and total basis. |
-| Timelines | Desk-inclusive first decision, external review decision, acceptance and publication endpoints; statistic type, population/period and source. |
-| Requirements | Initial/revision/final stage, article type, word/figure/table/reference rules, file format, data/code, AI use and relevant reporting/declaration policies. |
-| Publication integrity | Verifiable ownership/contact/policies, peer-review transparency, corrections, indexing claims and concrete discrepancies. Lack of DOAJ or high volume alone is insufficient for accusations. |
-| Confidence | Primary sources checked, supporting secondary/anecdotal material, missing facts, contradictions and next verification. |
+| Identity and status | Exact title, ISSNs, sponsoring institution/editorial location, publisher, official submission URL, title changes and whether the relevant track is accepting submissions. Flag obsolete suspension notices and expired calls when current status is uncertain. |
+| Scope and precedent | Target readers, article types, exclusions, primary source and comparable studies. For editorial statements record the speaker, role, date and scope of the statement. |
+| Indexing and rank | Match ISSN to the current responsible index, e.g. Clarivate MJL for SCIE versus ESCI. For JCR give the JIF data year, release/edition, and JIF quartile for each relevant category. Label a dated institutional reproduction or an inaccessible current record explicitly. Keep CAS editions and SJR separate. |
+| Costs to this author | Specify the article type and chosen route, payer (individual or institution), currency and effective date. Calculate the mandatory total for that case, including submission, APC, compulsory pages, length charges and applicable taxes. List elective OA/print color separately. Treat affiliation agreements or waivers as conditional until eligibility is verified. Zero APC alone establishes only the APC amount. |
+| Time to a usable result | Separate submission → first decision, external-review decision, acceptance, first online and issue publication. State whether each figure is a journal statistic, an editor's scheduled milestone, a community report, or an observed article date. Record statistic type, period, population and endpoint where available. |
+| Requirements and integrity | Current author instructions for the submission stage, scope, peer review, terms, article materials, data/code, declarations, publisher ownership and corrections. Retain contrary evidence and unresolved requirements. |
 
-Use current official instructions as requirements. Recent articles show conventions, not binding submission limits. Never copy proprietary templates, a licensed journal metrics table, personal reviewer lists or a skill's example IF/acceptance data into a reusable public skill.
+For a relevant timeline, inspect comparable published articles with visible histories. List DOI, manuscript type, original dates and calculated calendar days for each supported interval. Report how many papers had usable dates and that these are accepted papers. Preserve month-only issue dates, combined “accepted/published online” fields, and disagreements between PDF and platform records. Omit individual intervals whose endpoints cannot be established. When the journal gives only first decision or a final-manuscript deadline, mark the actual time to publication unknown. Retain these case histories in source-linked dossier notes, distinct from official statistics.
 
-## What “relatively attainable” means
+Keep the user's source posts, author-specific payment assumptions and unpublished work in the project. Keep the distributed skill reusable. Do not redistribute licensed metrics tables or proprietary templates.
 
-Explain attainable fit through actual evidence: the journal publishes this contribution type, recent comparable studies have relevant methods/evidence, the manuscript meets its scope and basic requirements, and practical costs/resources are acceptable. Assess repairable weaknesses honestly. A lower quartile cannot establish acceptance likelihood; strong topical fit cannot compensate for false or insufficient results.
+## Interpret “relatively attainable”
 
-Official journal-level acceptance statistics can be reported descriptively if the definition, period and source are available. They are not personal predictions. A simulated review may prioritize revisions but cannot calibrate a manuscript's chance of acceptance.
-
-If the user requests “冲刺 / 主投 / 备选”, use these as strategy labels and explain the assumed scope/evidence differences. Do not invent percentages. Never invent candidates to fill a fixed 2+2+1 template. For a fee-sensitive first paper, prioritize confirmed publication routes and avoid treating optional OA as mandatory or unknown cost as zero.
+Base the recommendation on the actual contribution, the journal's editorial threshold for that article type, comparable papers, practical costs and current submission status. State which limitation of the manuscript could lead to desk rejection. Report an official acceptance statistic only with its definition, time period and source. A person's chance of acceptance is unknown. Offer a stretch, primary or backup route where the evidence supports one; fixed quotas and a low quartile alone do not justify a candidate.
 
 ## Bundled constraint checks
 
@@ -60,6 +66,6 @@ Conflicting updates are preserved. The `resolve` command adopts the currently re
 
 ## Outputs
 
-Give a manuscript profile, complete candidate table with pool and reasons, detailed dossiers for useful targets, a practical submission order, unknown verification tasks and a current source ledger. Include only relevant fields and state actual coverage. Use Chinese for discussion when requested and the intended manuscript language for manuscript-ready text.
+Lead with the primary track, the evidence in the manuscript and the best supported route. For a Chinese request, present a compact table with 方向与同刊先例、候选及状态、收录与逐学科分区、个人必付费用、投稿到录用/上线时间、依据与待核项. Name the best fit, the lowest confirmed out-of-pocket route and the time to budget for the author's actual deadline where available. Explain conflicts or missing facts that would change the order. Retain the full candidate pool, dates and sources in the project for later verification. Record each consequential recommendation as a project decision with its journal and source IDs, including why the runner-up ranks lower. Put the original timeline dates, article histories and scoped editorial quotations in source-linked dossier notes. The generated REPORT.md can be rebuilt from records; keep research notes and author decisions in the project rather than editing an export.
 
 Use the live source routes in `sources-and-tools.md` and the relevant publication stages in `publication.md`. All source-specific tradeoffs and rejected shortcuts are recorded in `conflicts.md`.

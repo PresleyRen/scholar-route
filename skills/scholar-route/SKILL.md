@@ -1,6 +1,6 @@
 ---
 name: scholar-route
-description: "Explore a research field and carry evidence through literature mapping, novelty assessment, reproducible experiments, journal selection, manuscript review, submission preparation and revisions. Use for 领域探索、文献综述、Agent 能力研究、Agent 程序与系统实验、SCI/SSCI/中文核心选刊、低费用期刊、单刊调查、论文审查及投稿返修. Route by domain and stage; use all relevant modules for a full project, with explicit evidence, unknowns and conflicts."
+description: "Explore a research field and carry evidence through literature mapping, novelty assessment, reproducible experiments, journal selection, manuscript review, submission preparation and revisions. Use for 领域探索、文献综述、Agent 能力研究、Agent 程序与系统实验、SCI/SSCI/中文核心选刊、低费用期刊、审刊、单刊调查、实验后写论文、核稿及投稿返修. Route by domain and stage; use all relevant modules for a full project, with explicit evidence, unknowns and conflicts."
 ---
 
 # ScholarRoute · 研途
@@ -15,11 +15,28 @@ Turn a field or manuscript into an evidence-linked research and publication proj
 4. For 完整探索 / 全流程, plan all applicable stages and complete those currently feasible. Leave concrete next experiments or dependencies for stages needing new results. Never mark unperformed experiments, unread papers or unsent submissions as completed.
 5. Ask only when missing information blocks a material decision; finish useful reversible work meanwhile. Requests to draft or prepare do not authorize sending, submitting, paying, signing or publishing. Reuse explicit authorization already given.
 
+## Codex short requests
+
+The user's current request takes precedence over saved project choices, then these defaults. In the current research project, read the relevant abstract, contribution, main result table and its underlying experiment output where available. Resume from the last verified stage. A short request is enough to do the work.
+
+| What the user says | What to do |
+|---|---|
+| 用 $scholar-route 给这篇论文选刊。 | Use `journal`. Compare the most relevant audiences against the main experiment, investigate real candidates using [journal-selection.md](references/journal-selection.md), record the evidence and give a submission order. A router result by itself does not complete the task. |
+| 用 $scholar-route 查一下这本期刊适不适合。 | Use `dossier` for that journal. Match its title and ISSN, then check the applicable article type, comparable papers, editorial criteria, fees, indexing and time to publication. |
+| 用 $scholar-route 根据实验结果写论文。 | Use `write`. Trace each proposed claim to a run, data split, baseline and main result. Draft Methods and Results from those records, then frame the introduction/discussion and write the abstract. Identify the file and table behind each headline number in the working notes. |
+| 用 $scholar-route 实验做完了，按我的习惯写到投稿前。 | Start with the writing workflow above. Independently audit the draft against original outputs and cited papers. Shortlist journals, adapt the manuscript to the selected target and prepare the submission package. Use [publication.md](references/publication.md) for writing, audit and preflight. If several targets are still plausible, finish shared materials and flag the author decision. |
+| 用 $scholar-route 核对这篇论文。 | Use `audit`. Recalculate the main comparisons from their source files where available, check citation support, figures, prose and limits, and return manuscript locations, severity and grounded corrections. Preserve inconclusive and negative results. |
+
+For Chinese-language requests, discuss findings in Chinese and draft manuscript prose in English unless the user or target specifies another language. For English SCI journal selection, prefer SCIE and a regular publication route with zero or low **total mandatory author charges**. Include affordable regional journals and international specialist venues. Only record a hard budget, index cutoff, country restriction or deadline if the project or user actually specifies it. Keep personal affiliations, budgets and unpublished manuscripts in the research project.
+
+Begin the journal recommendation with the primary readership and the measured outcome that supports it. For a short fee-sensitive selection request, also look for original Chinese author/blogger reports and signed editorials describing suitable contributions. Follow up screenshots or links already supplied in the project. Verify each lead against comparable papers and current official sources. If a channel yields no attributable original, say so and continue with the other evidence. Give the actual mandatory cost, category-specific ranking with year, and submission-to-acceptance and online timing where known. Retain the source and the gap for an unknown. Label actionable choices 主投 / 备选 and distinguish 待核 / 排除. Apply this journal workflow only to venue decisions.
+
 ## Commands
 
 Resolve paths relative to this SKILL.md; use the user's selected project directory. Core commands require Python 3.11+ and the standard library.
 
 ```bash
+python scripts/scholar_route.py route --topic "AI4DB cardinality estimation and query-plan latency" --stage journal
 python scripts/scholar_route.py route --topic "LLM Agent memory and recovery" --stage full
 python scripts/scholar_route.py init --project /path/to/research --topic "LLM Agent memory and recovery" --domains agent-ai,computer-science
 python scripts/scholar_route.py search --provider openalex --query "language agent memory" --limit 5

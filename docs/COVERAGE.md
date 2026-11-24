@@ -53,13 +53,13 @@
 | `data-collection` | [references/exploration.md](../skills/scholar-route/references/exploration.md) | Agent 按工作流执行 | 按该模块具体产物验收 |
 | `state-map` | [references/data-contracts.md](../skills/scholar-route/references/data-contracts.md) | project_store.py, reports.py | CF18, CF25, CF26, CF28 |
 | `manuscript-profile` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | Agent 按工作流执行 | 按该模块具体产物验收 |
-| `venue-discovery` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | Agent 按工作流执行 | CF10 |
+| `venue-discovery` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | route_core.py, reports.py | CF10 |
 | `venue-identity` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | project_store.py, venue_audit.py | CF09 |
 | `journal-dossier` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | Agent 按工作流执行 | 按该模块具体产物验收 |
-| `indexing-metrics` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | project_store.py, venue_audit.py | CF04, CF05, CF06, CF33 |
-| `costs-timelines` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | project_store.py, venue_audit.py | CF06, CF12, CF13 |
+| `indexing-metrics` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | project_store.py, venue_audit.py, reports.py | CF04, CF05, CF06, CF33 |
+| `costs-timelines` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | project_store.py, venue_audit.py, reports.py | CF06, CF12, CF13 |
 | `journal-integrity` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | Agent 按工作流执行 | CF14 |
-| `fit-comparison` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | venue_audit.py | CF02, CF04, CF10, CF11, CF30 |
+| `fit-comparison` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | venue_audit.py, reports.py | CF02, CF04, CF10, CF11, CF30 |
 | `submission-plan` | [references/journal-selection.md](../skills/scholar-route/references/journal-selection.md) | venue_audit.py | CF02, CF03, CF07 |
 | `argument-audit` | [references/publication.md](../skills/scholar-route/references/publication.md) | Agent 按工作流执行 | CF21 |
 | `manuscript-writing` | [references/publication.md](../skills/scholar-route/references/publication.md) | Agent 按工作流执行 | CF16, CF21 |

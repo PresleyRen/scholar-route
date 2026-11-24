@@ -1,0 +1,70 @@
+[
+  {
+    "id": "intent-nlu",
+    "title": "意图识别与语义理解",
+    "domain": "computer-science",
+    "terms": ["intent classification", "intent recognition", "intent detection", "out of scope intent", "slot filling", "multi label text classification", "意图识别", "意图检测", "意图分类", "多意图", "槽位填充", "多标签文本分类"],
+    "outcomes": ["intent f1", "intent accuracy", "intent classification accuracy", "意图F1", "意图准确率", "意图识别准确率", "意图分类准确率"],
+    "check": "核对主表是否以话语为样本，比较意图标签、槽位或域外意图的识别效果。"
+  },
+  {
+    "id": "tool-routing",
+    "title": "工具选择与调用路由",
+    "domain": "agent-ai",
+    "terms": ["tool selection", "tool routing", "tool retrieval", "function selection", "工具选择", "工具路由", "工具检索", "函数选择"],
+    "outcomes": ["tool selection accuracy", "tool routing accuracy", "tool recall@k", "工具选择准确率", "工具路由准确率", "工具召回率"],
+    "check": "核对主要比较对象是否为路由器，评价单位是否为一次工具选择或调用。"
+  },
+  {
+    "id": "agent-systems",
+    "title": "端到端 Agent 系统",
+    "domain": "agent-ai",
+    "terms": ["end to end agent", "end to end agents", "agent planning", "agent workflow", "multi agent coordination", "端到端智能体", "多智能体协作", "智能体规划", "智能体工作流"],
+    "outcomes": ["task completion rate", "end to end task success", "end to end success rate", "任务完成率", "端到端成功率", "任务成功率"],
+    "context": ["agent", "agents", "agentic", "智能体", "工具路由", "工具调用", "agent系统", "agent 系统"],
+    "check": "核对是否对完整任务轨迹计分，并与可执行的 Agent 系统基线比较。"
+  },
+  {
+    "id": "text-to-sql",
+    "title": "自然语言数据库接口与 Text-to-SQL",
+    "domain": "computer-science",
+    "terms": ["text to sql", "nl2sql", "nl to sql", "natural language to sql", "natural language database interface", "sql generation", "自然语言转SQL", "自然语言转 SQL", "自然语言到SQL", "自然语言到 SQL", "文本到SQL", "文本到 SQL", "文本转SQL", "文本转 SQL", "SQL生成", "SQL 生成"],
+    "outcomes": ["sql execution accuracy", "sql exact match", "SQL执行准确率", "SQL执行正确率", "SQL精确匹配率"],
+    "check": "核对输出是否为 SQL，并查找跨数据库划分、执行正确率和数据库接口基线。"
+  },
+  {
+    "id": "ai4db",
+    "title": "数据库系统与 AI4DB",
+    "domain": "computer-science",
+    "terms": ["ai4db", "ai for databases", "learned index", "learned indexes", "learned indices", "cardinality estimation", "cardinality estimator", "join cardinality", "query optimizer", "database query optimization", "database query optimisation", "learned query optimization", "database tuning", "基数估计", "基数估算", "基数预测", "数据库连接的基数", "数据库连接基数", "查询优化器", "查询计划优化", "学习型索引", "学习索引", "数据库调优"],
+    "outcomes": ["cardinality q-error", "query plan latency", "基数估计误差", "查询计划延迟"],
+    "metric_context": ["database", "databases", "cardinality", "ai4db", "数据库", "查询计划", "基数估计"],
+    "contextual_outcomes": ["q-error", "qerror"],
+    "check": "核对贡献是否改进数据库组件，并查看估计误差、工作负载延迟、吞吐或资源开销。"
+  },
+  {
+    "id": "ontology",
+    "title": "本体与知识表示",
+    "domain": "computer-science",
+    "terms": ["ontology", "ontologies", "ontological modeling", "ontological modelling", "知识本体", "本体构建", "本体复用", "本体对齐", "本体推理", "本体建模", "本体一致性"],
+    "outcomes": ["ontology alignment f1", "ontology consistency rate", "本体对齐F1", "本体一致性通过率"],
+    "check": "核对主结果是否评估概念关系、本体对齐、推理一致性或跨场景复用。"
+  },
+  {
+    "id": "rag-retrieval",
+    "title": "信息检索与检索增强生成",
+    "domain": "computer-science",
+    "terms": ["rag", "retrieval augmented generation", "cross document retrieval", "document retrieval", "passage retrieval", "检索增强生成", "跨文档检索", "文档检索", "段落检索"],
+    "outcomes": ["retrieval recall", "retrieval ndcg", "grounded answer accuracy", "检索召回率", "检索NDCG", "有依据回答准确率"],
+    "check": "核对主表是否比较检索或问答基线，记录召回、排序或有依据回答的指标。"
+  },
+  {
+    "id": "domain-application",
+    "title": "垂直领域应用 AI",
+    "domain": "computer-science",
+    "terms": ["machine learning", "deep learning", "neural network", "neural networks", "llm", "llms", "artificial intelligence", "image classification", "imaging classification", "fault diagnosis model", "机器学习", "深度学习", "神经网络", "大模型", "图像分类", "影像分类", "故障诊断模型"],
+    "outcomes": ["clinical prediction accuracy", "crop yield prediction error", "临床预测准确率", "作物产量预测误差"],
+    "context": ["medical", "clinical", "healthcare", "industrial", "manufacturing", "energy", "agriculture", "agricultural", "crop", "education", "meteorology", "医学", "医疗", "临床", "工业", "制造", "能源", "农业", "作物", "教育", "气象"],
+    "check": "核对外部验证、领域基线及主结果所衡量的临床、工业、农业或其他应用任务。"
+  }
+]

@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import json
 import re
+import unicodedata
+from functools import lru_cache
 from pathlib import Path
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
@@ -13,7 +15,7 @@ STAGE_ALIASES = {
     "探索": "explore", "综述": "review", "设计": "design", "实验": "experiment",
     "选刊": "journal", "单刊": "dossier", "写作": "write", "审查": "audit",
     "投稿": "submit", "返修": "revise", "传播": "disseminate", "全流程": "full",
-    "all": "full",
+    "审刊": "dossier", "查单刊": "dossier", "核稿": "audit", "all": "full",
 }
 
 
@@ -26,6 +28,49 @@ def _matches(topic: str, word: str) -> bool:
         return re.search(r"(?<![a-z0-9])" + re.escape(word.lower()) +
                          r"(?![a-z0-9])", topic.lower()) is not None
     return word.casefold() in topic.casefold()
+
+
+def _normalize(text: str) -> str:
+    return re.sub(r"[\s\-\u2010-\u2015]+", " ", unicodedata.normalize("NFKC", text).casefold()).strip()
+
+
+@lru_cache(maxsize=512)
+def _track_pattern(word: str):
+    normalized = _normalize(word)
+    pattern = re.escape(normalized)
+    if normalized[0].isascii() and normalized[0].isalnum():
+        pattern = r"(?<![a-z0-9])" + pattern
+    if normalized[-1].isascii() and normalized[-1].isalnum():
+        pattern += r"(?![a-z0-9])"
+    return re.compile(pattern)
+
+
+def journal_tracks(topic: str) -> dict:
+    """Suggest audiences from named tasks and metrics. Conflicting endpoints need a main result."""
+    topic = _normalize(topic)
+    candidates = []
+    for track in asset("journal-tracks.json"):
+        def hits(field):
+            return [word for word in track.get(field, []) if _track_pattern(word).search(topic)]
+
+        context = hits("context")
+        if "context" in track and not context:
+            continue
+        tasks, outcomes = hits("terms"), hits("outcomes")
+        metric_context = hits("metric_context")
+        extra_outcomes = hits("contextual_outcomes")
+        if metric_context and extra_outcomes:
+            outcomes.extend(extra_outcomes)
+            context.extend(metric_context)
+        if tasks or outcomes:
+            candidates.append({
+                "id": track["id"], "title": track["title"], "domain": track["domain"],
+                "signals": list(dict.fromkeys(tasks + outcomes + context)),
+                "outcomes": outcomes, "check": track["check"],
+            })
+    contenders = [item for item in candidates if item["outcomes"]] or candidates
+    primary = contenders[0]["id"] if len(contenders) == 1 else None
+    return {"primary": primary, "candidates": candidates}
 
 
 def route(topic: str, domains: list[str] | None = None,
@@ -46,6 +91,8 @@ def route(topic: str, domains: list[str] | None = None,
         raise ValueError("Unknown region. Choose: " + ", ".join(REGIONS))
     profiles = asset("domains.json")
     modules = asset("modules.json")
+    journal_stage = stage in ("full", "journal", "dossier", "submit")
+    tracks = journal_tracks(topic) if journal_stage or not domains else None
     available = {d["id"]: d for d in profiles}
     signals = {}
     explicit = bool(domains)
@@ -56,9 +103,15 @@ def route(topic: str, domains: list[str] | None = None,
         selected = list(dict.fromkeys(domains))
     else:
         for domain in profiles:
-            hits = [word for word in domain["keywords"] if _matches(topic, word)]
+            domain_topic = topic.casefold()
+            for phrase in domain.get("ignore_phrases", []):
+                domain_topic = domain_topic.replace(phrase.casefold(), " ")
+            hits = [word for word in domain["keywords"] if _matches(domain_topic, word)]
             if hits:
                 signals[domain["id"]] = hits
+        for candidate in tracks["candidates"]:
+            found = signals.setdefault(candidate["domain"], [])
+            found.extend(word for word in candidate["signals"] if word not in found)
         selected = list(signals) or ["general"]
     if "agent-ai" in selected and "computer-science" not in selected:
         selected.append("computer-science")
@@ -93,6 +146,7 @@ def route(topic: str, domains: list[str] | None = None,
         "topic": topic.strip(), "stage": stage, "region": region,
         "domains": selected, "selection": "explicit" if explicit else "keyword_suggestion",
         "signals": signals, "modules": [m["id"] for m in chosen],
+        **({"journal_tracks": tracks} if journal_stage else {}),
         "module_details": chosen,
         "references": list(dict.fromkeys(m["reference"] for m in chosen)),
         "sources": list(dict.fromkeys(source_names)), "skipped": skipped,

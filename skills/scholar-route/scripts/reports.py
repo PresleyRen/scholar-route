@@ -11,8 +11,8 @@ import tempfile
 from pathlib import Path
 
 from project_store import fingerprint, load_project, locked, now
-from route_core import route
-from venue_audit import assess
+from route_core import journal_tracks, route
+from venue_audit import assess, checked_fact, checked_quartile
 
 
 def md(value) -> str:
@@ -21,7 +21,7 @@ def md(value) -> str:
 
 
 def graph_label(value) -> str:
-    return re.sub(r'[\x00-\x1f\x7f\x60"\\<>;{}\[\]|]', " ", str(value))[:100].replace("&", " and ")
+    return re.sub(r'[\x00-\x1f\x7f`"\\<>;{}\[\]|]', " ", str(value))[:100].replace("&", " and ")
 
 
 def _write(path: Path, text: str):
@@ -73,7 +73,7 @@ def map_markdown(state: dict) -> str:
     shown = edges[:60]
     connected = {n for e in shown for n in e}
     if shown:
-        lines += ["\x60\x60\x60mermaid", "flowchart TD"]
+        lines += ["```mermaid", "flowchart TD"]
         for pool, title, record in all_records:
             node = nodes[(pool, record["id"])]
             if node in connected:
@@ -81,7 +81,7 @@ def map_markdown(state: dict) -> str:
                 label = graph_label(title + ": " + content)
                 lines.append('    ' + node + '["' + label + '"]')
         lines += ["    " + a + " --> " + b for a, b in shown]
-        lines += ["\x60\x60\x60", ""]
+        lines += ["```", ""]
         if len(edges) > len(shown):
             lines += ["图中仅显示前 60 条关系；完整关系保存在 project.json。", ""]
     else:
@@ -121,6 +121,105 @@ def bibtex(state: dict) -> str:
     return "\n".join(chunks)
 
 
+def _journal_fact_text(journal, field, sources, max_age):
+    value, reason, fact = checked_fact(journal, field, sources, max_age)
+    if value is None:
+        labels = {"missing_value": "未记录", "unresolved_conflict": "来源冲突",
+                  "stale_fact": "核查已过期", "no_current_primary_evidence": "缺当前一手证据"}
+        text = "待核实（" + labels.get(reason, "缺已核查记录") + "）"
+    elif field == "mandatory_fee":
+        text = str(value) + " " + fact["currency"]
+        if fact.get("conditional") or not fact.get("includes_all_mandatory"):
+            text = "总额待核实，记录金额 " + text
+            if fact.get("conditional"):
+                text += "，优惠或适用条件待确认"
+            if not fact.get("includes_all_mandatory"):
+                text += "，必付项目未核全"
+    elif field.endswith("_days"):
+        text = str(value) + " 天"
+        if reason == "recorded_article_history":
+            text += "（已发表论文的日期观察）"
+    elif field == "indexing":
+        text = "、".join(value) or "记录未列出收录索引"
+    else:
+        text = str(value)
+    if value is not None and isinstance(fact.get("notes"), str) and fact["notes"].strip():
+        text += "（" + fact["notes"].strip() + "）"
+    elif value is not None and field.endswith("_days"):
+        text += "（未记录起止点、样本及统计口径）"
+    provenance = [*fact.get("source_ids", []), fact.get("checked_at")]
+    return text + (" [" + "，".join(filter(None, provenance)) + "]" if any(provenance) else "")
+
+
+def _journal_quartiles(journal, sources, max_age):
+    groups = {}
+    for metric in journal.get("metrics", []):
+        key = (metric["system"], metric["year"], metric["category"])
+        groups.setdefault(key, []).append(metric)
+    details = []
+    for (system, year, category), metrics in groups.items():
+        value, _, source_ids = checked_quartile(metrics, sources, max_age)
+        if value is None:
+            value = "待核实（来源冲突）" if source_ids else "待核实（缺当前索引证据）"
+        recorded_ids = source_ids or sorted({s for metric in metrics for s in metric.get("source_ids", [])})
+        provenance = " [" + "，".join(recorded_ids) + "]" if recorded_ids else ""
+        details.append(f"{system} {year} {category} {value}{provenance}")
+    return "；".join(details) or "分区待核实"
+
+
+def journal_comparison(state: dict, audit: dict) -> list[str]:
+    records = state["records"]
+    sources = {s["id"]: s for s in records["sources"]}
+    papers = {p["id"]: p for p in records["papers"]}
+    active = {row["id"]: row for pool in ("eligible", "unverified") for row in audit["pools"][pool]}
+    max_age = state["constraints"].get("max_fact_age_days", 180)
+    timings = (("first_decision_days", "首次决定"), ("external_review_days", "外审"),
+               ("acceptance_days", "录用"), ("first_online_days", "首次上线"),
+               ("issue_publication_days", "编入期次"))
+    rows = []
+    for journal in records["journals"]:
+        assessed = active.get(journal["id"])
+        if assessed is None:
+            continue
+        venue, _, _ = checked_fact(journal, "venue_type", sources, max_age)
+        if venue not in (None, "journal", "unknown"):
+            continue
+        status = "符合已记录硬条件" if assessed["status"] == "eligible" else "硬条件待核实"
+        name = journal["title"] + " [" + journal["id"] + "]，" + status
+        if venue != "journal":
+            name += "，类型待核实"
+        scope = _journal_fact_text(journal, "scope", sources, max_age)
+        if assessed["fit_rationale"]:
+            cited = [papers[p] for p in assessed["fit_paper_ids"]
+                     if papers[p].get("read_status") in {"abstract", "full_text"}]
+            identifiers = [p.get("doi") or p.get("url") or p["id"] for p in cited]
+            scope += "；适配评估：" + assessed["fit_rationale"] + " [" + "，".join(
+                [*identifiers, *assessed["fit_source_ids"]]) + "]"
+        else:
+            scope += "；适配研究待核实"
+        indexing = _journal_fact_text(journal, "indexing", sources, max_age)
+        fee = _journal_fact_text(journal, "mandatory_fee", sources, max_age)
+        if "oa_route" in journal["facts"]:
+            fee += "；出版路径 " + _journal_fact_text(journal, "oa_route", sources, max_age)
+        elif "mandatory_fee" in journal["facts"]:
+            fee += "；适用出版路径待核实"
+        time = "首次决定、外审、录用、首次上线、编入期次均待核实"
+        timeline_fields = timings
+        if "publication_days" in journal["facts"]:
+            timeline_fields = (*timings, ("publication_days", "发表（原记录口径）"))
+        if any(field in journal["facts"] for field, _ in timeline_fields):
+            time = "；".join(label + " " + _journal_fact_text(journal, field, sources, max_age)
+                            for field, label in timeline_fields)
+        cells = (name, scope, indexing + "；" + _journal_quartiles(journal, sources, max_age), fee, time)
+        rows.append("| " + " | ".join(md(cell) for cell in cells) + " |")
+    if not rows:
+        return []
+    return ["### 期刊证据对照", "",
+            "按项目记录顺序列出候选。方括号中的来源 ID 对应下方证据来源。时长沿用各来源的起止点与统计口径。",
+            "", "| 候选 | 刊物范围与适配依据 | 收录与分区 | 必付总额（原币） | 各阶段时长 |",
+            "|---|---|---|---|---|", *rows, ""]
+
+
 def report_markdown(state: dict, audit: dict) -> str:
     routing = route(state["topic"], state["domains"], state["stage"], state["region"])
     lines = [
@@ -133,9 +232,26 @@ def report_markdown(state: dict, audit: dict) -> str:
         "- 阶段：" + state["stage"],
         "- 适用模块：" + str(len(routing["modules"])),
         "- 模块清单：" + "、".join(routing["modules"]), "",
-        "## 记录统计", "",
-        "| 记录 | 数量 |", "|---|---|",
     ]
+    tracks = routing.get("journal_tracks")
+    if tracks is None and state["records"]["journals"]:
+        tracks = journal_tracks(state["topic"])
+    if tracks and (tracks["candidates"] or "computer-science" in routing["domains"]):
+        primary = tracks["primary"]
+        lines += ["### 选刊方向初筛", ""]
+        if tracks["candidates"]:
+            if primary:
+                lines.append("候选主方向为 `" + primary + "`，须由论文主结果和目标期刊近期文章复核。")
+            else:
+                lines.append("多个方向的线索并存，需从主表的评价对象、基线及指标判定主方向。")
+            lines += ["", "| 候选方向 | 题目或描述中命中的线索 | 从稿件复核 |", "|---|---|---|"]
+            for candidate in tracks["candidates"]:
+                lines.append("| " + md(candidate["title"]) + " (`" + candidate["id"] + "`) | " +
+                             md("、".join(candidate["signals"])) + " | " + md(candidate["check"]) + " |")
+        else:
+            lines.append("当前描述未提供足以细分 AI 投稿方向的线索。可结合摘要、主表及学科读者进一步确定。")
+        lines.append("")
+    lines += ["## 记录统计", "", "| 记录 | 数量 |", "|---|---|"]
     lines += ["| " + pool + " | " + str(len(items)) + " |" for pool, items in state["records"].items()]
     lines += ["", "## 期刊筛选", "", "以下分组只检查已记录的硬约束。适配分是 0–5 的主观、有依据评估；空值不补分。", ""]
     for pool, title in (("eligible", "符合已记录约束"), ("unverified", "待核实"), ("excluded", "已知不符合")):
@@ -147,6 +263,7 @@ def report_markdown(state: dict, audit: dict) -> str:
         if not audit["pools"][pool]:
             lines += ["| — | — | — | 尚无记录 |"]
         lines += [""]
+    lines += journal_comparison(state, audit)
     lines += ["### 待人工复核的建议顺序", "",
               "、".join(audit["shortlist"]["ids"]) or "暂无同时具备完整硬约束证据和适配评估的候选。",
               "", "同出版社展示上限：" + str(audit["shortlist"]["publisher_cap"]) +
@@ -176,7 +293,7 @@ def report_markdown(state: dict, audit: dict) -> str:
             md(source["type"]), md(source["accessed_at"]), "已记录核实" if source.get("verified") else "未核实"]) + " |")
     lines += ["", "## 当前边界", "",
               "- 报告保留事实来源和缺失项；科学主张是否成立、期刊是否真实适配仍需阅读原始证据。",
-              "- first_decision、external_review、acceptance、publication 时间不得混用；历史统计不是截止时间保证。",
+              "- 首次决定、外审、录用、首次上线与编入期次各有起止点。原有 publication_days 保留来源口径；历史统计不是截止时间保证。",
               "- 任何尚未实际执行的实验、提交、发表或通信均不能由本报告自动变成已完成。",
               "- 研究关系见 MAP.md；规范化记录及历史见 project.json；引文元数据见 references.bib。", ""]
     return "\n".join(lines)

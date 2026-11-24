@@ -48,7 +48,9 @@ Each `facts.FIELD` is an evidence object with:
 - `checked_at`: ISO date/timestamp; verified facts require it.
 - Optional notes describing exact source location, population/period or applicability.
 
-Recognized fields are `venue_type`, `indexing`, `publisher`, `mandatory_fee`, `languages`, `first_decision_days`, `external_review_days`, `acceptance_days`, `publication_days`, `article_types`, `scope` and `oa_route`. Indexing/languages/article_types are string lists. Timelines and mandatory_fee are nonnegative finite numbers. Time facts require endpoint/statistic/period explanations in notes; code stores them without treating averages as deadline guarantees.
+Recognized fields are `venue_type`, `indexing`, `publisher`, `mandatory_fee`, `languages`, `first_decision_days`, `external_review_days`, `acceptance_days`, `first_online_days`, `issue_publication_days`, `publication_days`, `article_types`, `scope` and `oa_route`. Indexing/languages/article_types are string lists. Timelines and mandatory_fee are nonnegative finite numbers.
+
+Use `first_online_days` for first online appearance and `issue_publication_days` for publication in an issue. In each fact's `notes`, identify the start and end events, statistic, observation period and sample. For instance, a publisher may measure acceptance to first online, while an article history may establish submission to first online. Keep each stated interval intact. Older `publication_days` entries retain their original meaning and display separately. For observations from accepted papers, link the original article as a source of type `paper` and record the DOI, dates and sample size in the notes. These observations describe the published sample. Use an official journal source when reporting a journal-wide statistic.
 
 A mandatory_fee also needs currency, `includes_all_mandatory: true` to pass a total-fee filter, and a checked publication route. Set `conditional: true` while a waiver or eligibility condition remains unresolved. Optional OA is not a mandatory fee; document that choice and the supporting official route.
 
@@ -107,7 +109,7 @@ This adopts the currently stored incoming value, not a value guessed from the re
 
 `report` writes:
 
-- `REPORT.md`: current route, counts, candidate pools/reasons, claim/experiment states, search boundaries and sources.
+- `REPORT.md` includes the current route, counts, candidate pools and reasons, recorded journal evidence for comparison, claim/experiment states, search boundaries and sources. The host uses the manuscript and the cited material to explain the submission order.
 - `MAP.md`: Mermaid relationships and complete entity table; capped diagram edges are disclosed.
 - `journals.csv`: comparable candidate rows with spreadsheet-formula escaping.
 - `references.bib`: citation metadata with escaped fields; verify both bibliography style and claim support.

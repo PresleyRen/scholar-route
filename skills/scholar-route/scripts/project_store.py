@@ -27,7 +27,7 @@ VENUE_TYPES = {"journal", "conference", "preprint", "book", "repository", "book-
 FACT_FIELDS = {
     "venue_type", "indexing", "publisher", "mandatory_fee", "languages",
     "first_decision_days", "external_review_days", "acceptance_days",
-    "publication_days", "article_types", "scope", "oa_route",
+    "first_online_days", "issue_publication_days", "publication_days", "article_types", "scope", "oa_route",
 }
 SECRET_KEY = re.compile(r"^(?:api[_-]?key|access[_-]?token|authorization|password|secret|token)$", re.I)
 IDENTIFIER = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:-]{0,159}$")

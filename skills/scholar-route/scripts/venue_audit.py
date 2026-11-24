@@ -25,7 +25,7 @@ def _evidence(item: dict, sources: dict, allowed: set[str], max_age: int) -> tup
     return True, "recorded_primary_evidence"
 
 
-def _fact(journal: dict, name: str, sources: dict, max_age: int):
+def checked_fact(journal: dict, name: str, sources: dict, max_age: int):
     fact = journal.get("facts", {}).get(name)
     if not fact or fact.get("value") is None:
         return None, "missing_value", fact or {}
@@ -34,7 +34,22 @@ def _fact(journal: dict, name: str, sources: dict, max_age: int):
         return None, "unresolved_conflict", fact
     allowed = {"index"} if name == "indexing" else {"publisher", "registry"}
     valid, reason = _evidence(fact, sources, allowed, max_age)
+    if not valid and name.endswith("_days") and _evidence(fact, sources, {"paper"}, max_age)[0]:
+        return fact["value"], "recorded_article_history", fact
     return (fact["value"] if valid else None), reason, fact
+
+
+def checked_quartile(observations: list[dict], sources: dict, max_age: int):
+    """Resolve one (system, year, category) against current primary evidence."""
+    valid = [m for m in observations if _evidence(m, sources, {"index"}, max_age)[0]]
+    values = {m["value"] for m in valid}
+    source_ids = sorted({s for m in valid for s in m.get("source_ids", [])})
+    if len(values) > 1:
+        return None, "Contradictory values for the same system/year/category.", source_ids
+    if not values:
+        return None, "No current evidence for the exact system/year/category.", source_ids
+    value = next(iter(values))
+    return value, value, source_ids
 
 
 def _check(field: str, status: str, reason: str, evidence=None):
@@ -55,20 +70,20 @@ def assess_journal(journal: dict, constraints: dict, sources: dict, papers: dict
                              "Recorded ISSN provenance." if good else "ISSN lacks current primary provenance.",
                              {"source_ids": [s["id"] for s in good]}))
     if constraints.get("require_journal", True):
-        value, reason, fact = _fact(journal, "venue_type", sources, max_age)
+        value, reason, fact = checked_fact(journal, "venue_type", sources, max_age)
         if value == "unknown":
             value, reason = None, "venue_type_unknown"
         status = "unknown" if value is None else ("pass" if value == "journal" else "fail")
         checks.append(_check("venue_type", status, reason if value is None else str(value), fact))
     if constraints.get("required_index"):
-        value, reason, fact = _fact(journal, "indexing", sources, max_age)
+        value, reason, fact = checked_fact(journal, "indexing", sources, max_age)
         required = constraints["required_index"].casefold()
         status = "unknown" if value is None else ("pass" if required in {i.casefold() for i in value} else "fail")
         checks.append(_check("indexing", status,
                              reason if value is None else "Required " + constraints["required_index"] + "; recorded " + ", ".join(value), fact))
     if "max_mandatory_fee" in constraints:
         cap = constraints["max_mandatory_fee"]
-        value, reason, fact = _fact(journal, "mandatory_fee", sources, max_age)
+        value, reason, fact = checked_fact(journal, "mandatory_fee", sources, max_age)
         if value is None:
             status = "unknown"
         elif fact.get("includes_all_mandatory") is not True:
@@ -82,12 +97,12 @@ def assess_journal(journal: dict, constraints: dict, sources: dict, papers: dict
             reason = "Mandatory total " + str(value) + " " + fact["currency"]
         checks.append(_check("mandatory_fee", status, reason, fact))
     if constraints.get("excluded_publishers"):
-        value, reason, fact = _fact(journal, "publisher", sources, max_age)
+        value, reason, fact = checked_fact(journal, "publisher", sources, max_age)
         status = "unknown" if value is None else (
             "fail" if value.casefold() in {x.casefold() for x in constraints["excluded_publishers"]} else "pass")
         checks.append(_check("publisher", status, reason if value is None else value, fact))
     if constraints.get("allowed_languages"):
-        value, reason, fact = _fact(journal, "languages", sources, max_age)
+        value, reason, fact = checked_fact(journal, "languages", sources, max_age)
         allowed = {x.casefold() for x in constraints["allowed_languages"]}
         status = "unknown" if value is None else ("pass" if allowed.intersection(x.casefold() for x in value) else "fail")
         checks.append(_check("languages", status, reason if value is None else ", ".join(value), fact))
@@ -95,17 +110,9 @@ def assess_journal(journal: dict, constraints: dict, sources: dict, papers: dict
         desired = constraints["quartile"]
         candidates = [m for m in journal.get("metrics", []) if
                       all(m.get(f) == desired[f] for f in ("system", "year", "category"))]
-        valid = [m for m in candidates if _evidence(m, sources, {"index"}, max_age)[0]]
-        values = {m["value"] for m in valid}
-        if len(values) > 1:
-            status, reason = "unknown", "Contradictory values for the same system/year/category."
-        elif not values:
-            status, reason = "unknown", "No current evidence for the exact system/year/category."
-        else:
-            value = next(iter(values))
-            status, reason = ("pass" if value in desired["allowed"] else "fail"), value
-        checks.append(_check("quartile", status, reason,
-                             {"source_ids": sorted({s for m in valid for s in m.get("source_ids", [])})}))
+        value, reason, source_ids = checked_quartile(candidates, sources, max_age)
+        status = "unknown" if value is None else ("pass" if value in desired["allowed"] else "fail")
+        checks.append(_check("quartile", status, reason, {"source_ids": source_ids}))
     statuses = {c["status"] for c in checks}
     status = "excluded" if "fail" in statuses else ("unverified" if "unknown" in statuses else "eligible")
     fit = journal.get("fit")
@@ -116,7 +123,7 @@ def assess_journal(journal: dict, constraints: dict, sources: dict, papers: dict
                               for s in fit["source_ids"] if s in sources)
                       and any(papers[p].get("read_status") in {"abstract", "full_text"}
                               for p in fit["paper_ids"] if p in papers))
-    publisher, _, _ = _fact(journal, "publisher", sources, max_age)
+    publisher, _, _ = checked_fact(journal, "publisher", sources, max_age)
     return {
         "id": journal["id"], "title": journal["title"], "status": status, "checks": checks,
         "fit_score": fit["score"] if fit_usable else None,

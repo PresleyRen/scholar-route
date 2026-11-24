@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Added short Codex requests for writing from completed experiments, auditing a manuscript, investigating one journal and selecting journals from manuscript evidence.
+- Distinguished AI research readerships in journal routing and expanded the dossier workflow for editorial statements, comparable papers, article-specific costs, rankings and publication timelines.
+- Added a journal evidence table to the normal report, with optional separate first-online and issue-publication intervals and the original source notes.
+- Added 13 offline regressions covering classification and journal comparison, including resumed projects. The full suite contains 131 tests.
+
 ## 1.1.0 — 2026-10-20
 
 - Re-audited the complete tracked inventory: 17 sources, 139 feature mappings, 41 capabilities and 33 integration rules.

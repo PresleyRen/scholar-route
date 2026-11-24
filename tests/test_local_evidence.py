@@ -16,10 +16,11 @@ class LocalEvidenceTests(unittest.TestCase):
         init_project(self.project, "Local manuscript review", ["computer-science"])
         self.brief = Path(self.temp.name) / "brief.md"
         self.brief.write_text("Unmeasured Agent idea, supplied locally.", encoding="utf-8")
+        self.today = dt.datetime.now(dt.timezone.utc).date().isoformat()
         self.source = {
             "id": "local-brief", "title": "User supplied research brief",
             "path": str(self.brief), "sha256": hashlib.sha256(self.brief.read_bytes()).hexdigest(),
-            "type": "other", "accessed_at": dt.date.today().isoformat(), "verified": True,
+            "type": "other", "accessed_at": self.today, "verified": True,
         }
 
     def tearDown(self):
@@ -63,12 +64,12 @@ class LocalEvidenceTests(unittest.TestCase):
     def test_map_includes_searches_and_nested_venue_evidence_without_claiming_journal_type(self):
         record(self.project, "source", self.source)
         record(self.project, "search", {"id": "fixture-query", "provider": "fixture",
-                                      "query": "bounded agent query", "retrieved_at": dt.date.today().isoformat(),
+                                      "query": "bounded agent query", "retrieved_at": self.today,
                                       "source_ids": ["local-brief"], "exhaustive": False})
         record(self.project, "journal", {"id": "conference-fixture", "title": "Fictional Conference",
                                          "facts": {"venue_type": {"value": "conference", "verification": "unverified",
                                                                   "source_ids": ["local-brief"],
-                                                                  "checked_at": dt.date.today().isoformat()}}})
+                                                                  "checked_at": self.today}}})
         diagram = map_markdown(load_project(self.project))
         self.assertIn('S1 --> Q1', diagram)
         self.assertIn('S1 --> J1', diagram)

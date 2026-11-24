@@ -68,12 +68,12 @@ python examples/run_demo.py --project ./work/demo
 Requires Python 3.11+. Install the entire `skills/scholar-route/` directory in the host's skill directory. For Codex, project and personal locations are `.agents/skills/scholar-route/` and `~/.agents/skills/scholar-route/`; see the [official skill documentation](https://learn.chatgpt.com/docs/build-skills).
 
 ```text
-Use $scholar-route to investigate long-term memory and failure recovery
-in LLM Agents. Resume the existing project, map the literature and competing
-mechanisms, then design equal-budget baselines, ablations and a minimal test.
-Distinguish capability and systems contributions. Build an SCIE submission
-route from the manuscript evidence, prioritizing no-mandatory-fee options.
+Use $scholar-route to find journals for this manuscript.
 ```
+
+Codex reads the abstract and main experimental result, determines the readership, and checks comparable articles, category-specific rankings, mandatory charges and publication timelines. For an English SCI search, defaults favor SCIE and affordable regular publication routes, including regional and international specialist journals. State a different index, region or budget in the same request. Chinese-language discussions default to English manuscript drafts.
+
+Other short requests include `Use $scholar-route to take these finished experiments through writing and pre-submission checks` and `Use $scholar-route to audit this manuscript`. To investigate one journal, name it in the request. For an early-stage project, ask to explore a field.
 
 Direct CLI example:
 
@@ -168,9 +168,11 @@ Examples include equal-token and equal-call comparisons for multi-Agent claims; 
 
 The integration preserves useful workflow contributions while selecting explicit rules for conflicting behavior: field-aware retrieval, three-state candidate eligibility, exact quartile identities, mandatory versus optional fees, separate review-time endpoints, provenance-preserving updates and complementary review roles.
 
-**118 automated tests** comprise the existing 89 plus 29 new routing, conflict and coverage checks. One parameter-combination test covers **288 routes**. **18 conflict rules** link executable tests; **15 workflow conflicts** have saved inputs, applied outputs and review decisions. Workflow scenarios and Python test results are recorded separately in the [audit report](docs/AUDIT-2026-10-20.md).
+The v1.1.0 release’s **118 automated tests** comprise the existing 89 plus 29 new routing, conflict and coverage checks. One parameter-combination test covers **288 routes**. **18 conflict rules** link executable tests; **15 workflow conflicts** have saved inputs, applied outputs and review decisions. Workflow scenarios and Python test results are recorded separately in the [audit report](docs/AUDIT-2026-10-20.md).
 
 GitHub Actions runs Python 3.11 and 3.12, retaining exact tested source and logs as artifacts. The [workflow scenario review](docs/WORKFLOW-REVIEW.md) records qualitative decisions; the original release's API probes and usability cases remain in [historical validation](docs/VALIDATION.md).
+
+The journal update passes 131 offline tests. New cases cover bilingual task routing, ambiguous outcomes, resumed projects, conditional author charges, conflicting rank evidence and separate publication milestones. A manuscript reporting database cardinality q-error is routed to AI4DB even when a chat agent demonstrates the result.
 
 ## Locate a weakness and extend the skill
 
